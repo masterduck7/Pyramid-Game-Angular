@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {Title} from "@angular/platform-browser";
+import { Component, OnInit, NgModule } from '@angular/core';
+import { ClrIconModule } from '@clr/angular';
+import { Title } from "@angular/platform-browser";
+
+@NgModule({
+  declarations: [HomeComponent],
+  imports: [ClrIconModule]
+})
 
 @Component({
   selector: 'app-home',
