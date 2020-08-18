@@ -1,5 +1,5 @@
 deployment:
     tasks:
-      - source /home/lpsoftwa/nodevenv/api/12/bin/activate
+      - source /home/lpsoftwa/nodevenv/api/12/bin/activate && cd /home/lpsoftwa/api
       - export DEPLOYPATH=/home/lpsoftwa/public_html/
       - ng build --output-path=DEPLOYPATH
