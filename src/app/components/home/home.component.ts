@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from "@angular/platform-browser";
 import '@clr/icons';
+import '@clr/icons/shapes/all-shapes';
 
 @Component({
   selector: 'app-home',
