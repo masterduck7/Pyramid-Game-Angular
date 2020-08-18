@@ -1,4 +1,5 @@
 deployment:
     tasks:
+      - export PATH=/home/lpsoftwa/nodevenv/api/12/bin/:$PATH
       - export DEPLOYPATH=/home/lpsoftwa/public_html/
       - ng build --output-path=DEPLOYPATH
