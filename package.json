@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "ng build --prod",
-    "build:ci": "npm run clean && npm run test && npm run build:prod",
+    "build": "ng build && mv dist/pyramid-game dist/pyramidgame",
+    "build:prod": "ng build --prod && mv dist/pyramid-game dist/pyramidgame",
+    "build:ci": "npm run clean && npm run test && npm run build:prod && mv dist/pyramid-game dist/pyramidgame",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
     "lint": "ng lint",
@@ -15,8 +15,8 @@
     "int:extract": "ng xi18n --output-path src/locale",
     "start:en": "ng serve --configuration=en",
     "start:es": "ng serve --configuration=es",
-    "build:en": "ng build --configuration=en",
-    "build:es": "ng build --configuration=es"
+    "build:en": "ng build --configuration=en && mv dist/pyramid-game dist/pyramidgame",
+    "build:es": "ng build --configuration=es && mv dist/pyramid-game dist/pyramidgame"
   },
   "private": true,
   "dependencies": {
