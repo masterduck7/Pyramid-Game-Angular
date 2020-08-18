@@ -11,6 +11,7 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "clean": "rimraf dist",
     "int:extract": "ng xi18n --output-path src/locale",
     "start:en": "ng serve --configuration=en",
     "start:es": "ng serve --configuration=es",
