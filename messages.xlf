@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="4d360b0bbaf4b2025e116977c1e228fd922d7655" datatype="html">
+        <source>Pyramid Game</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Title for home view</note>
+      </trans-unit>
+      <trans-unit id="92eee6be6de0b11c924e3ab27db30257159c0a7c" datatype="html">
+        <source>Home</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Access to Home view</note>
+      </trans-unit>
+      <trans-unit id="37939fa361d820d0469c58e2101ef8ac545bd546" datatype="html">
+        <source>Start Game</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Access to Start game view</note>
+      </trans-unit>
+      <trans-unit id="61e0f26d843eec0b33ff475e111b0c2f7a80b835" datatype="html">
+        <source>Statistics</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Access to stadistics view</note>
+      </trans-unit>
+      <trans-unit id="02f8ee7117d0f306f5726d1c578a9f18c4ba5b6d" datatype="html">
+        <source>Steps</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">Steps</note>
+      </trans-unit>
+      <trans-unit id="a94c1929ff1348760c21af3e30a29f81526e754e" datatype="html">
+        <source>Ingrese nombre de jugadores</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">First step title</note>
+      </trans-unit>
+      <trans-unit id="7944f42bf2eac086f8ac7a1c2f4efb4cfddca790" datatype="html">
+        <source>1-26 players</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">First step description</note>
+      </trans-unit>
+      <trans-unit id="fb9ed4c53c32b8aaa079e227a36fab2aa97e9b91" datatype="html">
+        <source>Ingrese altura de pirámide</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="description">Second step title</note>
+      </trans-unit>
+      <trans-unit id="4cfc28ee2d91e1d513c73699925bbfcd21130744" datatype="html">
+        <source>1-10</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Second step description</note>
+      </trans-unit>
+      <trans-unit id="5116ca7195838132798d6c73d0b2bbe57ca2ac74" datatype="html">
+        <source>Empiece a jugar y beber</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <note priority="1" from="description">Third step</note>
+      </trans-unit>
+      <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html">
+        <source>Rules</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="description">Rules</note>
+      </trans-unit>
+      <trans-unit id="dedf5c10dcf1949632038ad446dc288fcdad54fc" datatype="html">
+        <source>Se asignan 2 cartas al azar por jugador</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <note priority="1" from="description">First rule</note>
+      </trans-unit>
+      <trans-unit id="f7233fa4c38c9813513ab81fb2ac1bf884a6af76" datatype="html">
+        <source>La dificultad depende de la altura de la piramide</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <note priority="1" from="description">Second rule</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
