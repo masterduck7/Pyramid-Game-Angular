@@ -3,7 +3,6 @@ import { ClrIconModule } from '@clr/angular';
 import { Title } from "@angular/platform-browser";
 
 @NgModule({
-  declarations: [HomeComponent],
   imports: [ClrIconModule]
 })
 
