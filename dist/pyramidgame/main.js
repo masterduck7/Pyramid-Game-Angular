@@ -220,11 +220,11 @@ else {
 }
 var I18N_10;
 if (typeof ngI18nClosureMode !== "undefined" && ngI18nClosureMode) {
-    const MSG_EXTERNAL_7055011470366795053$$SRC_APP_COMPONENTS_HOME_HOME_COMPONENT_TS_11 = goog.getMsg("Developed in Angular JS");
-    I18N_10 = MSG_EXTERNAL_7055011470366795053$$SRC_APP_COMPONENTS_HOME_HOME_COMPONENT_TS_11;
+    const MSG_EXTERNAL_496205841461013952$$SRC_APP_COMPONENTS_HOME_HOME_COMPONENT_TS_11 = goog.getMsg("Developed in Angular ");
+    I18N_10 = MSG_EXTERNAL_496205841461013952$$SRC_APP_COMPONENTS_HOME_HOME_COMPONENT_TS_11;
 }
 else {
-    I18N_10 = $localize `:␟3a3c8cdf4952cacaafd23c13d26ba61ea6d58bbd␟7055011470366795053:Developed in Angular JS`;
+    I18N_10 = $localize `:␟058704f61c0cbc8043dc1f186071cd8a222e5400␟496205841461013952:Developed in Angular `;
 }
 var I18N_12;
 if (typeof ngI18nClosureMode !== "undefined" && ngI18nClosureMode) {
