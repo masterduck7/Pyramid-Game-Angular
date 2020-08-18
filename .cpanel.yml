@@ -1,4 +1,4 @@
 deployment:
     tasks:
       - export DEPLOYPATH=/home/lpsoftwa/public_html/
-      - /bin/cp -R dist/pyramid-game $DEPLOYPATH
+      - /bin/cp -R dist/pyramidgame $DEPLOYPATH
