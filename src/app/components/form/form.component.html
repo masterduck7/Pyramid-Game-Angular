@@ -15,13 +15,23 @@
     <div class="div-form">
         <h1 class="title">Set game data</h1>
         <div>
+            <label>Mode</label>
+            <select formControlName="mode" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
+                <option value=""></option>
+                <option *ngFor="let i of ['Hard','Normal']">{{i}}</option>
+            </select>
+            <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
+                <div *ngIf="f.height.errors.required" class="error">Height is required</div>
+            </div>
+        </div>
+        <div>
             <label>Height</label>
             <select formControlName="height" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.height.errors }">
                 <option value=""></option>
                 <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
             </select>
             <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                <div *ngIf="f.height.errors.required">Height is required</div>
+                <div *ngIf="f.height.errors.required" class="error">Height is required</div>
             </div>
         </div>
         <div>
@@ -31,7 +41,7 @@
                 <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">{{i}}</option>
             </select>
             <div *ngIf="submitted && f.numberPlayers.errors" class="invalid-feedback">
-                <div *ngIf="f.numberPlayers.errors.required">Number of players is required</div>
+                <div *ngIf="f.numberPlayers.errors.required" class="error">Number of players is required</div>
             </div>
         </div>
         <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
@@ -40,7 +50,7 @@
                     <div class="form-group col-6">
                         <input type="text" formControlName="name" placeholder="Player {{i + 1}}" class="form-control input-form-text" [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
                         <div *ngIf="submitted && ticket.controls.name.errors" class="invalid-feedback">
-                            <div *ngIf="ticket.controls.name.errors.required">Name is required</div>
+                            <div *ngIf="ticket.controls.name.errors.required" class="error">Name is required</div>
                         </div>
                     </div>
                 </div>

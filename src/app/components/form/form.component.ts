@@ -9,23 +9,25 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
 
-  dynamicForm: FormGroup;
-  submitted = false;
+    dynamicForm: FormGroup;
+    submitted = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
-      this.dynamicForm = this.formBuilder.group({
-          height: [null, Validators.required],
-          numberPlayers: ['', Validators.required],
-          players: new FormArray([])
-      });
-  }
+    ngOnInit() {
+        this.dynamicForm = this.formBuilder.group({
+            mode: [null, Validators.required],  
+            height: [null, Validators.required],
+            numberPlayers: ['', Validators.required],
+            players: new FormArray([])
+        });
+    }
 
   // convenience getters for easy access to form fields
   get f() { return this.dynamicForm.controls; }
   get t() { return this.f.players as FormArray; }
   get h() { return this.f.height; }
+  get m() { return this.f.mode; }
 
   onChangeTickets(e) {
       const numberPlayers = e.target.value || 0;
@@ -64,5 +66,6 @@ export class FormComponent implements OnInit {
       this.submitted = false;
       this.t.reset();
       this.h.reset();
+      this.m.reset();
   }
 }
