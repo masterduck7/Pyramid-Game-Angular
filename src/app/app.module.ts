@@ -8,12 +8,14 @@ import { HomeComponent } from './components/home/home.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormComponent } from './components/form/form.component';
+import { GameComponent } from './components/game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    FormComponent
+    FormComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
