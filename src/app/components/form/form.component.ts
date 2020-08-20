@@ -45,8 +45,27 @@ export class FormComponent implements OnInit {
         }
     }
 
+    checkRepeatedPlayers() {
+        let checkPlayers:string[] = [];
+        let result:string = "";
+        this.f.players.value.forEach(player => {
+            if (checkPlayers.includes(player.name)) {
+                result = 'error';
+            }else{
+                checkPlayers.push(player.name)
+            }
+        });
+        return result;
+    }
+
     onSubmit() {
         this.submitted = true;
+        // Check is any name is repeated
+        let test:string = this.checkRepeatedPlayers();
+        if (test === 'error') {
+            alert('Check names')
+            return;
+        }
         // stop here if form is invalid
         if (this.dynamicForm.invalid) {
             return;
