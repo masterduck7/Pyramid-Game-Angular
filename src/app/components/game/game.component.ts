@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-game',
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
+  height:string;
+  mode:string;
+  players:string[];
+  structure:string[][] = [];
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.height = localStorage.getItem('pyramid_height')
+    this.mode = localStorage.getItem('pyramid_mode')
+    this.players = JSON.parse(localStorage.getItem('pyramid_users'))
+    this.setStructure();
+  }
+
+  setStructure(){
+    let sstructure:string[][] = [];
+    for (let index = Number(this.height); index > 0; index--) {
+      let row:string[] = [];
+      for (let data = 0; data < index; data++) {
+        row.push('X')
+      }
+      sstructure.push(row)
+    }
+    this.structure = sstructure
   }
 
 }
