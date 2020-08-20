@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './form.component';
 
@@ -11,6 +12,7 @@ describe('FormComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
+        RouterTestingModule.withRoutes([]),
       ],
       declarations: [ FormComponent ]
     })
