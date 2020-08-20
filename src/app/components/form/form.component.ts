@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 
@@ -12,7 +13,7 @@ export class FormComponent implements OnInit {
     dynamicForm: FormGroup;
     submitted = false;
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder, private route: Router) { }
 
     ngOnInit() {
         this.dynamicForm = this.formBuilder.group({
@@ -50,8 +51,11 @@ export class FormComponent implements OnInit {
         if (this.dynamicForm.invalid) {
             return;
         }
-        // display form values on success
-        alert(JSON.stringify(this.dynamicForm.value, null, 4));
+        // Save Game data in Local Storage
+        localStorage.setItem('pyramid_height',this.f.height.value)
+        localStorage.setItem('pyramid_mode',this.f.mode.value)
+        localStorage.setItem('pyramid_users',JSON.stringify(this.f.players.value))
+        this.route.navigate(['/game']);
     }
 
     onReset() {
