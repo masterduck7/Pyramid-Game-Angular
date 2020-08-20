@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { GameComponent } from './game.component';
 
 describe('GameComponent', () => {
@@ -8,12 +8,29 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameComponent ]
+      declarations: [ GameComponent ],
+      imports: [
+        RouterTestingModule.withRoutes([])
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    var store = {};
+
+    spyOn(localStorage, 'getItem').and.callFake( (key:string):string => {
+     return store[key] || null;
+    });
+    spyOn(localStorage, 'removeItem').and.callFake((key:string):void =>  {
+      delete store[key];
+    });
+    spyOn(localStorage, 'setItem').and.callFake((key:string, value:string):string =>  {
+      return store[key] = <string>value;
+    });
+    spyOn(localStorage, 'clear').and.callFake(() =>  {
+        store = {};
+    });
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

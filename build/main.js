@@ -613,7 +613,7 @@ class GameComponent {
     ngOnInit() {
         this.height = localStorage.getItem('pyramid_height');
         this.mode = localStorage.getItem('pyramid_mode');
-        this.players = JSON.parse(localStorage.getItem('pyramid_users'));
+        this.players = JSON.parse(localStorage.getItem('pyramid_users')) || [];
         localStorage.setItem('pyramid_lastcard', '0');
         this.setStructure();
         this.setUsers(this.players);
@@ -654,7 +654,6 @@ class GameComponent {
         let newCard = Number(lastCardPlayed) + 1;
         localStorage.setItem('pyramid_lastcard', newCard.toString());
         if (item + 1 === this.lastCard) {
-            alert("Finished");
             this.finish();
         }
     }
