@@ -8,17 +8,17 @@
     justify-content: center;
 }
 .card {
-    height:40px;
-    width:35px;
+    height:42px;
+    width:30px;
     margin: 25%;
-    background-color: crimson;
+    background: url("../../../assets/Card.png") no-repeat top center;
+    background-size: 100%;
 }
 .button {
     cursor: pointer;
     outline: none;
     color: transparent;
     border: none;
-    border-radius: 10px;
     box-shadow: 0 2px #999;
 }
 .button:hover {background-color: #3e8e41}
@@ -28,5 +28,5 @@
     transform: translateY(4px);
 }
 .button:disabled {
-    background-color: #000000;
+    background: black;
 }

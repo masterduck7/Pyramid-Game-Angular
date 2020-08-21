@@ -68,6 +68,12 @@ export class GameComponent implements OnInit {
     }
   }
 
+  addDrinks(user:string, numberDrinks:number) {
+    let beforeDrinks:string = localStorage.getItem(user)
+    let newDrinks:number = Number(beforeDrinks) + numberDrinks
+    localStorage.setItem('pyramid_user_', newDrinks.toString())
+  }
+
   finish() {
     alert("Finished")
     localStorage.removeItem('pyramid_height')
