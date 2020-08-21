@@ -29,3 +29,7 @@
 .button:disabled {
     background: black;
 }
+.table-users {
+    width: 90%;
+    margin-left: 5%;
+}

@@ -25,6 +25,7 @@ export class GameComponent implements OnInit {
     localStorage.setItem('pyramid_lastcard','0')
     this.setStructure();
     this.setUsers(this.players);
+    this.updateUserDrinks();
   }
 
   setStructure(){

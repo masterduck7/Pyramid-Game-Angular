@@ -26,7 +26,21 @@
             </table>
         </main>
         <nav class="sidenav" [clr-nav-level]="2">
-            Holi
+            <h2 style="text-align: center;">Drinks</h2>
+            <table class="table table-users">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Drinks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of userDrinks">
+                        <td>{{user.name}}</td>
+                        <td>{{user.drinks}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </nav>
     </div>
 </clr-main-container>
