@@ -87,8 +87,22 @@ export class GameComponent implements OnInit {
     this.userDrinks = userDrinks;
   }
 
+  userMoreDrinks() {
+    let maxDrinks:number = -1
+    let maxDrinksUser:string = ''
+    this.userList.forEach(user => {
+      let drinks:number =  Number(localStorage.getItem('pyramid_user_' + user))
+      if (drinks > maxDrinks) {
+        maxDrinks = drinks
+        maxDrinksUser = user
+      }
+    });
+    return [maxDrinksUser, maxDrinks];
+  }
+
   finish() {
-    alert("Finished")
+    let userDrinks = this.userMoreDrinks()
+    alert('The winner is => ' + userDrinks[0] + ' with ' + userDrinks[1] + ' drinks !!!')
     localStorage.removeItem('pyramid_height')
     localStorage.removeItem('pyramid_mode')
     localStorage.removeItem('pyramid_users')
