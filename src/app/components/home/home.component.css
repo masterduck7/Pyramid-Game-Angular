@@ -1,4 +1,19 @@
 .title {
     text-align: center;
     font-weight: bold;
-};
+}
+.center-content {
+    display: grid;
+    justify-content: center;
+}
+.image {
+    width: 80%;
+    height: auto;
+    top: 25%;
+    position: relative;
+    align-self: center;
+}
+.body-container {
+    background: white;
+    background-color: white;
+}

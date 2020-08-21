@@ -12,6 +12,7 @@ export class GameComponent implements OnInit {
   mode:string;
   players:string[];
   userList:string[];
+  userDrinks:object[] = [];
   structure:number[][] = [];
   lastCard:number;
 
@@ -63,15 +64,26 @@ export class GameComponent implements OnInit {
     let lastCardPlayed:string = localStorage.getItem('pyramid_lastcard');
     let newCard:number = Number(lastCardPlayed) + 1
     localStorage.setItem('pyramid_lastcard',newCard.toString())
+    this.addDrinks("a", 1)
     if (item + 1 === this.lastCard) {
       this.finish()
     }
   }
 
   addDrinks(user:string, numberDrinks:number) {
-    let beforeDrinks:string = localStorage.getItem(user)
+    let beforeDrinks:string = localStorage.getItem('pyramid_user_' + user)
     let newDrinks:number = Number(beforeDrinks) + numberDrinks
-    localStorage.setItem('pyramid_user_', newDrinks.toString())
+    localStorage.setItem('pyramid_user_' + user, newDrinks.toString())
+    this.updateUserDrinks();
+  }
+
+  updateUserDrinks() {
+    let userDrinks:object[] = []
+    this.userList.forEach(user => {
+      let userData:object = {name: user, drinks : localStorage.getItem('pyramid_user_' + user)}
+      userDrinks.push(userData)
+    });
+    this.userDrinks = userDrinks;
   }
 
   finish() {
@@ -81,7 +93,7 @@ export class GameComponent implements OnInit {
     localStorage.removeItem('pyramid_users')
     localStorage.removeItem('pyramid_lastcard')
     this.userList.forEach(user => {
-      localStorage.removeItem('pyramid_user_'+user)
+      localStorage.removeItem('pyramid_user_' + user)
     });
     this.route.navigate(['/']);
   }

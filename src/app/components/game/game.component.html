@@ -1,25 +1,32 @@
-<header class="header-6">
-    <div class="branding">
-        <a href="https://lpsoftware.space" class="nav-link">
-            <clr-icon shape="happy-face"></clr-icon>
-        </a>
-        <span i18n class="title">Pyramid Game</span>
+<clr-main-container>
+    <clr-header>
+        <div class="header-nav" [clr-nav-level]="1">
+            <div class="branding">
+                <a href="https://lpsoftware.space" class="nav-link">
+                    <clr-icon shape="happy-face"></clr-icon>
+                </a>
+                <span i18n class="title">Pyramid Game</span>
+            </div>
+            <a i18n routerLink="/" (click)="finish()" class="nav-link nav-text">Finish game</a>
+            <a i18n class="nav-link nav-text">Statistics</a>
+        </div>
+    </clr-header>
+    <div class="content-container">
+        <main class="content-area center-content">
+            <table>
+                <tbody>
+                    <tr class="row" *ngFor="let row of structure">           
+                        <td *ngFor="let item of row">
+                            <button id={{item}} [disabled]="checkCard(item)" (click)="playCard(item)" class="card button">
+                                {{item}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <nav class="sidenav" [clr-nav-level]="2">
+            Holi
+        </nav>
     </div>
-    <div class="header-nav">
-        <a i18n routerLink="/" (click)="finish()" class="nav-link nav-text">Finish game</a>
-        <a i18n class="nav-link nav-text">Statistics</a>
-    </div>
-</header>
-<br>
-<table class="board">
-<tbody>
-    <tr class="row" *ngFor="let row of structure">           
-        <td *ngFor="let item of row">
-            <button id={{item}} [disabled]="checkCard(item)" (click)="playCard(item)" class="card button">
-                {{item}}
-            </button>
-        </td>
-    </tr>
-</tbody>
-</table>
-  
+</clr-main-container>

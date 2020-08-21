@@ -1,7 +1,6 @@
-.board {
-    margin-left:auto; 
-    margin-right:auto;
-    width: 50%;
+.center-content {
+    display: flex;
+    justify-content: center;
 }
 .row {
     display: flex;
@@ -10,7 +9,7 @@
 .card {
     height:42px;
     width:30px;
-    margin: 25%;
+    margin: 15%;
     background: url("../../../assets/Card.png") no-repeat top center;
     background-size: 100%;
 }
