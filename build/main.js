@@ -568,7 +568,7 @@ function GameComponent_tr_14_td_1_Template(rf, ctx) { if (rf & 1) {
     const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 14);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GameComponent_tr_14_td_1_Template_button_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r6); const item_r4 = ctx.$implicit; const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r5.playCard(item_r4.number); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GameComponent_tr_14_td_1_Template_button_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r6); const item_r4 = ctx.$implicit; const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r5.playCard(item_r4); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -615,12 +615,12 @@ class GameComponent {
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-        this.userCardsInGame = [];
-        this.userCardsInGameBackup = [];
         this.boardCardList = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+        this.userCardsInGame = [];
+        this.userCardsInGameBackup = [];
     }
     ngOnInit() {
         this.mode = localStorage.getItem('pyramid_mode');
@@ -766,7 +766,7 @@ class GameComponent {
         let newCard = Number(lastCardPlayed) + 1;
         localStorage.setItem('pyramid_lastcard', newCard.toString());
         this.addDrinks("a", 1);
-        if (item + 1 === this.lastCard) {
+        if (item.number + 1 === this.lastCard) {
             this.finish();
         }
     }

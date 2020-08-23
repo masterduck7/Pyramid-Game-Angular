@@ -19,12 +19,12 @@ export class GameComponent implements OnInit {
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-  userCardsInGame:string[] = [];
-  userCardsInGameBackup:string[] = [];
   boardCardList:string[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J","Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+  userCardsInGame:string[] = [];
+  userCardsInGameBackup:string[] = [];
 
   constructor(private route: Router) { }
 
@@ -176,7 +176,7 @@ export class GameComponent implements OnInit {
     let newCard:number = Number(lastCardPlayed) + 1
     localStorage.setItem('pyramid_lastcard',newCard.toString())
     this.addDrinks("a", 1)
-    if (item + 1 === this.lastCard) {
+    if (item.number + 1 === this.lastCard) {
       this.finish()
     }
   }
