@@ -568,7 +568,7 @@ function GameComponent_tr_14_td_1_Template(rf, ctx) { if (rf & 1) {
     const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 14);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GameComponent_tr_14_td_1_Template_button_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r6); const item_r4 = ctx.$implicit; const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r5.playCard(item_r4); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GameComponent_tr_14_td_1_Template_button_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r6); const item_r4 = ctx.$implicit; const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r5.playCard(item_r4.number); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -576,10 +576,10 @@ function GameComponent_tr_14_td_1_Template(rf, ctx) { if (rf & 1) {
     const item_r4 = ctx.$implicit;
     const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("id", item_r4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx_r3.checkCard(item_r4));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("id", item_r4.number);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx_r3.checkCard(item_r4.number));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", item_r4, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", item_r4.card, " ");
 } }
 function GameComponent_tr_14_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr", 13);
@@ -611,23 +611,132 @@ class GameComponent {
         this.route = route;
         this.userDrinks = [];
         this.structure = [];
+        this.userCardList = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+        this.userCardsInGame = [];
+        this.userCardsInGameBackup = [];
+        this.boardCardList = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
     }
     ngOnInit() {
+        this.mode = localStorage.getItem('pyramid_mode');
         this.height = localStorage.getItem('pyramid_height');
         this.mode = localStorage.getItem('pyramid_mode');
         this.players = JSON.parse(localStorage.getItem('pyramid_users')) || [];
         localStorage.setItem('pyramid_lastcard', '0');
-        this.setStructure();
+        this.setUserCards();
+        this.onlyCardsInBoard();
+        this.setStructure(this.mode);
         this.setUsers(this.players);
         this.updateUserDrinks();
     }
-    setStructure() {
+    setUserCards() {
+        this.players.forEach(user => {
+            let card1 = this.setCards('user', this.mode);
+            let card2 = this.setCards('user', this.mode);
+            this.userCardsInGame.push(card1);
+            this.userCardsInGame.push(card2);
+            this.userCardsInGameBackup.push(card1);
+            this.userCardsInGameBackup.push(card2);
+        });
+    }
+    onlyCardsInBoard() {
+        let cardsInGame = [];
+        this.userCardsInGame.forEach(card => {
+            if (!cardsInGame.includes(card)) {
+                cardsInGame.push(card);
+                cardsInGame.push(card);
+                cardsInGame.push(card);
+                cardsInGame.push(card);
+            }
+        });
+        this.userCardsInGame = cardsInGame;
+    }
+    reUseCards() {
+        let randomCard = this.userCardsInGameBackup[Math.floor(Math.random() * this.userCardsInGameBackup.length)];
+        return randomCard;
+    }
+    setCards(type, mode) {
+        if (type === 'board') {
+            if (mode === 'Hard') {
+                if (this.userCardsInGame.length === 0) {
+                    return this.reUseCards();
+                }
+                let randomCard = this.userCardsInGame[Math.floor(Math.random() * this.userCardsInGame.length)];
+                // Remove cards from list
+                let new_card_list = this.userCardsInGame;
+                for (let index = 0; index < new_card_list.length; index++) {
+                    if (randomCard === new_card_list[index]) {
+                        delete new_card_list[index];
+                        break;
+                    }
+                }
+                // Remove undefined items
+                const new_card_list_clean = [];
+                for (let index = 0; index < new_card_list.length; index++) {
+                    if (new_card_list[index] !== undefined) {
+                        new_card_list_clean.push(new_card_list[index]);
+                    }
+                }
+                this.userCardsInGame = new_card_list_clean;
+                return randomCard;
+            }
+            else if (mode === 'Normal') {
+                let randomCard = this.boardCardList[Math.floor(Math.random() * this.boardCardList.length)];
+                // Remove cards from list
+                let new_card_list = this.boardCardList;
+                for (let index = 0; index < new_card_list.length; index++) {
+                    if (randomCard === new_card_list[index]) {
+                        delete new_card_list[index];
+                        break;
+                    }
+                }
+                // Remove undefined items
+                const new_card_list_clean = [];
+                for (let index = 0; index < new_card_list.length; index++) {
+                    if (new_card_list[index] !== undefined) {
+                        new_card_list_clean.push(new_card_list[index]);
+                    }
+                }
+                this.boardCardList = new_card_list_clean;
+                return randomCard;
+            }
+        }
+        else if (type === 'user') {
+            let randomCard = this.userCardList[Math.floor(Math.random() * this.userCardList.length)];
+            // Remove cards from list
+            let new_card_list = this.userCardList;
+            for (let index = 0; index < new_card_list.length; index++) {
+                if (randomCard === new_card_list[index]) {
+                    delete new_card_list[index];
+                    break;
+                }
+            }
+            // Remove undefined items
+            const new_card_list_clean = [];
+            for (let index = 0; index < new_card_list.length; index++) {
+                if (new_card_list[index] !== undefined) {
+                    new_card_list_clean.push(new_card_list[index]);
+                }
+            }
+            this.userCardList = new_card_list_clean;
+            return randomCard;
+        }
+        else {
+            return '';
+        }
+    }
+    setStructure(mode) {
         let set_structure = [];
         let cont = 0;
         for (let index = Number(this.height); index > 0; index--) {
             let row = [];
             for (let data = 0; data < index; data++) {
-                row.push(cont);
+                row.push({ card: this.setCards('board', mode), number: cont });
                 cont = cont + 1;
             }
             set_structure.push(row);
@@ -758,7 +867,7 @@ GameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("clr-nav-level", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.userDrinks);
-    } }, directives: [_clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrMainContainer"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["MainContainerWillyWonka"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrHeader"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["NavDetectionOompaLoompa"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrNavLevel"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrIconCustomTag"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], styles: [".center-content[_ngcontent-%COMP%] {\n    display: flex;\n    justify-content: center;\n}\n.row[_ngcontent-%COMP%] {\n    display: flex;\n    justify-content: center;\n}\n.card[_ngcontent-%COMP%] {\n    height:42px;\n    width:30px;\n    margin: 15%;\n    background: url('Card.png') no-repeat top center;\n    background-size: 100%;\n}\n.button[_ngcontent-%COMP%] {\n    cursor: pointer;\n    outline: none;\n    color: transparent;\n    border: none;\n    box-shadow: 0 2px #999;\n}\n.button[_ngcontent-%COMP%]:hover {background-color: #3e8e41}\n.button[_ngcontent-%COMP%]:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n}\n.button[_ngcontent-%COMP%]:disabled {\n    background: black;\n}\n.table-users[_ngcontent-%COMP%] {\n    width: 90%;\n    margin-left: 5%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9nYW1lL2dhbWUuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7QUFDQTtJQUNJLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7QUFDQTtJQUNJLFdBQVc7SUFDWCxVQUFVO0lBQ1YsV0FBVztJQUNYLGdEQUFnRTtJQUNoRSxxQkFBcUI7QUFDekI7QUFDQTtJQUNJLGVBQWU7SUFDZixhQUFhO0lBQ2Isa0JBQWtCO0lBQ2xCLFlBQVk7SUFDWixzQkFBc0I7QUFDMUI7QUFDQSxlQUFlLHlCQUF5QjtBQUN4QztJQUNJLHlCQUF5QjtJQUN6QixzQkFBc0I7SUFDdEIsMEJBQTBCO0FBQzlCO0FBQ0E7SUFDSSxpQkFBaUI7QUFDckI7QUFDQTtJQUNJLFVBQVU7SUFDVixlQUFlO0FBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9nYW1lL2dhbWUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jZW50ZXItY29udGVudCB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cbi5yb3cge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG59XG4uY2FyZCB7XG4gICAgaGVpZ2h0OjQycHg7XG4gICAgd2lkdGg6MzBweDtcbiAgICBtYXJnaW46IDE1JTtcbiAgICBiYWNrZ3JvdW5kOiB1cmwoXCIuLi8uLi8uLi9hc3NldHMvQ2FyZC5wbmdcIikgbm8tcmVwZWF0IHRvcCBjZW50ZXI7XG4gICAgYmFja2dyb3VuZC1zaXplOiAxMDAlO1xufVxuLmJ1dHRvbiB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIG91dGxpbmU6IG5vbmU7XG4gICAgY29sb3I6IHRyYW5zcGFyZW50O1xuICAgIGJvcmRlcjogbm9uZTtcbiAgICBib3gtc2hhZG93OiAwIDJweCAjOTk5O1xufVxuLmJ1dHRvbjpob3ZlciB7YmFja2dyb3VuZC1jb2xvcjogIzNlOGU0MX1cbi5idXR0b246YWN0aXZlIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjM2U4ZTQxO1xuICAgIGJveC1zaGFkb3c6IDAgNXB4ICM2NjY7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDRweCk7XG59XG4uYnV0dG9uOmRpc2FibGVkIHtcbiAgICBiYWNrZ3JvdW5kOiBibGFjaztcbn1cbi50YWJsZS11c2VycyB7XG4gICAgd2lkdGg6IDkwJTtcbiAgICBtYXJnaW4tbGVmdDogNSU7XG59Il19 */"] });
+    } }, directives: [_clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrMainContainer"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["MainContainerWillyWonka"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrHeader"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["NavDetectionOompaLoompa"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrNavLevel"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrIconCustomTag"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], styles: [".center-content[_ngcontent-%COMP%] {\n    display: flex;\n    justify-content: center;\n}\n.row[_ngcontent-%COMP%] {\n    display: flex;\n    justify-content: center;\n}\n.card[_ngcontent-%COMP%] {\n    height:42px;\n    width:30px;\n    margin: 15%;\n    background: url('Card.png') no-repeat top center;\n    background-size: 100%;\n}\n.button[_ngcontent-%COMP%] {\n    cursor: pointer;\n    outline: none;\n    color: blue;\n    border: none;\n    box-shadow: 0 2px #999;\n}\n.button[_ngcontent-%COMP%]:hover {background-color: #3e8e41}\n.button[_ngcontent-%COMP%]:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n}\n.button[_ngcontent-%COMP%]:disabled {\n    background: black;\n}\n.table-users[_ngcontent-%COMP%] {\n    width: 90%;\n    margin-left: 5%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9nYW1lL2dhbWUuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7QUFDQTtJQUNJLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7QUFDQTtJQUNJLFdBQVc7SUFDWCxVQUFVO0lBQ1YsV0FBVztJQUNYLGdEQUFnRTtJQUNoRSxxQkFBcUI7QUFDekI7QUFDQTtJQUNJLGVBQWU7SUFDZixhQUFhO0lBQ2IsV0FBVztJQUNYLFlBQVk7SUFDWixzQkFBc0I7QUFDMUI7QUFDQSxlQUFlLHlCQUF5QjtBQUN4QztJQUNJLHlCQUF5QjtJQUN6QixzQkFBc0I7SUFDdEIsMEJBQTBCO0FBQzlCO0FBQ0E7SUFDSSxpQkFBaUI7QUFDckI7QUFDQTtJQUNJLFVBQVU7SUFDVixlQUFlO0FBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9nYW1lL2dhbWUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jZW50ZXItY29udGVudCB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cbi5yb3cge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG59XG4uY2FyZCB7XG4gICAgaGVpZ2h0OjQycHg7XG4gICAgd2lkdGg6MzBweDtcbiAgICBtYXJnaW46IDE1JTtcbiAgICBiYWNrZ3JvdW5kOiB1cmwoXCIuLi8uLi8uLi9hc3NldHMvQ2FyZC5wbmdcIikgbm8tcmVwZWF0IHRvcCBjZW50ZXI7XG4gICAgYmFja2dyb3VuZC1zaXplOiAxMDAlO1xufVxuLmJ1dHRvbiB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIG91dGxpbmU6IG5vbmU7XG4gICAgY29sb3I6IGJsdWU7XG4gICAgYm9yZGVyOiBub25lO1xuICAgIGJveC1zaGFkb3c6IDAgMnB4ICM5OTk7XG59XG4uYnV0dG9uOmhvdmVyIHtiYWNrZ3JvdW5kLWNvbG9yOiAjM2U4ZTQxfVxuLmJ1dHRvbjphY3RpdmUge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMzZThlNDE7XG4gICAgYm94LXNoYWRvdzogMCA1cHggIzY2NjtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoNHB4KTtcbn1cbi5idXR0b246ZGlzYWJsZWQge1xuICAgIGJhY2tncm91bmQ6IGJsYWNrO1xufVxuLnRhYmxlLXVzZXJzIHtcbiAgICB3aWR0aDogOTAlO1xuICAgIG1hcmdpbi1sZWZ0OiA1JTtcbn0iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](GameComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
