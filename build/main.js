@@ -853,17 +853,26 @@ class GameComponent {
     }
     playCard(item) {
         this.cardInGame = (Number(this.cardInGame) + 1).toString();
-        let users = this.getUsersWithCard(item['card']);
-        users.forEach(user => {
-            this.addDrinks(user, item.row + 1);
-        });
         this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
-        this.userPlayed = users.join(', ');
-        if (item.type) {
+        if (item.card === '0') {
+            this.userPlayed = 'All';
             this.action = 'drinks';
+            this.userDrinks.forEach(user => {
+                this.addDrinks(user['name'], item.row + 1);
+            });
         }
         else {
-            this.action = 'gives';
+            let users = this.getUsersWithCard(item['card']);
+            users.forEach(user => {
+                this.addDrinks(user, item.row + 1);
+            });
+            this.userPlayed = users.join(', ');
+            if (item.type) {
+                this.action = 'drinks';
+            }
+            else {
+                this.action = 'gives';
+            }
         }
         this.actualRow = item.row + 1;
         if (item.row === 0) {
@@ -878,22 +887,13 @@ class GameComponent {
         }
     }
     getUsersWithCard(card) {
-        if (card === '0') {
-            let users = [];
-            this.userDrinks.forEach(user => {
+        let users = [];
+        this.userDrinks.forEach(user => {
+            if (user['cards'].includes(card)) {
                 users.push(user['name']);
-            });
-            return users;
-        }
-        else {
-            let users = [];
-            this.userDrinks.forEach(user => {
-                if (user['cards'].includes(card)) {
-                    users.push(user['name']);
-                }
-            });
-            return users;
-        }
+            }
+        });
+        return users;
     }
     addDrinks(user, numberDrinks) {
         let beforeDrinks = localStorage.getItem('pyramid_user_' + user);
