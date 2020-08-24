@@ -48,6 +48,7 @@ export class GameComponent implements OnInit {
       }
       this.setStructure('Hard');
     }else if (mode === 'Normal') {
+      this.setNumberCardsInGame();
       this.setUserCards('Normal');
       this.setStructure('Normal');
     }
@@ -65,8 +66,8 @@ export class GameComponent implements OnInit {
     let userData:object[] = [];
     if (mode === 'Hard') {
       this.players.forEach(user => {
-        let card1:string = this.setCards('user', mode);
-        let card2:string = this.setCards('user', mode);
+        let card1:string = this.setCards('user', mode, false);
+        let card2:string = this.setCards('user', mode, false);
         userData.push({'name': user['name'], 'cards': [card1, card2]})
         if (!this.userCardsInGame.includes(card1)) {
           this.userCardsInGame.push(card1);
@@ -83,8 +84,8 @@ export class GameComponent implements OnInit {
       });
     }else if (mode === 'Normal') {
       this.players.forEach(user => {
-        let card1:string = this.setCards('user', mode);
-        let card2:string = this.setCards('user', mode);
+        let card1:string = this.setCards('user', mode, false);
+        let card2:string = this.setCards('user', mode, false);
         userData.push({'name': user['name'], 'cards': [card1, card2]})
         if (!this.userCardsInGame.includes(card1)) {
           this.userCardsInGame.push(card1);
@@ -127,23 +128,40 @@ export class GameComponent implements OnInit {
   // If normal and card without user fill with 'all drinks' card
   setStructure(mode:string){
     let set_structure:object[][] = [];
-    let cont:number = 0;
-    for (let index = Number(this.height); index > 0; index--) {
+    let cont:number = this.numberCardsInGame;
+    for (let index = 1; index < Number(this.height) + 1; index++) {
       let row:object[] = [];
       for (let data = 0; data < index; data++) {
-        row.push({card: this.setCards('board', mode), number: cont})
-        cont = cont + 1;
+        if (index === 1) {
+          row.push({card: this.setCards('board', mode, true), number: cont - 1})
+          cont = cont - 1;
+        }else {
+          row.push({card: this.setCards('board', mode, false), number: cont - 1})
+          cont = cont - 1;
+        }
       }
-      set_structure.push(row)
+      set_structure.push(row.reverse())
     }
-    this.lastCard = cont;
+    this.lastCard = this.numberCardsInGame;
     this.structure = set_structure
   }
 
-  setCards(type:string, mode:string) {
+  // Set cards, first card never is 'all drinks'
+  // 5 tries to get another card. If not found put all drinks card
+  setCards(type:string, mode:string, first:boolean) {
     if (type === 'board') {
       if (mode === 'Hard') {
         let randomCard:string = this.userCardsInGame[Math.floor(Math.random()*this.userCardsInGame.length)];
+        if (first) {
+          let cont:number = 0;
+          while (cont < 5) {
+            let card:string = this.userCardsInGame[Math.floor(Math.random()*this.userCardsInGame.length)];
+            if (card !== '0') {
+              randomCard = card;
+              cont = 5;
+            }
+          }
+        }
         // Remove cards from list
         let new_card_list:string[] = this.userCardsInGame;
         for (let index = 0; index < new_card_list.length; index++) {
@@ -163,6 +181,16 @@ export class GameComponent implements OnInit {
         return randomCard; 
       }else if (mode === 'Normal') {
         let randomCard:string = this.boardCardList[Math.floor(Math.random()*this.boardCardList.length)];
+        if (first) {
+          let cont:number = 0;
+          while (cont < 5) {
+            let card:string = this.boardCardList[Math.floor(Math.random()*this.boardCardList.length)];
+            if (this.userCardsInGame.includes(card)) {
+              randomCard = card;
+              cont = 5;
+            }
+          }
+        }
         // Remove cards from list
         let new_card_list:string[] = this.boardCardList;
         for (let index = 0; index < new_card_list.length; index++) {
