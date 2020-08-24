@@ -17,3 +17,12 @@
     background: white;
     background-color: white;
 }
+.nav {
+    width: 50%;
+    height: inherit;
+}
+.lpsoftware {
+    position: absolute;
+    bottom: 10%;
+    text-align: center;
+}

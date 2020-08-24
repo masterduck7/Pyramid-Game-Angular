@@ -26,6 +26,11 @@ export class GameComponent implements OnInit {
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   userCardsInGame:string[] = [];
+  modalWinners:boolean = false;
+  winners:string = '';
+  modalCard:boolean = false;
+  cardPlayed:string = '';
+  userPlayed:string = '';
 
   constructor(private route: Router) { }
 
@@ -254,6 +259,9 @@ export class GameComponent implements OnInit {
     users.forEach(user => {
       this.addDrinks(user, item.row + 1)
     });
+    this.cardPlayed = item.card;
+    this.userPlayed = users.join(',');
+    this.modalCard = true;
     if (item.number + 1 === this.lastCard) {
       this.finish()
     }
@@ -265,7 +273,7 @@ export class GameComponent implements OnInit {
       this.userDrinks.forEach(user => {
         users.push(user['name'])
       });
-    return users;
+      return users;
     }else {
       let users:string[] = [];
       this.userDrinks.forEach(user => {
@@ -317,19 +325,27 @@ export class GameComponent implements OnInit {
         maxDrinksUser = maxDrinksUser + ',' + user
       }
     });
-    return [maxDrinksUser, maxDrinks];
+    this.winners = maxDrinksUser + ' with ' + maxDrinks + ' drinks !!!';
+    this.modalWinners = true;
   }
 
   finish() {
-    let userDrinks = this.userMoreDrinks()
-    alert('The winner is => ' + userDrinks[0] + ' with ' + userDrinks[1] + ' drinks !!!')
+    this.userMoreDrinks()
     localStorage.removeItem('pyramid_height')
     localStorage.removeItem('pyramid_mode')
     localStorage.removeItem('pyramid_users')
     this.userList.forEach(user => {
       localStorage.removeItem('pyramid_user_' + user)
     });
+  }
+
+  closeModalWinners() {
+    this.modalWinners = false;
     this.route.navigate(['/']);
+  }
+
+  closeModalCard() {
+    this.modalCard = false;
   }
 
 }

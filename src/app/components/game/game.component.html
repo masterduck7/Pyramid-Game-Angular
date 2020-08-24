@@ -24,7 +24,7 @@
                 </tbody>
             </table>
         </main>
-        <nav class="sidenav" [clr-nav-level]="2">
+        <nav class="sidenav nav" [clr-nav-level]="2">
             <h2 style="text-align: center;">Drinks</h2>
             <table class="table table-users">
                 <thead>
@@ -45,3 +45,23 @@
         </nav>
     </div>
 </clr-main-container>
+
+<clr-modal [(clrModalOpen)]="modalWinners" [clrModalClosable]="false">
+    <h3 class="modal-title">User with more drinks</h3>
+    <div class="modal-body">
+        <p>{{winners}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="closeModalWinners()" >Finish</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalCard" [clrModalClosable]="false" [clrModalSize]="'sm'">
+    <div class="modal-body body-modal">
+        <p>{{cardPlayed}}</p>
+        <p>{{userPlayed}}</p>
+    </div>
+    <div class="modal-footer footer-modal">
+        <button type="button" class="btn btn-primary" (click)="closeModalCard()" >Close</button>
+    </div>
+</clr-modal>
