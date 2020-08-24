@@ -15,13 +15,15 @@
             <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
                 <div class="div-form">
                     <h1 class="title">Set game data</h1>
-                    <br><br>
+                    <br>
                     <div>
                         <label>Mode</label>
                         <select formControlName="mode" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of ['Hard','Normal']">{{i}}</option>
-                        </select>
+                        </select><br>
+                        <small class="help-text">Hard mode: All cards drinks at least one player</small><br>
+                        <small class="help-text">Normal mode: Get random cards and fill with all drinks</small><br>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
                             <div *ngIf="f.height.errors.required" class="error">Height is required</div>
                         </div>
