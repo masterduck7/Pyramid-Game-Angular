@@ -590,7 +590,7 @@ function GameComponent_tr_14_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", row_r2);
 } }
-function GameComponent_tr_26_Template(rf, ctx) { if (rf & 1) {
+function GameComponent_tr_28_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -598,11 +598,16 @@ function GameComponent_tr_26_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "td");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const user_r7 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](user_r7.name);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](user_r7.cards);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](user_r7.drinks);
 } }
@@ -611,6 +616,7 @@ class GameComponent {
         this.route = route;
         this.userDrinks = [];
         this.structure = [];
+        this.cardInGame = '0';
         this.userCardList = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
@@ -620,52 +626,116 @@ class GameComponent {
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
             "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
         this.userCardsInGame = [];
-        this.userCardsInGameBackup = [];
     }
     ngOnInit() {
         this.mode = localStorage.getItem('pyramid_mode');
         this.height = localStorage.getItem('pyramid_height');
         this.mode = localStorage.getItem('pyramid_mode');
         this.players = JSON.parse(localStorage.getItem('pyramid_users')) || [];
-        localStorage.setItem('pyramid_lastcard', '0');
-        this.setUserCards();
-        this.onlyCardsInBoard();
-        this.setStructure(this.mode);
-        this.setUsers(this.players);
-        this.updateUserDrinks();
+        this.setGame(this.mode);
     }
-    setUserCards() {
-        this.players.forEach(user => {
-            let card1 = this.setCards('user', this.mode);
-            let card2 = this.setCards('user', this.mode);
-            this.userCardsInGame.push(card1);
-            this.userCardsInGame.push(card2);
-            this.userCardsInGameBackup.push(card1);
-            this.userCardsInGameBackup.push(card2);
-        });
-    }
-    onlyCardsInBoard() {
-        let cardsInGame = [];
-        this.userCardsInGame.forEach(card => {
-            if (!cardsInGame.includes(card)) {
-                cardsInGame.push(card);
-                cardsInGame.push(card);
-                cardsInGame.push(card);
-                cardsInGame.push(card);
+    setGame(mode) {
+        this.setUserVars(this.players);
+        if (mode === 'Hard') {
+            this.setNumberCardsInGame();
+            this.setUserCards('Hard');
+            if (this.numberCardsInGame > this.userCardsInGame.length) {
+                let diff = this.numberCardsInGame - this.userCardsInGame.length;
+                this.fillBoard(diff);
             }
-        });
-        this.userCardsInGame = cardsInGame;
+            this.setStructure('Hard');
+        }
+        else if (mode === 'Normal') {
+            this.setUserCards('Normal');
+            this.setStructure('Normal');
+        }
     }
-    reUseCards() {
-        let randomCard = this.userCardsInGameBackup[Math.floor(Math.random() * this.userCardsInGameBackup.length)];
-        return randomCard;
+    setNumberCardsInGame() {
+        let number_cards = 0;
+        for (let i = 1; i < Number(this.height) + 1; i++) {
+            number_cards += i;
+        }
+        this.numberCardsInGame = number_cards;
+    }
+    setUserCards(mode) {
+        let userData = [];
+        if (mode === 'Hard') {
+            this.players.forEach(user => {
+                let card1 = this.setCards('user', mode);
+                let card2 = this.setCards('user', mode);
+                userData.push({ 'name': user['name'], 'cards': [card1, card2] });
+                if (!this.userCardsInGame.includes(card1)) {
+                    this.userCardsInGame.push(card1);
+                    this.userCardsInGame.push(card1);
+                    this.userCardsInGame.push(card1);
+                    this.userCardsInGame.push(card1);
+                }
+                if (!this.userCardsInGame.includes(card2)) {
+                    this.userCardsInGame.push(card2);
+                    this.userCardsInGame.push(card2);
+                    this.userCardsInGame.push(card2);
+                    this.userCardsInGame.push(card2);
+                }
+            });
+        }
+        else if (mode === 'Normal') {
+            this.players.forEach(user => {
+                let card1 = this.setCards('user', mode);
+                let card2 = this.setCards('user', mode);
+                userData.push({ 'name': user['name'], 'cards': [card1, card2] });
+                if (!this.userCardsInGame.includes(card1)) {
+                    this.userCardsInGame.push(card1);
+                }
+                if (!this.userCardsInGame.includes(card2)) {
+                    this.userCardsInGame.push(card2);
+                }
+            });
+        }
+        this.setUserDrinks(userData);
+    }
+    // Fill Board
+    // If diff cards > 7 , fill with 'all drinks' and 7 repeated cards from users
+    fillBoard(diff) {
+        let originalCards = this.userCardsInGame;
+        let diffCards = diff;
+        if (diff > 7) {
+            diffCards = 7;
+            for (let i = 0; i < diff - 7; i++) {
+                this.userCardsInGame.push('0');
+            }
+        }
+        for (let i = 0; i < diffCards; i++) {
+            let randomCard = originalCards[Math.floor(Math.random() * originalCards.length)];
+            this.userCardsInGame.push(randomCard);
+        }
+    }
+    setUserVars(users) {
+        let userList = [];
+        users.forEach(user => {
+            userList.push(user.name);
+            localStorage.setItem('pyramid_user_' + user.name, '0');
+        });
+        this.userList = userList;
+    }
+    // Set structure by mode
+    // If normal and card without user fill with 'all drinks' card
+    setStructure(mode) {
+        let set_structure = [];
+        let cont = 0;
+        for (let index = Number(this.height); index > 0; index--) {
+            let row = [];
+            for (let data = 0; data < index; data++) {
+                row.push({ card: this.setCards('board', mode), number: cont });
+                cont = cont + 1;
+            }
+            set_structure.push(row);
+        }
+        this.lastCard = cont;
+        this.structure = set_structure;
     }
     setCards(type, mode) {
         if (type === 'board') {
             if (mode === 'Hard') {
-                if (this.userCardsInGame.length === 0) {
-                    return this.reUseCards();
-                }
                 let randomCard = this.userCardsInGame[Math.floor(Math.random() * this.userCardsInGame.length)];
                 // Remove cards from list
                 let new_card_list = this.userCardsInGame;
@@ -703,7 +773,12 @@ class GameComponent {
                     }
                 }
                 this.boardCardList = new_card_list_clean;
-                return randomCard;
+                if (!this.userCardsInGame.includes(randomCard)) {
+                    return '0';
+                }
+                else {
+                    return randomCard;
+                }
             }
         }
         else if (type === 'user') {
@@ -730,31 +805,8 @@ class GameComponent {
             return '';
         }
     }
-    setStructure(mode) {
-        let set_structure = [];
-        let cont = 0;
-        for (let index = Number(this.height); index > 0; index--) {
-            let row = [];
-            for (let data = 0; data < index; data++) {
-                row.push({ card: this.setCards('board', mode), number: cont });
-                cont = cont + 1;
-            }
-            set_structure.push(row);
-        }
-        this.lastCard = cont;
-        this.structure = set_structure;
-    }
-    setUsers(users) {
-        let userList = [];
-        users.forEach(user => {
-            userList.push(user.name);
-            localStorage.setItem('pyramid_user_' + user.name, '0');
-        });
-        this.userList = userList;
-    }
     checkCard(id) {
-        let lastCardPlayed = localStorage.getItem('pyramid_lastcard');
-        if (lastCardPlayed != id) {
+        if (this.cardInGame != id) {
             return true;
         }
         else {
@@ -762,9 +814,7 @@ class GameComponent {
         }
     }
     playCard(item) {
-        let lastCardPlayed = localStorage.getItem('pyramid_lastcard');
-        let newCard = Number(lastCardPlayed) + 1;
-        localStorage.setItem('pyramid_lastcard', newCard.toString());
+        this.cardInGame = (Number(this.cardInGame) + 1).toString();
         this.addDrinks("a", 1);
         if (item.number + 1 === this.lastCard) {
             this.finish();
@@ -776,10 +826,18 @@ class GameComponent {
         localStorage.setItem('pyramid_user_' + user, newDrinks.toString());
         this.updateUserDrinks();
     }
+    setUserDrinks(userData) {
+        let userDrinks = [];
+        userData.forEach(user => {
+            let userData = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']) };
+            userDrinks.push(userData);
+        });
+        this.userDrinks = userDrinks;
+    }
     updateUserDrinks() {
         let userDrinks = [];
-        this.userList.forEach(user => {
-            let userData = { name: user, drinks: localStorage.getItem('pyramid_user_' + user) };
+        this.userDrinks.forEach(user => {
+            let userData = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']) };
             userDrinks.push(userData);
         });
         this.userDrinks = userDrinks;
@@ -802,7 +860,6 @@ class GameComponent {
         localStorage.removeItem('pyramid_height');
         localStorage.removeItem('pyramid_mode');
         localStorage.removeItem('pyramid_users');
-        localStorage.removeItem('pyramid_lastcard');
         this.userList.forEach(user => {
             localStorage.removeItem('pyramid_user_' + user);
         });
@@ -810,7 +867,7 @@ class GameComponent {
     }
 }
 GameComponent.ɵfac = function GameComponent_Factory(t) { return new (t || GameComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"])); };
-GameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: GameComponent, selectors: [["app-game"]], decls: 27, vars: 4, consts: [[1, "header-nav", 3, "clr-nav-level"], [1, "branding"], ["href", "https://lpsoftware.space", 1, "nav-link"], ["shape", "happy-face"], [1, "title"], ["routerLink", "/", 1, "nav-link", "nav-text", 3, "click"], [1, "content-container"], [1, "content-area", "center-content"], ["class", "row", 4, "ngFor", "ngForOf"], [1, "sidenav", 3, "clr-nav-level"], [2, "text-align", "center"], [1, "table", "table-users"], [4, "ngFor", "ngForOf"], [1, "row"], [1, "card", "button", 3, "id", "disabled", "click"]], template: function GameComponent_Template(rf, ctx) { if (rf & 1) {
+GameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: GameComponent, selectors: [["app-game"]], decls: 29, vars: 4, consts: [[1, "header-nav", 3, "clr-nav-level"], [1, "branding"], ["href", "https://lpsoftware.space", 1, "nav-link"], ["shape", "happy-face"], [1, "title"], ["routerLink", "/", 1, "nav-link", "nav-text", 3, "click"], [1, "content-container"], [1, "content-area", "center-content"], ["class", "row", 4, "ngFor", "ngForOf"], [1, "sidenav", 3, "clr-nav-level"], [2, "text-align", "center"], [1, "table", "table-users"], [4, "ngFor", "ngForOf"], [1, "row"], [1, "card", "button", 3, "id", "disabled", "click"]], template: function GameComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "clr-main-container");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "clr-header");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 0);
@@ -847,12 +904,15 @@ GameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, "User");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "th");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](24, "Drinks");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](24, "Cards");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "th");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26, "Drinks");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "tbody");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](26, GameComponent_tr_26_Template, 5, 2, "tr", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "tbody");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](28, GameComponent_tr_28_Template, 7, 3, "tr", 12);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -865,7 +925,7 @@ GameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.structure);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("clr-nav-level", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.userDrinks);
     } }, directives: [_clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrMainContainer"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["MainContainerWillyWonka"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrHeader"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["NavDetectionOompaLoompa"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrNavLevel"], _clr_angular__WEBPACK_IMPORTED_MODULE_2__["ClrIconCustomTag"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], styles: [".center-content[_ngcontent-%COMP%] {\n    display: flex;\n    justify-content: center;\n}\n.row[_ngcontent-%COMP%] {\n    display: flex;\n    justify-content: center;\n}\n.card[_ngcontent-%COMP%] {\n    height:42px;\n    width:30px;\n    margin: 15%;\n    background: url('Card.png') no-repeat top center;\n    background-size: 100%;\n}\n.button[_ngcontent-%COMP%] {\n    cursor: pointer;\n    outline: none;\n    color: blue;\n    border: none;\n    box-shadow: 0 2px #999;\n}\n.button[_ngcontent-%COMP%]:hover {background-color: #3e8e41}\n.button[_ngcontent-%COMP%]:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    transform: translateY(4px);\n}\n.button[_ngcontent-%COMP%]:disabled {\n    background: black;\n}\n.table-users[_ngcontent-%COMP%] {\n    width: 90%;\n    margin-left: 5%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9nYW1lL2dhbWUuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7QUFDQTtJQUNJLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7QUFDQTtJQUNJLFdBQVc7SUFDWCxVQUFVO0lBQ1YsV0FBVztJQUNYLGdEQUFnRTtJQUNoRSxxQkFBcUI7QUFDekI7QUFDQTtJQUNJLGVBQWU7SUFDZixhQUFhO0lBQ2IsV0FBVztJQUNYLFlBQVk7SUFDWixzQkFBc0I7QUFDMUI7QUFDQSxlQUFlLHlCQUF5QjtBQUN4QztJQUNJLHlCQUF5QjtJQUN6QixzQkFBc0I7SUFDdEIsMEJBQTBCO0FBQzlCO0FBQ0E7SUFDSSxpQkFBaUI7QUFDckI7QUFDQTtJQUNJLFVBQVU7SUFDVixlQUFlO0FBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9nYW1lL2dhbWUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jZW50ZXItY29udGVudCB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cbi5yb3cge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG59XG4uY2FyZCB7XG4gICAgaGVpZ2h0OjQycHg7XG4gICAgd2lkdGg6MzBweDtcbiAgICBtYXJnaW46IDE1JTtcbiAgICBiYWNrZ3JvdW5kOiB1cmwoXCIuLi8uLi8uLi9hc3NldHMvQ2FyZC5wbmdcIikgbm8tcmVwZWF0IHRvcCBjZW50ZXI7XG4gICAgYmFja2dyb3VuZC1zaXplOiAxMDAlO1xufVxuLmJ1dHRvbiB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIG91dGxpbmU6IG5vbmU7XG4gICAgY29sb3I6IGJsdWU7XG4gICAgYm9yZGVyOiBub25lO1xuICAgIGJveC1zaGFkb3c6IDAgMnB4ICM5OTk7XG59XG4uYnV0dG9uOmhvdmVyIHtiYWNrZ3JvdW5kLWNvbG9yOiAjM2U4ZTQxfVxuLmJ1dHRvbjphY3RpdmUge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMzZThlNDE7XG4gICAgYm94LXNoYWRvdzogMCA1cHggIzY2NjtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoNHB4KTtcbn1cbi5idXR0b246ZGlzYWJsZWQge1xuICAgIGJhY2tncm91bmQ6IGJsYWNrO1xufVxuLnRhYmxlLXVzZXJzIHtcbiAgICB3aWR0aDogOTAlO1xuICAgIG1hcmdpbi1sZWZ0OiA1JTtcbn0iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](GameComponent, [{

@@ -14,7 +14,9 @@ export class GameComponent implements OnInit {
   userList:string[];
   userDrinks:object[] = [];
   structure:object[][] = [];
+  cardInGame:string = '0';
   lastCard:number;
+  numberCardsInGame:number;
   userCardList:string[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J","Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
@@ -24,7 +26,6 @@ export class GameComponent implements OnInit {
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   userCardsInGame:string[] = [];
-  userCardsInGameBackup:string[] = [];
 
   constructor(private route: Router) { }
 
@@ -33,49 +34,115 @@ export class GameComponent implements OnInit {
     this.height = localStorage.getItem('pyramid_height')
     this.mode = localStorage.getItem('pyramid_mode')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
-    localStorage.setItem('pyramid_lastcard','0')
-    this.setUserCards();
-    this.onlyCardsInBoard();
-    this.setStructure(this.mode);
-    this.setUsers(this.players);
-    this.updateUserDrinks();
+    this.setGame(this.mode);
   }
 
-  setUserCards() {
-    this.players.forEach(user => {
-      let card1:string = this.setCards('user',this.mode);
-      let card2:string = this.setCards('user',this.mode);
-      this.userCardsInGame.push(card1);
-      this.userCardsInGame.push(card2);
-      this.userCardsInGameBackup.push(card1);
-      this.userCardsInGameBackup.push(card2);
-    });
-  }
-
-  onlyCardsInBoard() {
-    let cardsInGame:string[] = [];
-    this.userCardsInGame.forEach(card => {
-      if (!cardsInGame.includes(card)) {
-        cardsInGame.push(card);
-        cardsInGame.push(card);
-        cardsInGame.push(card);
-        cardsInGame.push(card); 
+  setGame(mode:string){
+    this.setUserVars(this.players);
+    if (mode === 'Hard') {
+      this.setNumberCardsInGame();
+      this.setUserCards('Hard');
+      if (this.numberCardsInGame > this.userCardsInGame.length) {
+        let diff:number = this.numberCardsInGame - this.userCardsInGame.length;
+        this.fillBoard(diff);
       }
-    });
-    this.userCardsInGame = cardsInGame;
+      this.setStructure('Hard');
+    }else if (mode === 'Normal') {
+      this.setUserCards('Normal');
+      this.setStructure('Normal');
+    }
   }
 
-  reUseCards() {
-    let randomCard:string = this.userCardsInGameBackup[Math.floor(Math.random()*this.userCardsInGameBackup.length)];
-    return randomCard; 
+  setNumberCardsInGame() {
+    let number_cards:number = 0;
+    for (let i = 1; i < Number(this.height) + 1; i++) {
+      number_cards += i
+    }
+    this.numberCardsInGame = number_cards;
+  }
+
+  setUserCards(mode:string) {
+    let userData:object[] = [];
+    if (mode === 'Hard') {
+      this.players.forEach(user => {
+        let card1:string = this.setCards('user', mode);
+        let card2:string = this.setCards('user', mode);
+        userData.push({'name': user['name'], 'cards': [card1, card2]})
+        if (!this.userCardsInGame.includes(card1)) {
+          this.userCardsInGame.push(card1);
+          this.userCardsInGame.push(card1);
+          this.userCardsInGame.push(card1);
+          this.userCardsInGame.push(card1);  
+        }
+        if (!this.userCardsInGame.includes(card2)) {
+          this.userCardsInGame.push(card2);
+          this.userCardsInGame.push(card2);
+          this.userCardsInGame.push(card2);
+          this.userCardsInGame.push(card2);  
+        }
+      });
+    }else if (mode === 'Normal') {
+      this.players.forEach(user => {
+        let card1:string = this.setCards('user', mode);
+        let card2:string = this.setCards('user', mode);
+        userData.push({'name': user['name'], 'cards': [card1, card2]})
+        if (!this.userCardsInGame.includes(card1)) {
+          this.userCardsInGame.push(card1);
+        }
+        if (!this.userCardsInGame.includes(card2)) {
+          this.userCardsInGame.push(card2);
+        }
+      });
+    }
+    this.setUserDrinks(userData);
+  }
+
+  // Fill Board
+  // If diff cards > 7 , fill with 'all drinks' and 7 repeated cards from users
+  fillBoard(diff:number) {
+    let originalCards:string[] = this.userCardsInGame;
+    let diffCards:number = diff;
+    if (diff > 7) {
+      diffCards = 7
+      for (let i = 0; i < diff - 7; i++) {
+        this.userCardsInGame.push('0')
+      }
+    }
+    for (let i = 0; i < diffCards; i++) {
+      let randomCard:string = originalCards[Math.floor(Math.random()*originalCards.length)];
+      this.userCardsInGame.push(randomCard)
+    }
+  }
+
+  setUserVars(users) {
+    let userList:string[] = []
+    users.forEach(user => {
+      userList.push(user.name)
+      localStorage.setItem('pyramid_user_' + user.name, '0')
+    });
+    this.userList = userList;
+  }
+
+  // Set structure by mode
+  // If normal and card without user fill with 'all drinks' card
+  setStructure(mode:string){
+    let set_structure:object[][] = [];
+    let cont:number = 0;
+    for (let index = Number(this.height); index > 0; index--) {
+      let row:object[] = [];
+      for (let data = 0; data < index; data++) {
+        row.push({card: this.setCards('board', mode), number: cont})
+        cont = cont + 1;
+      }
+      set_structure.push(row)
+    }
+    this.lastCard = cont;
+    this.structure = set_structure
   }
 
   setCards(type:string, mode:string) {
     if (type === 'board') {
       if (mode === 'Hard') {
-        if (this.userCardsInGame.length === 0) {
-          return this.reUseCards();
-        }
         let randomCard:string = this.userCardsInGame[Math.floor(Math.random()*this.userCardsInGame.length)];
         // Remove cards from list
         let new_card_list:string[] = this.userCardsInGame;
@@ -112,8 +179,13 @@ export class GameComponent implements OnInit {
             }
         }
         this.boardCardList = new_card_list_clean
-        return randomCard; 
+        if (!this.userCardsInGame.includes(randomCard)) {
+          return '0'
+        }else {
+          return randomCard;
+        }
       }
+      
     }else if (type === 'user') {
       let randomCard:string = this.userCardList[Math.floor(Math.random()*this.userCardList.length)];
       // Remove cards from list
@@ -136,35 +208,10 @@ export class GameComponent implements OnInit {
     }else {
       return '';
     }
-  }
-
-  setStructure(mode:string){
-    let set_structure:object[][] = [];
-    let cont:number = 0;
-    for (let index = Number(this.height); index > 0; index--) {
-      let row:object[] = [];
-      for (let data = 0; data < index; data++) {
-        row.push({card: this.setCards('board',mode), number: cont})
-        cont = cont + 1;
-      }
-      set_structure.push(row)
-    }
-    this.lastCard = cont;
-    this.structure = set_structure
-  }
-
-  setUsers(users) {
-      let userList:string[] = []
-      users.forEach(user => {
-        userList.push(user.name)
-        localStorage.setItem('pyramid_user_' + user.name, '0')
-      });
-      this.userList = userList;
-  }
+  } 
 
   checkCard(id) {
-    let lastCardPlayed:string = localStorage.getItem('pyramid_lastcard');
-    if (lastCardPlayed != id) {
+    if (this.cardInGame != id) {
       return true
     }else{
       return false
@@ -172,9 +219,7 @@ export class GameComponent implements OnInit {
   }
 
   playCard(item) {
-    let lastCardPlayed:string = localStorage.getItem('pyramid_lastcard');
-    let newCard:number = Number(lastCardPlayed) + 1
-    localStorage.setItem('pyramid_lastcard',newCard.toString())
+    this.cardInGame = (Number(this.cardInGame) + 1).toString()
     this.addDrinks("a", 1)
     if (item.number + 1 === this.lastCard) {
       this.finish()
@@ -188,10 +233,19 @@ export class GameComponent implements OnInit {
     this.updateUserDrinks();
   }
 
+  setUserDrinks(userData:object[]) {
+    let userDrinks:object[] = []
+    userData.forEach(user => {
+      let userData:object = {name: user['name'], cards: user['cards'], drinks : localStorage.getItem('pyramid_user_' + user['name'])}
+      userDrinks.push(userData)
+    });
+    this.userDrinks = userDrinks;
+  }
+
   updateUserDrinks() {
     let userDrinks:object[] = []
-    this.userList.forEach(user => {
-      let userData:object = {name: user, drinks : localStorage.getItem('pyramid_user_' + user)}
+    this.userDrinks.forEach(user => {
+      let userData:object = {name: user['name'], cards: user['cards'], drinks : localStorage.getItem('pyramid_user_' + user['name'])}
       userDrinks.push(userData)
     });
     this.userDrinks = userDrinks;
@@ -216,7 +270,6 @@ export class GameComponent implements OnInit {
     localStorage.removeItem('pyramid_height')
     localStorage.removeItem('pyramid_mode')
     localStorage.removeItem('pyramid_users')
-    localStorage.removeItem('pyramid_lastcard')
     this.userList.forEach(user => {
       localStorage.removeItem('pyramid_user_' + user)
     });

@@ -30,12 +30,14 @@
                 <thead>
                     <tr>
                         <th>User</th>
+                        <th>Cards</th>
                         <th>Drinks</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let user of userDrinks">
                         <td>{{user.name}}</td>
+                        <td>{{user.cards}}</td>
                         <td>{{user.drinks}}</td>
                     </tr>
                 </tbody>
