@@ -59,7 +59,8 @@
 <clr-modal [(clrModalOpen)]="modalCard" [clrModalClosable]="false" [clrModalSize]="'sm'">
     <div class="modal-body body-modal">
         <p>{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
-        <p>{{cardPlayed}}</p>
+        <br>
+        <img src={{cardPlayed}} alt="Card" class="card-played"/>
     </div>
     <div class="modal-footer footer-modal">
         <button type="button" class="btn btn-primary" (click)="closeModalCard()" >Close</button>

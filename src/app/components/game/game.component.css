@@ -42,4 +42,9 @@
 }
 .body-modal {
     text-align: center;
+    word-wrap: break-word;
+}
+.card-played {
+    width: 70%;
+    height: auto;
 }

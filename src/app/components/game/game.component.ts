@@ -264,8 +264,8 @@ export class GameComponent implements OnInit {
     users.forEach(user => {
       this.addDrinks(user, item.row + 1)
     });
-    this.cardPlayed = item.card;
-    this.userPlayed = users.join(',');
+    this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
+    this.userPlayed = users.join(', ');
     if (item.type) {
       this.action = 'drinks';
     }else {
