@@ -17,7 +17,7 @@
                     <tr class="row" *ngFor="let row of structure">           
                         <td *ngFor="let item of row">
                             <button id={{item.number}} [disabled]="checkCard(item.number)" (click)="playCard(item)" class="card button">
-                                {{item.card}}
+                                
                             </button>
                         </td>
                     </tr>

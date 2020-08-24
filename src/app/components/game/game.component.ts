@@ -299,6 +299,9 @@ export class GameComponent implements OnInit {
       let userData:object = {name: user['name'], cards: user['cards'], drinks : localStorage.getItem('pyramid_user_' + user['name'])}
       userDrinks.push(userData)
     });
+    userDrinks.sort((a, b) => {
+      return b['drinks'] - a['drinks'];
+    });
     this.userDrinks = userDrinks;
   }
 
