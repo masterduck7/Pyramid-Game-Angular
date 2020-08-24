@@ -269,9 +269,11 @@ export class GameComponent implements OnInit {
       });
     }else {
       let users:string[] = this.getUsersWithCard(item['card']);
-      users.forEach(user => {
-        this.addDrinks(user, item.row + 1)
-      });
+      if (item.type) {
+        users.forEach(user => {
+          this.addDrinks(user, item.row + 1)
+        });
+      }
       this.userPlayed = users.join(', ');
       if (item.type) {
         this.action = 'drinks';
@@ -286,9 +288,6 @@ export class GameComponent implements OnInit {
       this.shots = 'shots !'
     }
     this.modalCard = true;
-    if (item.number + 1 === this.lastCard) {
-      this.finish()
-    }
   }
 
   getUsersWithCard(card:string) {
@@ -362,6 +361,9 @@ export class GameComponent implements OnInit {
 
   closeModalCard() {
     this.modalCard = false;
+    if (Number(this.cardInGame) === this.lastCard) {
+      this.finish()
+    }
   }
 
 }

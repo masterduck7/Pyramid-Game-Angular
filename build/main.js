@@ -863,9 +863,11 @@ class GameComponent {
         }
         else {
             let users = this.getUsersWithCard(item['card']);
-            users.forEach(user => {
-                this.addDrinks(user, item.row + 1);
-            });
+            if (item.type) {
+                users.forEach(user => {
+                    this.addDrinks(user, item.row + 1);
+                });
+            }
             this.userPlayed = users.join(', ');
             if (item.type) {
                 this.action = 'drinks';
@@ -882,9 +884,6 @@ class GameComponent {
             this.shots = 'shots !';
         }
         this.modalCard = true;
-        if (item.number + 1 === this.lastCard) {
-            this.finish();
-        }
     }
     getUsersWithCard(card) {
         let users = [];
@@ -951,6 +950,9 @@ class GameComponent {
     }
     closeModalCard() {
         this.modalCard = false;
+        if (Number(this.cardInGame) === this.lastCard) {
+            this.finish();
+        }
     }
 }
 GameComponent.ɵfac = function GameComponent_Factory(t) { return new (t || GameComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"])); };
@@ -1008,7 +1010,7 @@ GameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "clr-modal", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("clrModalOpenChange", function GameComponent_Template_clr_modal_clrModalOpenChange_29_listener($event) { return ctx.modalWinners = $event; });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "h3", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "User with more drinks");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "Winners");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "div", 15);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "p");
