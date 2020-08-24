@@ -723,18 +723,20 @@ class GameComponent {
     setStructure(mode) {
         let set_structure = [];
         let cont = this.numberCardsInGame;
+        let rowNumber = Number(this.height) - 1;
         for (let index = 1; index < Number(this.height) + 1; index++) {
             let row = [];
             for (let data = 0; data < index; data++) {
                 if (index === 1) {
-                    row.push({ card: this.setCards('board', mode, true), number: cont - 1 });
+                    row.push({ card: this.setCards('board', mode, true), number: cont - 1, row: rowNumber });
                     cont = cont - 1;
                 }
                 else {
-                    row.push({ card: this.setCards('board', mode, false), number: cont - 1 });
+                    row.push({ card: this.setCards('board', mode, false), number: cont - 1, row: rowNumber });
                     cont = cont - 1;
                 }
             }
+            rowNumber = rowNumber - 1;
             set_structure.push(row.reverse());
         }
         this.lastCard = this.numberCardsInGame;
@@ -844,9 +846,30 @@ class GameComponent {
     }
     playCard(item) {
         this.cardInGame = (Number(this.cardInGame) + 1).toString();
-        this.addDrinks("a", 1);
+        let users = this.getUsersWithCard(item['card']);
+        users.forEach(user => {
+            this.addDrinks(user, item.row + 1);
+        });
         if (item.number + 1 === this.lastCard) {
             this.finish();
+        }
+    }
+    getUsersWithCard(card) {
+        if (card === '0') {
+            let users = [];
+            this.userDrinks.forEach(user => {
+                users.push(user['name']);
+            });
+            return users;
+        }
+        else {
+            let users = [];
+            this.userDrinks.forEach(user => {
+                if (user['cards'].includes(card)) {
+                    users.push(user['name']);
+                }
+            });
+            return users;
         }
     }
     addDrinks(user, numberDrinks) {
@@ -879,6 +902,9 @@ class GameComponent {
             if (drinks > maxDrinks) {
                 maxDrinks = drinks;
                 maxDrinksUser = user;
+            }
+            else if (drinks === maxDrinks) {
+                maxDrinksUser = maxDrinksUser + ',' + user;
             }
         });
         return [maxDrinksUser, maxDrinks];

@@ -129,17 +129,19 @@ export class GameComponent implements OnInit {
   setStructure(mode:string){
     let set_structure:object[][] = [];
     let cont:number = this.numberCardsInGame;
+    let rowNumber:number = Number(this.height) - 1;
     for (let index = 1; index < Number(this.height) + 1; index++) {
       let row:object[] = [];
       for (let data = 0; data < index; data++) {
         if (index === 1) {
-          row.push({card: this.setCards('board', mode, true), number: cont - 1})
+          row.push({card: this.setCards('board', mode, true), number: cont - 1, row: rowNumber})
           cont = cont - 1;
         }else {
-          row.push({card: this.setCards('board', mode, false), number: cont - 1})
+          row.push({card: this.setCards('board', mode, false), number: cont - 1, row: rowNumber})
           cont = cont - 1;
         }
       }
+      rowNumber = rowNumber - 1;
       set_structure.push(row.reverse())
     }
     this.lastCard = this.numberCardsInGame;
@@ -248,9 +250,30 @@ export class GameComponent implements OnInit {
 
   playCard(item) {
     this.cardInGame = (Number(this.cardInGame) + 1).toString()
-    this.addDrinks("a", 1)
+    let users:string[] = this.getUsersWithCard(item['card']);
+    users.forEach(user => {
+      this.addDrinks(user, item.row + 1)
+    });
     if (item.number + 1 === this.lastCard) {
       this.finish()
+    }
+  }
+
+  getUsersWithCard(card:string) {
+    if (card === '0') {
+      let users:string[] = [];
+      this.userDrinks.forEach(user => {
+        users.push(user['name'])
+      });
+    return users;
+    }else {
+      let users:string[] = [];
+      this.userDrinks.forEach(user => {
+        if (user['cards'].includes(card)) {
+          users.push(user['name'])
+        }
+      });
+      return users;
     }
   }
 
@@ -287,6 +310,8 @@ export class GameComponent implements OnInit {
       if (drinks > maxDrinks) {
         maxDrinks = drinks
         maxDrinksUser = user
+      }else if (drinks === maxDrinks) {
+        maxDrinksUser = maxDrinksUser + ',' + user
       }
     });
     return [maxDrinksUser, maxDrinks];
