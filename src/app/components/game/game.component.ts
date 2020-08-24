@@ -31,6 +31,9 @@ export class GameComponent implements OnInit {
   modalCard:boolean = false;
   cardPlayed:string = '';
   userPlayed:string = '';
+  action:string = '';
+  actualRow:string = '';
+  shots:string = '';
 
   constructor(private route: Router) { }
 
@@ -135,17 +138,19 @@ export class GameComponent implements OnInit {
     let set_structure:object[][] = [];
     let cont:number = this.numberCardsInGame;
     let rowNumber:number = Number(this.height) - 1;
+    let type:boolean = true;
     for (let index = 1; index < Number(this.height) + 1; index++) {
       let row:object[] = [];
       for (let data = 0; data < index; data++) {
         if (index === 1) {
-          row.push({card: this.setCards('board', mode, true), number: cont - 1, row: rowNumber})
+          row.push({card: this.setCards('board', mode, true), number: cont - 1, row: rowNumber, type: type})
           cont = cont - 1;
         }else {
-          row.push({card: this.setCards('board', mode, false), number: cont - 1, row: rowNumber})
+          row.push({card: this.setCards('board', mode, false), number: cont - 1, row: rowNumber, type: type})
           cont = cont - 1;
         }
       }
+      type = !type;
       rowNumber = rowNumber - 1;
       set_structure.push(row.reverse())
     }
@@ -261,6 +266,17 @@ export class GameComponent implements OnInit {
     });
     this.cardPlayed = item.card;
     this.userPlayed = users.join(',');
+    if (item.type) {
+      this.action = 'drinks';
+    }else {
+      this.action = 'gives';
+    }
+    this.actualRow = item.row + 1;
+    if (item.row === 0) {
+      this.shots = 'shot !'
+    }else {
+      this.shots = 'shots !'
+    }
     this.modalCard = true;
     if (item.number + 1 === this.lastCard) {
       this.finish()

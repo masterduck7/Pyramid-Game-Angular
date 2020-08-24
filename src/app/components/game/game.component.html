@@ -52,14 +52,14 @@
         <p>{{winners}}</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="closeModalWinners()" >Finish</button>
+        <button type="button" class="btn btn-primary" (click)="closeModalWinners()">Finish</button>
     </div>
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalCard" [clrModalClosable]="false" [clrModalSize]="'sm'">
     <div class="modal-body body-modal">
+        <p>{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
         <p>{{cardPlayed}}</p>
-        <p>{{userPlayed}}</p>
     </div>
     <div class="modal-footer footer-modal">
         <button type="button" class="btn btn-primary" (click)="closeModalCard()" >Close</button>
