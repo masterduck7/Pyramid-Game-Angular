@@ -1,0 +1,50 @@
+.center-content {
+    display: flex;
+    justify-content: center;
+}
+.row {
+    display: flex;
+    justify-content: center;
+}
+.card {
+    height:42px;
+    width:30px;
+    margin: 15%;
+    background: url("../../../assets/Card.png") no-repeat top center;
+    background-size: 100%;
+}
+.button {
+    cursor: pointer;
+    outline: none;
+    color: blue;
+    border: none;
+    box-shadow: 0 2px #999;
+}
+.button:hover {background-color: #3e8e41}
+.button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+.button:disabled {
+    background: black;
+}
+.table-users {
+    width: 90%;
+    margin-left: 5%;
+}
+.nav {
+    width: 50%;
+    height: inherit;
+}
+.footer-modal {
+    justify-content: center;
+}
+.body-modal {
+    text-align: center;
+    word-wrap: break-word;
+}
+.card-played {
+    width: 70%;
+    height: auto;
+}

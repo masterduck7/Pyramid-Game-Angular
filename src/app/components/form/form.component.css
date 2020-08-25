@@ -1,6 +1,7 @@
 .title {
     text-align: center;
     font-weight: bold;
+    margin-top: 0%;
 }
 .div-form {
     width: 70%;
@@ -8,8 +9,6 @@
 }
 .select-form {
     margin-left: 10px;
-    margin-bottom: 1%;
-    margin-top: 1%;
 	font-size: 14px;
 	font-weight: 700;
 	color: #444;
@@ -32,22 +31,26 @@
 	background-size: .65em auto, 100%;
 }
 .input-form {
-    margin-left: 30px;
+    margin-left: 1%;
     margin-bottom: 15px;
     margin-top: 15px;
-    width: 40%;
+    width: 100%;
     outline-width: 0ch;
     text-align: center;
 }
 .input-form-text {
-    margin-left: 10px;
+    margin-left: 1%;
     margin-bottom: 10px;
     margin-top: 10px;
     border: 0ch;
-    width: 90%;
+    width: 80%;
     text-align: center;
 }
 .error {
     color: crimson;
+    font-weight: bold;
+}
+.help-text {
+    font-size: 10px;
     font-weight: bold;
 }
