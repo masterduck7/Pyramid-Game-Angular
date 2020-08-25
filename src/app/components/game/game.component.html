@@ -66,3 +66,13 @@
         <button type="button" class="btn btn-primary" (click)="closeModalCard()" >Close</button>
     </div>
 </clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalRules" [clrModalClosable]="false">
+    <h3 class="modal-title">Set a rule</h3>
+    <div class="modal-body">
+        <p>{{userRules}} choose your rule</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="closeModalRules()">Close</button>
+    </div>
+</clr-modal>

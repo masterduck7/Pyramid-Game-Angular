@@ -26,6 +26,8 @@ export class GameComponent implements OnInit {
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   userCardsInGame:string[] = [];
+  modalRules:boolean = false;
+  userRules:string = '';
   modalWinners:boolean = false;
   winners:string = '';
   modalCard:boolean = false;
@@ -259,35 +261,68 @@ export class GameComponent implements OnInit {
   }
 
   playCard(item) {
-    this.cardInGame = (Number(this.cardInGame) + 1).toString()
-    this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
-    if (item.card === '0') {
-      this.userPlayed = 'All'
-      this.action = 'drinks';
-      this.userDrinks.forEach(user => {
-        this.addDrinks(user['name'], item.row + 1)
-      });
-    }else {
-      let users:string[] = this.getUsersWithCard(item['card']);
-      if (item.type) {
-        users.forEach(user => {
-          this.addDrinks(user, item.row + 1)
-        });
-      }
-      this.userPlayed = users.join(', ');
-      if (item.type) {
+    if (this.ruleTime()) {
+      this.createRule();
+      this.cardInGame = (Number(this.cardInGame) + 1).toString()
+      this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
+      if (item.card === '0') {
+        this.userPlayed = 'All'
         this.action = 'drinks';
+        this.userDrinks.forEach(user => {
+          this.addDrinks(user['name'], item.row + 1)
+        });
       }else {
-        this.action = 'gives';
+        let users:string[] = this.getUsersWithCard(item['card']);
+        if (item.type) {
+          users.forEach(user => {
+            this.addDrinks(user, item.row + 1)
+          });
+        }
+        this.userPlayed = users.join(', ');
+        if (item.type) {
+          this.action = 'drinks';
+        }else {
+          this.action = 'gives';
+        }
       }
-    }
-    this.actualRow = item.row + 1;
-    if (item.row === 0) {
-      this.shots = 'shot !'
+      this.actualRow = item.row + 1;
+      if (item.row === 0) {
+        this.shots = 'shot !'
+      }else {
+        this.shots = 'shots !'
+      }
     }else {
-      this.shots = 'shots !'
+      this.cardInGame = (Number(this.cardInGame) + 1).toString()
+      this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
+      if (item.card === '0') {
+        this.userPlayed = 'All'
+        this.action = 'drinks';
+        this.userDrinks.forEach(user => {
+          this.addDrinks(user['name'], item.row + 1)
+        });
+      }else {
+        let users:string[] = this.getUsersWithCard(item['card']);
+        if (item.type) {
+          users.forEach(user => {
+            this.addDrinks(user, item.row + 1)
+          });
+        }
+        this.userPlayed = users.join(', ');
+        if (item.type) {
+          this.action = 'drinks';
+        }else {
+          this.action = 'gives';
+        }
+      }
+      this.actualRow = item.row + 1;
+      if (item.row === 0) {
+        this.shots = 'shot !'
+      }else {
+        this.shots = 'shots !'
+      }
+      this.modalCard = true;
     }
-    this.modalCard = true;
+    
   }
 
   getUsersWithCard(card:string) {
@@ -366,4 +401,24 @@ export class GameComponent implements OnInit {
     }
   }
 
+  closeModalRules() {
+    this.modalRules = false;
+    this.modalCard = true;
+  }
+
+  // Choose random user
+  createRule() {
+    let randomUser:string = this.userList[Math.floor(Math.random()*this.userList.length)];
+    this.userRules = randomUser;
+    this.modalRules = true;
+  }
+
+  // Rule created after 10 cards
+  ruleTime() {
+    if (Number.isInteger((Number(this.cardInGame) + 1)/10)) {
+      return true;
+    }else {
+      return false;
+    }
+  }
 }
