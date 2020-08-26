@@ -26,6 +26,7 @@ export class GameComponent implements OnInit {
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   userCardsInGame:string[] = [];
+  setRule:number;
   modalRules:boolean = false;
   userRules:string = '';
   modalWinners:boolean = false;
@@ -62,6 +63,7 @@ export class GameComponent implements OnInit {
       this.setUserCards('Normal');
       this.setStructure('Normal');
     }
+    this.setRuleTime();
   }
 
   setNumberCardsInGame() {
@@ -414,11 +416,25 @@ export class GameComponent implements OnInit {
   }
 
   // Rule created after 10 cards
+  // If last card not show rule
   ruleTime() {
-    if (Number.isInteger((Number(this.cardInGame) + 1)/10)) {
+    if ( (Number(this.cardInGame) + 1) === this.lastCard ) {
+      return false;
+    }
+    if (Number.isInteger((Number(this.cardInGame) + 1)/this.setRule)) {
       return true;
     }else {
       return false;
+    }
+  }
+
+  // If pyramid height > 4 rules every 10 cards
+  // else rule every 5 cards
+  setRuleTime() {
+    if (Number(this.height) > 4) {
+      this.setRule = 10
+    }else {
+      this.setRule = 5
     }
   }
 }
