@@ -13,11 +13,7 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "clean": "rimraf dist",
-    "int:extract": "ng xi18n --output-path src/locale",
-    "start:es": "ng serve --configuration=es",
-    "build:es": "ng build --prod --configuration=es --output-path=build/es/",
-    "build:i18n": "ng build --prod --configuration=es --output-path=build/es/ && ng build --prod --output-path=build/en/"
+    "clean": "rimraf dist"
   },
   "private": true,
   "dependencies": {
@@ -34,8 +30,11 @@
     "@clr/core": "^3.1.5",
     "@clr/icons": "^4.0.0-rc.1",
     "@clr/ui": "^4.0.0-rc.1",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "@webcomponents/custom-elements": "^1.0.0",
     "@webcomponents/webcomponentsjs": "^2.4.4",
+    "flag-icon-css": "^3.5.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

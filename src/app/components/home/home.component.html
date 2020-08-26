@@ -5,57 +5,59 @@
                 <a href="https://lpsoftware.space" class="nav-link">
                     <clr-icon shape="happy-face"></clr-icon>
                 </a>
-                <span i18n class="title">Pyramid Game</span>
+                <span i18n class="title">{{'Pyramid Game' | translate}}</span>
             </div>
-            <a i18n routerLink="/" routerLinkActive="active" class="active nav-link nav-text">Home</a>
-            <a i18n routerLink="/form" class="nav-link nav-text">Start Game</a>
+            <a i18n routerLink="/" routerLinkActive="active" class="active nav-link nav-text">{{'Home' | translate}}</a>
+            <a i18n routerLink="/form" class="nav-link nav-text">{{'Start Game' | translate}}</a>
+            <a routerLink="/" (click)="switchLang('es')" class="nav-link nav-text"><span class="flag-icon flag-icon-es"></span> {{'Spanish' | translate}}</a>
+            <a routerLink="/" (click)="switchLang('en')" class="nav-link nav-text"><span class="flag-icon flag-icon-us"></span> {{'English' | translate}}</a>
         </div>
     </clr-header>
     <div class="content-container body-container">
         <main class="content-area center-content">
-            <h1 i18n class="title">Pyramid Game</h1>
-            <h5 i18n>Steps</h5>
+            <h1 i18n class="title">{{'Pyramid Game' | translate}}</h1>
+            <h5 i18n>{{'Steps' | translate}}</h5>
             <ul class="clr-timeline clr-timeline-vertical">
                 <li class="clr-timeline-step">
                     <clr-icon shape="circle" aria-label="Not started"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">Set users</span>
-                        <span i18n class="clr-timeline-step-description">1-26 players</span>
+                        <span i18n class="clr-timeline-step-title">{{'Set users' | translate}}</span>
+                        <span i18n class="clr-timeline-step-description">{{'1-26 players' | translate}}</span>
                     </div>
                 </li>
                 <li class="clr-timeline-step">
                     <clr-icon shape="circle" aria-label="Not started"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">Set Pyramid Height</span>
-                        <span i18n class="clr-timeline-step-description">1-10</span>
+                        <span i18n class="clr-timeline-step-title">{{'Set Pyramid Height' | translate}}</span>
+                        <span i18n class="clr-timeline-step-description">{{'1-10' | translate}}</span>
                     </div>
                 </li>
                 <li class="clr-timeline-step">
                     <clr-icon shape="success-standard" aria-label="Completed"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">Start to drink!</span>
+                        <span i18n class="clr-timeline-step-title">{{'Start to drink!' | translate}}</span>
                     </div>
                 </li>
             </ul>
-            <h5 i18n>Rules</h5>
+            <h5 i18n>{{'Rules' | translate}}</h5>
             <ul class="clr-timeline clr-timeline-vertical">
                 <li class="clr-timeline-step">
                     <clr-icon shape="dot-circle" aria-current="true" aria-label="Current"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">2 cards are assigned per player</span>
+                        <span i18n class="clr-timeline-step-title">{{'2 cards are assigned per player' | translate}}</span>
                     </div>
                 </li>
                 <li class="clr-timeline-step">
                     <clr-icon shape="dot-circle" aria-current="true" aria-label="Current"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">The difficulty depends on the height of the pyramid</span>
+                        <span i18n class="clr-timeline-step-title">{{'The difficulty depends on the height of the pyramid' | translate}}</span>
                     </div>
                 </li>
             </ul>
         </main>
         <nav class="sidenav body-container nav" [clr-nav-level]="2">
             <img src="../../../assets/Example.png" alt="Example" class="image"/>
-            <h6 i18n class="lpsoftware">By LPSoftware</h6>
+            <h6 i18n class="lpsoftware">{{'By LPSoftware' | translate}}</h6>
         </nav>
     </div>
 </clr-main-container>

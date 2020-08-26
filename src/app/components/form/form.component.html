@@ -5,49 +5,52 @@
                 <a href="https://lpsoftware.space" class="nav-link">
                     <clr-icon shape="happy-face"></clr-icon>
                 </a>
-                <span i18n class="title">Pyramid Game</span>
+                <span i18n class="title">{{'Pyramid Game' | translate}}</span>
             </div>
-            <a i18n routerLink="/" routerLinkActive="active" class="active nav-link nav-text">Home</a>
+            <a i18n routerLink="/" routerLinkActive="active" class="active nav-link nav-text">{{'Home' | translate}}</a>
+            <a routerLink="/form" (click)="switchLang('es')" class="nav-link nav-text"><span class="flag-icon flag-icon-es"></span> {{'Spanish' | translate}}</a>
+            <a routerLink="/form" (click)="switchLang('en')" class="nav-link nav-text"><span class="flag-icon flag-icon-us"></span> {{'English' | translate}}</a>
         </div>
     </clr-header>
     <div class="content-container body-container">
         <main class="content-area center-content">
             <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
                 <div class="div-form">
-                    <h1 i18n class="title">Set game data</h1>
+                    <h1 i18n class="title">{{'Set game data' | translate}}</h1>
                     <br>
                     <div>
-                        <label i18n>Mode</label>
+                        <label i18n>{{'Mode' | translate}}</label>
                         <select formControlName="mode" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
                             <option value=""></option>
-                            <option *ngFor="let i of ['Hard','Normal']">{{i}}</option>
+                            <option i18n value="Hard">{{'Hard' | translate}}</option>
+                            <option i18n value="Normal">{{'Normal' | translate}}</option>
                         </select><br>
-                        <small i18n class="help-text">Hard mode: All cards drinks at least one player</small><br>
-                        <small i18n class="help-text">Normal mode: Get random cards and fill with all drinks</small><br>
+                        <small i18n class="help-text">{{'Hard mode' | translate}}</small><br>
+                        <small i18n class="help-text">{{'Normal mode' | translate}}</small><br>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                            <div i18n *ngIf="f.height.errors.required" class="error">Height is required</div>
+                            <div i18n *ngIf="f.height.errors.required" class="error">{{'Height is required' | translate}}</div>
                         </div>
                     </div>
                     <br>
                     <div>
-                        <label i18n>Height</label>
+                        <label i18n>{{'Height' | translate}}</label>
                         <select formControlName="height" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.height.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
                         </select>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                            <div i18n *ngIf="f.height.errors.required" class="error">Height is required</div>
+                            <div i18n *ngIf="f.height.errors.required" class="error">{{'Height is required' | translate}}</div>
                         </div>
                     </div>
                     <br>
                     <div>
-                        <label i18n>Number of players</label>
+                        <label i18n>{{'Number of players' | translate}}</label>
                         <select formControlName="numberPlayers" class="form-control select-form" (change)="onChangeTickets($event)" [ngClass]="{ 'is-invalid': submitted && f.numberPlayers.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">{{i}}</option>
                         </select>
                         <div *ngIf="submitted && f.numberPlayers.errors" class="invalid-feedback">
-                            <div i18n *ngIf="f.numberPlayers.errors.required" class="error">Number of players is required</div>
+                            <div i18n *ngIf="f.numberPlayers.errors.required" class="error">{{'Number of players is required' | translate}}</div>
                         </div>
                     </div>
                     <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
@@ -56,7 +59,7 @@
                                 <div class="form-group col-6">
                                     <input type="text" formControlName="name" placeholder="Player {{i + 1}}" class="form-control input-form-text" [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
                                     <div *ngIf="submitted && ticket.controls.name.errors" class="invalid-feedback">
-                                        <div i18n *ngIf="ticket.controls.name.errors.required" class="error">Name is required</div>
+                                        <div i18n *ngIf="ticket.controls.name.errors.required" class="error">{{'Name is required' | translate}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -64,9 +67,9 @@
                     </div>
                     <br>
                     <div class="card-footer text-center">
-                        <button i18n class="btn btn-primary mr-1">Play</button><br><br>
-                        <button i18n class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
-                        <button i18n class="btn btn-secondary" type="button" (click)="onClear()">Clear</button>
+                        <button i18n class="btn btn-primary mr-1">{{'Play' | translate}}</button><br><br>
+                        <button i18n class="btn btn-secondary mr-1" type="reset" (click)="onReset()">{{'Reset' | translate}}</button>
+                        <button i18n class="btn btn-secondary" type="button" (click)="onClear()">{{'Clear' | translate}}</button>
                     </div>
                 </div>
             </form>
@@ -75,11 +78,11 @@
 </clr-main-container>
 
 <clr-modal [(clrModalOpen)]="modalError" [clrModalClosable]="false">
-    <h3 i18n class="modal-title">Check names</h3>
+    <h3 i18n class="modal-title">{{'Check names' | translate}}</h3>
     <div class="modal-body">
-        <p i18n>You have one or more players names repeated</p>
+        <p i18n>{{'You have one or more players names repeated' | translate}}</p>
     </div>
     <div class="modal-footer">
-        <button i18n type="button" class="btn btn-primary" (click)="closeModalError()">Close</button>
+        <button i18n type="button" class="btn btn-primary" (click)="closeModalError()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>

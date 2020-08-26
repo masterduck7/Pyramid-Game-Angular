@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {Router } from '@angular/router';
 
 @Component({
@@ -8,6 +9,7 @@ import {Router } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
+  language:string = localStorage.getItem('pyramid_lang');
   height:string;
   mode:string;
   players:string[];
@@ -30,15 +32,32 @@ export class GameComponent implements OnInit {
   modalRules:boolean = false;
   userRules:string = '';
   modalWinners:boolean = false;
-  winners:string = '';
+  winnerNames:string = '';
+  winnerDrinks:string = '';
   modalCard:boolean = false;
   cardPlayed:string = '';
   userPlayed:string = '';
   action:string = '';
   actualRow:string = '';
   shots:string = '';
+  modalWords:object;
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, public translate: TranslateService) {
+    translate.addLangs(['en', 'es']);
+    let lang:string = localStorage.getItem('pyramid_lang')
+    if (lang) {
+      translate.setDefaultLang(lang);
+    } else {
+      translate.setDefaultLang('en');
+      localStorage.setItem('pyramid_lang', 'en');
+    }
+    
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('pyramid_lang', lang);
+  }
 
   ngOnInit() {
     this.mode = localStorage.getItem('pyramid_mode')
@@ -46,6 +65,7 @@ export class GameComponent implements OnInit {
     this.mode = localStorage.getItem('pyramid_mode')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
     this.setGame(this.mode);
+    this.setWords();
   }
 
   setGame(mode:string){
@@ -265,66 +285,51 @@ export class GameComponent implements OnInit {
   playCard(item) {
     if (this.ruleTime()) {
       this.createRule();
-      this.cardInGame = (Number(this.cardInGame) + 1).toString()
-      this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
-      if (item.card === '0') {
-        this.userPlayed = 'All'
-        this.action = 'drinks';
-        this.userDrinks.forEach(user => {
-          this.addDrinks(user['name'], item.row + 1)
-        });
-      }else {
-        let users:string[] = this.getUsersWithCard(item['card']);
-        if (item.type) {
-          users.forEach(user => {
-            this.addDrinks(user, item.row + 1)
-          });
-        }
-        this.userPlayed = users.join(', ');
-        if (item.type) {
-          this.action = 'drinks';
-        }else {
-          this.action = 'gives';
-        }
-      }
-      this.actualRow = item.row + 1;
-      if (item.row === 0) {
-        this.shots = 'shot !'
-      }else {
-        this.shots = 'shots !'
-      }
+      this.play(item);
     }else {
-      this.cardInGame = (Number(this.cardInGame) + 1).toString()
-      this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
-      if (item.card === '0') {
-        this.userPlayed = 'All'
-        this.action = 'drinks';
-        this.userDrinks.forEach(user => {
-          this.addDrinks(user['name'], item.row + 1)
-        });
-      }else {
-        let users:string[] = this.getUsersWithCard(item['card']);
-        if (item.type) {
-          users.forEach(user => {
-            this.addDrinks(user, item.row + 1)
-          });
-        }
-        this.userPlayed = users.join(', ');
-        if (item.type) {
-          this.action = 'drinks';
-        }else {
-          this.action = 'gives';
-        }
-      }
-      this.actualRow = item.row + 1;
-      if (item.row === 0) {
-        this.shots = 'shot !'
-      }else {
-        this.shots = 'shots !'
-      }
+      this.play(item);
       this.modalCard = true;
     }
     
+  }
+
+  play(item) {
+    this.cardInGame = (Number(this.cardInGame) + 1).toString()
+    this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
+    if (item.card === '0') {
+      this.userPlayed = this.returnTranslation('All');
+      this.action = this.returnTranslation('drinks');
+      this.userDrinks.forEach(user => {
+        this.addDrinks(user['name'], item.row + 1)
+      });
+    }else {
+      let users:string[] = this.getUsersWithCard(item['card']);
+      if (item.type) {
+        users.forEach(user => {
+          this.addDrinks(user, item.row + 1)
+        });
+      }
+      this.userPlayed = users.join(', ');
+      if (users.length > 1) {
+        if (item.type) {
+          this.action = this.returnTranslation('drinks');
+        }else {
+          this.action = this.returnTranslation('gives');
+        } 
+      }else {
+        if (item.type) {
+          this.action = this.returnTranslation('drink');
+        }else {
+          this.action = this.returnTranslation('give');
+        }
+      }
+    }
+    this.actualRow = item.row + 1;
+    if (item.row === 0) {
+      this.shots = this.returnTranslation('shot') + ' !';
+    }else {
+      this.shots = this.returnTranslation('shots') + ' !';
+    }
   }
 
   getUsersWithCard(card:string) {
@@ -377,7 +382,8 @@ export class GameComponent implements OnInit {
         maxDrinksUser = maxDrinksUser + ',' + user
       }
     });
-    this.winners = maxDrinksUser + ' with ' + maxDrinks + ' drinks !!!';
+    this.winnerNames = maxDrinksUser;
+    this.winnerDrinks = maxDrinks.toString();
     this.modalWinners = true;
   }
 
@@ -435,6 +441,26 @@ export class GameComponent implements OnInit {
       this.setRule = 10
     }else {
       this.setRule = 5
+    }
+  }
+
+  setWords() {
+    this.modalWords = {
+      'drink' : ['drink', 'bebe'],
+      'drinks' : ['drinks', 'beben'],
+      'give' : ['give', 'regala'],
+      'gives' : ['gives', 'regalan'],
+      'shot' : ['shot', 'trago'],
+      'shots' : ['shots', 'tragos'],
+      'All' : ['All', 'Todos'],
+    };
+  }
+
+  returnTranslation(word:string) {
+    if (this.language === 'en') {
+      return this.modalWords[word][0]
+    } else {
+      return this.modalWords[word][1]
     }
   }
 }
