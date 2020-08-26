@@ -4,6 +4,7 @@
     <body>
       <trans-unit id="4d360b0bbaf4b2025e116977c1e228fd922d7655" datatype="html">
         <source>Pyramid Game</source>
+        <target>Pyramid Game</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">8</context>
@@ -23,6 +24,7 @@
       </trans-unit>
       <trans-unit id="92eee6be6de0b11c924e3ab27db30257159c0a7c" datatype="html">
         <source>Home</source>
+        <target>Home</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">10</context>
@@ -34,12 +36,14 @@
       </trans-unit>
       <trans-unit id="37939fa361d820d0469c58e2101ef8ac545bd546" datatype="html">
         <source>Start Game</source>
+        <source>Start Game</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="02f8ee7117d0f306f5726d1c578a9f18c4ba5b6d" datatype="html">
+        <source>Steps</source>
         <source>Steps</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -48,6 +52,7 @@
       </trans-unit>
       <trans-unit id="0685fe40e3cb174a35e643f45a698a7ea5bcddbc" datatype="html">
         <source>Set users</source>
+        <source>Set users</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">22</context>
@@ -55,12 +60,14 @@
       </trans-unit>
       <trans-unit id="7944f42bf2eac086f8ac7a1c2f4efb4cfddca790" datatype="html">
         <source>1-26 players</source>
+        <target>1-26 players</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="31d42b9e2726946bcc26c79ba04dfbf1d6df2e21" datatype="html">
+        <source>Set Pyramid Height</source>
         <source>Set Pyramid Height</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -69,12 +76,14 @@
       </trans-unit>
       <trans-unit id="4cfc28ee2d91e1d513c73699925bbfcd21130744" datatype="html">
         <source>1-10</source>
+        <target>1-10</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b0aaf8855024af066b0d1e28db4678aceaaf853c" datatype="html">
+        <source>Start to drink!</source>
         <source>Start to drink!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -83,12 +92,14 @@
       </trans-unit>
       <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html">
         <source>Rules</source>
+        <source>Rules</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8c87692d85a1609dda418bffc9e0a8c559723f23" datatype="html">
+        <source>2 cards are assigned per player</source>
         <source>2 cards are assigned per player</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -97,6 +108,7 @@
       </trans-unit>
       <trans-unit id="69e79b115f09c68db3f9db185739bc3072b6fddd" datatype="html">
         <source>The difficulty depends on the height of the pyramid</source>
+        <source>The difficulty depends on the height of the pyramid</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">51</context>
@@ -104,12 +116,14 @@
       </trans-unit>
       <trans-unit id="6f343511675d2d0c9c359341cb4131c6cfc5fc9e" datatype="html">
         <source>By LPSoftware</source>
+        <target>By LPSoftware</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5073620e8a5a621c159eb9d1709b536053da5534" datatype="html">
+        <source>Set game data</source>
         <source>Set game data</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -118,12 +132,14 @@
       </trans-unit>
       <trans-unit id="37e10df2d9c0c25ef04ac112c9c9a7723e8efae0" datatype="html">
         <source>Mode</source>
+        <source>Mode</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="243cab428f4015b030932e2ce8d14c995b1faeb2" datatype="html">
+        <source>Hard mode: All cards drinks at least one player</source>
         <source>Hard mode: All cards drinks at least one player</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -132,12 +148,14 @@
       </trans-unit>
       <trans-unit id="a09928b80ce6f63862ec4d05bbd9f7d5964d3619" datatype="html">
         <source>Normal mode: Get random cards and fill with all drinks</source>
+        <source>Normal mode: Get random cards and fill with all drinks</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bf7423606f8f915d7710293bc4b17c7ecf199516" datatype="html">
+        <source>Height is required</source>
         <source>Height is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -150,12 +168,14 @@
       </trans-unit>
       <trans-unit id="179eb5c4a21ad324f75f723218a621d120e39d30" datatype="html">
         <source>Height</source>
+        <source>Height</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cf8fc9eecbe314ea751d9ee5b9fa9b4dd45357e7" datatype="html">
+        <source>Number of players</source>
         <source>Number of players</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -164,12 +184,14 @@
       </trans-unit>
       <trans-unit id="131ec75c446ec9600ce33f5fdf03dd47c238e9c9" datatype="html">
         <source>Number of players is required</source>
+        <source>Number of players is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5b752f143ab30faa45a2679b5e7a28bbf3fb246d" datatype="html">
+        <source>Name is required</source>
         <source>Name is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -178,6 +200,7 @@
       </trans-unit>
       <trans-unit id="9b00b4b718d67ef6351bba15acd4ad0f2bc47927" datatype="html">
         <source>Play</source>
+        <source>Play</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">67</context>
@@ -185,12 +208,14 @@
       </trans-unit>
       <trans-unit id="06c663bf1474713f57551123a46b34318543b67d" datatype="html">
         <source>Reset</source>
+        <target>Reset</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="99ee4faa69cd2ea8e3678c1f557c0ff1f05aae46" datatype="html">
+        <source>Clear</source>
         <source>Clear</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -199,6 +224,7 @@
       </trans-unit>
       <trans-unit id="fe172c46f37adccef895b340fbdd084076293d8f" datatype="html">
         <source>Check names</source>
+        <source>Check names</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">78</context>
@@ -206,12 +232,14 @@
       </trans-unit>
       <trans-unit id="8ce8232c34e29d28a60613eed937f1539e06931d" datatype="html">
         <source>You have one or more players names repeated</source>
+        <source>You have one or more players names repeated</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
           <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
+        <source>Close</source>
         <source>Close</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/form/form.component.html</context>
@@ -228,12 +256,14 @@
       </trans-unit>
       <trans-unit id="65adc5f96aba4c3f838b2625b338e0e904067c0d" datatype="html">
         <source>Finish game</source>
+        <source>Finish game</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e5ad3b3091ba6045ad626f950209a5d19540e37f" datatype="html">
+        <source>Drinks</source>
         <source>Drinks</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
@@ -246,6 +276,7 @@
       </trans-unit>
       <trans-unit id="e08a77594f3d89311cdf6da5090044270909c194" datatype="html">
         <source>User</source>
+        <source>User</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
           <context context-type="linenumber">32</context>
@@ -253,6 +284,7 @@
       </trans-unit>
       <trans-unit id="f324a6867b1d23a56912d6bec936ce1de123f351" datatype="html">
         <source>Cards</source>
+        <target>Cards</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
           <context context-type="linenumber">33</context>
@@ -260,12 +292,14 @@
       </trans-unit>
       <trans-unit id="c83c140a52d5ef6128774eab27e6ed546c589213" datatype="html">
         <source>Winners</source>
+        <target>Winners</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="23b52e77dfb7db57ad941e799334e8f952002f1b" datatype="html">
+        <source>Set a rule</source>
         <source>Set a rule</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
@@ -274,6 +308,7 @@
       </trans-unit>
       <trans-unit id="571f1a7eab616622578f24f61392af31bd2bb008" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{userRules}}"/> choose your rule</source>
+        <target><x id="INTERPOLATION" equiv-text="{{userRules}}"/>Choose your rule</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
           <context context-type="linenumber">73</context>

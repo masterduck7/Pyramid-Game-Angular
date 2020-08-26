@@ -308,6 +308,7 @@
       </trans-unit>
       <trans-unit id="571f1a7eab616622578f24f61392af31bd2bb008" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{userRules}}"/> choose your rule</source>
+        <target><x id="INTERPOLATION" equiv-text="{{userRules}}"/> Escoge tu regla</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/game/game.component.html</context>
           <context context-type="linenumber">73</context>

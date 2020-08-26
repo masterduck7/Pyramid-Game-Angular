@@ -15,10 +15,9 @@
     "e2e": "ng e2e",
     "clean": "rimraf dist",
     "int:extract": "ng xi18n --output-path src/locale",
-    "start:en": "ng serve --configuration=en",
     "start:es": "ng serve --configuration=es",
-    "build:en": "ng build --configuration=en && mv dist/pyramid-game dist/pyramidgame",
-    "build:es": "ng build --configuration=es && mv dist/pyramid-game dist/pyramidgame"
+    "build:es": "ng build --prod --configuration=es --output-path=build/es/",
+    "build:i18n": "ng build --prod --configuration=es --output-path=build/es/ && ng build --prod --output-path=build/en/"
   },
   "private": true,
   "dependencies": {
