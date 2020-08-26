@@ -7,7 +7,7 @@
     "build": "rm -R dist/pyramidgame && ng build && mv dist/pyramid-game dist/pyramidgame",
     "build:prod": "ng build --prod && mv dist/pyramid-game dist/pyramidgame",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
-    "git:commit": "ng build --output-path=build && git add . && git commit -m",
+    "git:commit": "ng build --prod --output-path=build && git add . && git commit -m",
     "git:push": "git push origin",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
