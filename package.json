@@ -34,7 +34,6 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@webcomponents/custom-elements": "^1.0.0",
     "@webcomponents/webcomponentsjs": "^2.4.4",
-    "flag-icon-css": "^3.5.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
