@@ -14,40 +14,40 @@
         <main class="content-area center-content">
             <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
                 <div class="div-form">
-                    <h1 class="title">Set game data</h1>
+                    <h1 i18n class="title">Set game data</h1>
                     <br>
                     <div>
-                        <label>Mode</label>
+                        <label i18n>Mode</label>
                         <select formControlName="mode" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of ['Hard','Normal']">{{i}}</option>
                         </select><br>
-                        <small class="help-text">Hard mode: All cards drinks at least one player</small><br>
-                        <small class="help-text">Normal mode: Get random cards and fill with all drinks</small><br>
+                        <small i18n class="help-text">Hard mode: All cards drinks at least one player</small><br>
+                        <small i18n class="help-text">Normal mode: Get random cards and fill with all drinks</small><br>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                            <div *ngIf="f.height.errors.required" class="error">Height is required</div>
+                            <div i18n *ngIf="f.height.errors.required" class="error">Height is required</div>
                         </div>
                     </div>
                     <br>
                     <div>
-                        <label>Height</label>
+                        <label i18n>Height</label>
                         <select formControlName="height" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.height.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
                         </select>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                            <div *ngIf="f.height.errors.required" class="error">Height is required</div>
+                            <div i18n *ngIf="f.height.errors.required" class="error">Height is required</div>
                         </div>
                     </div>
                     <br>
                     <div>
-                        <label>Number of players</label>
+                        <label i18n>Number of players</label>
                         <select formControlName="numberPlayers" class="form-control select-form" (change)="onChangeTickets($event)" [ngClass]="{ 'is-invalid': submitted && f.numberPlayers.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">{{i}}</option>
                         </select>
                         <div *ngIf="submitted && f.numberPlayers.errors" class="invalid-feedback">
-                            <div *ngIf="f.numberPlayers.errors.required" class="error">Number of players is required</div>
+                            <div i18n *ngIf="f.numberPlayers.errors.required" class="error">Number of players is required</div>
                         </div>
                     </div>
                     <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
@@ -56,7 +56,7 @@
                                 <div class="form-group col-6">
                                     <input type="text" formControlName="name" placeholder="Player {{i + 1}}" class="form-control input-form-text" [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
                                     <div *ngIf="submitted && ticket.controls.name.errors" class="invalid-feedback">
-                                        <div *ngIf="ticket.controls.name.errors.required" class="error">Name is required</div>
+                                        <div i18n *ngIf="ticket.controls.name.errors.required" class="error">Name is required</div>
                                     </div>
                                 </div>
                             </div>
@@ -64,9 +64,9 @@
                     </div>
                     <br>
                     <div class="card-footer text-center">
-                        <button class="btn btn-primary mr-1">Play</button><br><br>
-                        <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
-                        <button class="btn btn-secondary" type="button" (click)="onClear()">Clear</button>
+                        <button i18n class="btn btn-primary mr-1">Play</button><br><br>
+                        <button i18n class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
+                        <button i18n class="btn btn-secondary" type="button" (click)="onClear()">Clear</button>
                     </div>
                 </div>
             </form>
@@ -75,11 +75,11 @@
 </clr-main-container>
 
 <clr-modal [(clrModalOpen)]="modalError" [clrModalClosable]="false">
-    <h3 class="modal-title">Check names</h3>
+    <h3 i18n class="modal-title">Check names</h3>
     <div class="modal-body">
-        <p>You have one or more players names repeated</p>
+        <p i18n>You have one or more players names repeated</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="closeModalError()">Close</button>
+        <button i18n type="button" class="btn btn-primary" (click)="closeModalError()">Close</button>
     </div>
 </clr-modal>

@@ -25,13 +25,13 @@
             </table>
         </main>
         <nav class="sidenav nav" [clr-nav-level]="2">
-            <h2 style="text-align: center;">Drinks</h2>
+            <h2 i18n style="text-align: center;">Drinks</h2>
             <table class="table table-users">
                 <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Cards</th>
-                        <th>Drinks</th>
+                        <th i18n>User</th>
+                        <th i18n>Cards</th>
+                        <th i18n>Drinks</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +47,7 @@
 </clr-main-container>
 
 <clr-modal [(clrModalOpen)]="modalWinners" [clrModalClosable]="false">
-    <h3 class="modal-title">Winners</h3>
+    <h3 i18n class="modal-title">Winners</h3>
     <div class="modal-body">
         <p>{{winners}}</p>
     </div>
@@ -63,16 +63,16 @@
         <img src={{cardPlayed}} alt="Card" class="card-played"/>
     </div>
     <div class="modal-footer footer-modal">
-        <button type="button" class="btn btn-primary" (click)="closeModalCard()" >Close</button>
+        <button i18n type="button" class="btn btn-primary" (click)="closeModalCard()" >Close</button>
     </div>
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalRules" [clrModalClosable]="false">
-    <h3 class="modal-title">Set a rule</h3>
+    <h3 i18n class="modal-title">Set a rule</h3>
     <div class="modal-body">
-        <p>{{userRules}} choose your rule</p>
+        <p i18n>{{userRules}} choose your rule</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="closeModalRules()">Close</button>
+        <button i18n type="button" class="btn btn-primary" (click)="closeModalRules()">Close</button>
     </div>
 </clr-modal>
