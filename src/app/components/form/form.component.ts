@@ -12,6 +12,7 @@ export class FormComponent implements OnInit {
 
     dynamicForm: FormGroup;
     submitted = false;
+    modalError:boolean = false;
 
     constructor(private formBuilder: FormBuilder, private route: Router) { }
 
@@ -63,7 +64,7 @@ export class FormComponent implements OnInit {
         // Check is any name is repeated
         let test:string = this.checkRepeatedPlayers();
         if (test === 'error') {
-            alert('Check names')
+            this.modalError = true;
             return;
         }
         // stop here if form is invalid
@@ -90,5 +91,9 @@ export class FormComponent implements OnInit {
         this.t.reset();
         this.h.reset();
         this.m.reset();
+    }
+
+    closeModalError() {
+        this.modalError = false;
     }
 }

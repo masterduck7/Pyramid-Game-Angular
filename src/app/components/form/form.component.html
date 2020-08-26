@@ -73,3 +73,13 @@
         </main>
     </div>
 </clr-main-container>
+
+<clr-modal [(clrModalOpen)]="modalError" [clrModalClosable]="false">
+    <h3 class="modal-title">Check names</h3>
+    <div class="modal-body">
+        <p>You have one or more players names repeated</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="closeModalError()">Close</button>
+    </div>
+</clr-modal>
