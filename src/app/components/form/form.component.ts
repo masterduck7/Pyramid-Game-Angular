@@ -79,7 +79,7 @@ export class FormComponent implements OnInit {
     checkNumberCards() {
         let numberCards:number = 0;
         let height:number = Number(localStorage.getItem('pyramid_height'));
-        let userCards:number = Number(2 * Number(this.f.players.value.length))
+        let userCards:number = Number(8 * Number(this.f.players.value.length))
         for (let i = 1; i < height + 1 ; i++) {
             numberCards = Number(numberCards) + Number(i);
         }
