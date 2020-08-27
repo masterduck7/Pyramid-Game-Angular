@@ -14,6 +14,7 @@ export class FormComponent implements OnInit {
     dynamicForm: FormGroup;
     submitted = false;
     modalError:boolean = false;
+    modalNumberCards:boolean = false;
 
     constructor(private formBuilder: FormBuilder, private route: Router, public translate: TranslateService) {
         translate.addLangs(['en', 'es']);
@@ -75,6 +76,26 @@ export class FormComponent implements OnInit {
         return result;
     }
 
+    checkNumberCards() {
+        let numberCards:number = 0;
+        let height:number = Number(localStorage.getItem('pyramid_height'));
+        let userCards:number = Number(2 * Number(this.f.players.value.length))
+        for (let i = 1; i < height + 1 ; i++) {
+            numberCards = Number(numberCards) + Number(i);
+        }
+        if (numberCards > userCards) {
+            this.modalNumberCards = true;
+        }
+        else {
+            this.route.navigate(['/game']);
+        }
+    }
+
+    closeModalNumberCards() {
+        this.modalNumberCards = false;
+        this.route.navigate(['/game']);
+    }
+
     onSubmit() {
         this.submitted = true;
         // Check is any name is repeated
@@ -91,7 +112,7 @@ export class FormComponent implements OnInit {
         localStorage.setItem('pyramid_height',this.f.height.value)
         localStorage.setItem('pyramid_mode',this.f.mode.value)
         localStorage.setItem('pyramid_users',JSON.stringify(this.f.players.value))
-        this.route.navigate(['/game']);
+        this.checkNumberCards()
     }
 
     onReset() {

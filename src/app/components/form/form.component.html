@@ -86,3 +86,13 @@
         <button i18n type="button" class="btn btn-primary" (click)="closeModalError()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalNumberCards" [clrModalClosable]="false">
+    <h3 i18n class="modal-title">{{'Number of users to play' | translate}}</h3>
+    <div class="modal-body">
+        <p i18n>{{'number cards error' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+        <button i18n type="button" class="btn btn-primary" (click)="closeModalNumberCards()">{{'Close' | translate}}</button>
+    </div>
+</clr-modal>

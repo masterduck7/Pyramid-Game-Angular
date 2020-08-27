@@ -30,6 +30,8 @@
     "Clear" : "Clear",
     "Check names" : "Check names",
     "You have one or more players names repeated" : "You have one or more players names repeated",
+    "Number of users to play": "Number of players to fill pyramid",
+    "number cards error": "The number of selected players is not enough to complete the pyramid.\nIt will be completed with card 'All drinks'",
     "Close" : "Close",
     "Finish game" : "Finish game",
     "Drinks" : "Drinks",

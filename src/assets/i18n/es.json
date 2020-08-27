@@ -30,6 +30,8 @@
     "Clear" : "Limpiar",
     "Check names" : "Revise nombres de los jugadores",
     "You have one or more players names repeated" : "Existe mas de un usuario con el mismo nombre",
+    "Number of users to play": "Numero de jugadores para completar la piramide",
+    "number cards error": "El numero de jugadores seleccionados no alcanza para completar la piramide.\nSe completara con carta 'Todos beben'",
     "Close" : "Cerrar",
     "Finish game" : "Terminar juego",
     "Drinks" : "Tragos",
