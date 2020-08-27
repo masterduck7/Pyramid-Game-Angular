@@ -13,12 +13,7 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "clean": "rimraf dist",
-    "int:extract": "ng xi18n --output-path src/locale",
-    "start:en": "ng serve --configuration=en",
-    "start:es": "ng serve --configuration=es",
-    "build:en": "ng build --configuration=en && mv dist/pyramid-game dist/pyramidgame",
-    "build:es": "ng build --configuration=es && mv dist/pyramid-game dist/pyramidgame"
+    "clean": "rimraf dist"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +30,8 @@
     "@clr/core": "^3.1.5",
     "@clr/icons": "^4.0.0-rc.1",
     "@clr/ui": "^4.0.0-rc.1",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "@webcomponents/custom-elements": "^1.0.0",
     "@webcomponents/webcomponentsjs": "^2.4.4",
     "rxjs": "~6.5.5",

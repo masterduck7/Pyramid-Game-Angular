@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
@@ -14,7 +15,22 @@ export class FormComponent implements OnInit {
     submitted = false;
     modalError:boolean = false;
 
-    constructor(private formBuilder: FormBuilder, private route: Router) { }
+    constructor(private formBuilder: FormBuilder, private route: Router, public translate: TranslateService) {
+        translate.addLangs(['en', 'es']);
+        let lang:string = localStorage.getItem('pyramid_lang')
+        if (lang) {
+            translate.setDefaultLang(lang);
+        } else {
+            translate.setDefaultLang('en');
+            localStorage.setItem('pyramid_lang', 'en');
+        }
+        
+      }
+
+    switchLang(lang: string) {
+        this.translate.use(lang);
+        localStorage.setItem('pyramid_lang', lang);
+    }
 
     ngOnInit() {
         this.dynamicForm = this.formBuilder.group({

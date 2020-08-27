@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FormComponent } from './form.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FormComponent', () => {
   let component: FormComponent;
@@ -13,6 +14,7 @@ describe('FormComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot()
       ],
       declarations: [ FormComponent ]
     })
