@@ -152,6 +152,7 @@ export class GameComponent implements OnInit {
     users.forEach(user => {
       userList.push(user.name)
       localStorage.setItem('pyramid_user_' + user.name, '0')
+      localStorage.setItem('pyramid_user_gifts_' + user.name, '0')
     });
     this.userList = userList;
   }
@@ -308,6 +309,10 @@ export class GameComponent implements OnInit {
         users.forEach(user => {
           this.addDrinks(user, item.row + 1)
         });
+      } else {
+        users.forEach(user => {
+          this.addGifts(user, item.row + 1)
+        })
       }
       this.userPlayed = users.join(', ');
       if (users.length > 1) {
@@ -349,10 +354,17 @@ export class GameComponent implements OnInit {
     this.updateUserDrinks();
   }
 
+  addGifts(user: string, numberGifts: number) {
+    let beforeGifts: string = localStorage.getItem('pyramid_user_gifts_' + user)
+    let newGifts: number = Number(beforeGifts) + numberGifts
+    localStorage.setItem('pyramid_user_gifts_' + user, newGifts.toString())
+    this.updateUserDrinks();
+  }
+
   setUserDrinks(userData: object[]) {
     let userDrinks: object[] = []
     userData.forEach(user => {
-      let userData: object = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']) }
+      let userData: object = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']), gifts: localStorage.getItem('pyramid_user_gifts_' + user['name']) }
       userDrinks.push(userData)
     });
     this.userDrinks = userDrinks;
@@ -361,7 +373,7 @@ export class GameComponent implements OnInit {
   updateUserDrinks() {
     let userDrinks: object[] = []
     this.userDrinks.forEach(user => {
-      let userData: object = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']) }
+      let userData: object = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']), gifts: localStorage.getItem('pyramid_user_gifts_' + user['name']) }
       userDrinks.push(userData)
     });
     userDrinks.sort((a, b) => {
@@ -394,6 +406,7 @@ export class GameComponent implements OnInit {
     localStorage.removeItem('pyramid_users')
     this.userList.forEach(user => {
       localStorage.removeItem('pyramid_user_' + user)
+      localStorage.removeItem('pyramid_user_gifts_' + user)
     });
   }
 
