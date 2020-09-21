@@ -68,7 +68,6 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.mode = localStorage.getItem('pyramid_mode')
     this.height = localStorage.getItem('pyramid_height')
-    this.mode = localStorage.getItem('pyramid_mode')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
     this.setGame(this.mode);
     this.setWords();
