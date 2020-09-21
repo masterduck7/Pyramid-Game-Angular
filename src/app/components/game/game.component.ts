@@ -89,6 +89,14 @@ export class GameComponent implements OnInit {
       this.setNumberCardsInGame();
       this.setUserCards('Normal');
       this.setStructure('Normal');
+    } else if (mode === 'Birthday') {
+      this.setNumberCardsInGame();
+      this.setUserCards('Hard');
+      if (this.numberCardsInGame > this.userCardsInGame.length) {
+        let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
+        this.fillBoard(diff);
+      }
+      this.setStructure('Hard');
     }
     this.setRuleTime();
   }
