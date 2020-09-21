@@ -12,6 +12,7 @@ export class GameComponent implements OnInit {
   language: string = localStorage.getItem('pyramid_lang');
   height: string;
   mode: string;
+  rule: string;
   players: string[];
   userList: string[];
   userDrinks: object[] = [];
@@ -69,6 +70,7 @@ export class GameComponent implements OnInit {
     this.mode = localStorage.getItem('pyramid_mode')
     this.height = localStorage.getItem('pyramid_height')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
+    this.rule = localStorage.getItem('pyramid_rule') || 'Yes'
     this.setGame(this.mode);
     this.setWords();
   }
@@ -448,6 +450,7 @@ export class GameComponent implements OnInit {
     this.userMoreDrinks()
     localStorage.removeItem('pyramid_height')
     localStorage.removeItem('pyramid_mode')
+    localStorage.removeItem('pyramid_rule')
     localStorage.removeItem('pyramid_users')
     this.userList.forEach(user => {
       localStorage.removeItem('pyramid_user_' + user)
@@ -503,7 +506,7 @@ export class GameComponent implements OnInit {
   // Rule created after 10 cards
   // If last card not show rule
   ruleTime() {
-    if (this.mode === "Hard") {
+    if (this.rule === 'Yes') {
       if ((Number(this.cardInGame) + 1) === this.lastCard) {
         return false;
       }
