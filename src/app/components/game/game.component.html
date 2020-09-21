@@ -14,10 +14,11 @@
         <main class="content-area center-content">
             <table>
                 <tbody>
-                    <tr class="row" *ngFor="let row of structure">           
+                    <tr class="row" *ngFor="let row of structure">
                         <td *ngFor="let item of row">
-                            <button id={{item.number}} [disabled]="checkCard(item.number)" (click)="playCard(item)" class="card button">
-                                
+                            <button id={{item.number}} [disabled]="checkCard(item.number)" (click)="playCard(item)"
+                                class="card button">
+
                             </button>
                         </td>
                     </tr>
@@ -32,6 +33,7 @@
                         <th i18n>{{'User' | translate}}</th>
                         <th i18n>{{'Cards' | translate}}</th>
                         <th i18n>{{'Drinks' | translate}}</th>
+                        <th i18n>{{'Gifts' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +41,7 @@
                         <td>{{user.name}}</td>
                         <td>{{user.cards}}</td>
                         <td>{{user.drinks}}</td>
+                        <td>{{user.gifts}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -49,7 +52,22 @@
 <clr-modal [(clrModalOpen)]="modalWinners" [clrModalClosable]="false">
     <h3 i18n class="modal-title">{{'Winners' | translate}}</h3>
     <div class="modal-body">
-        <p>{{winnerNames}} {{'with' | translate}} {{winnerDrinks}} {{'Drinks_min' | translate}}</p>
+        <table class="table table-users">
+            <thead>
+                <tr>
+                    <th i18n>{{'User' | translate}}</th>
+                    <th i18n>{{'Drinks' | translate}}</th>
+                    <th i18n>{{'Gifts' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userDrinks">
+                    <td>{{user.name}}</td>
+                    <td>{{user.drinks}}</td>
+                    <td>{{user.gifts}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="closeModalWinners()">{{'Finish' | translate}}</button>
@@ -58,12 +76,13 @@
 
 <clr-modal [(clrModalOpen)]="modalCard" [clrModalClosable]="false" [clrModalSize]="'sm'">
     <div class="modal-body body-modal">
-        <p>{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
+        <p *ngIf="notRepeatedOnly">{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
+        <p *ngIf="repeated">{{userPlayedRepeated}} {{actionRepeated}} {{2*actualRow}} {{shotsRepeated}}</p>
         <br>
-        <img src={{cardPlayed}} alt="Card" class="card-played"/>
+        <img src={{cardPlayed}} alt="Card" class="card-played" />
     </div>
     <div class="modal-footer footer-modal">
-        <button i18n type="button" class="btn btn-primary" (click)="closeModalCard()" >{{'Close' | translate}}</button>
+        <button i18n type="button" class="btn btn-primary" (click)="closeModalCard()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>
 
