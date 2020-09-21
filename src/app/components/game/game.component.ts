@@ -31,6 +31,7 @@ export class GameComponent implements OnInit {
   setRule: number;
   modalRules: boolean = false;
   userRules: string = '';
+  userWithoutRule: string[];
   modalWinners: boolean = false;
   winnerNames: string = '';
   winnerDrinks: string = '';
@@ -155,6 +156,7 @@ export class GameComponent implements OnInit {
       localStorage.setItem('pyramid_user_gifts_' + user.name, '0')
     });
     this.userList = userList;
+    this.userWithoutRule = userList;
   }
 
   // Set structure by mode
@@ -429,8 +431,29 @@ export class GameComponent implements OnInit {
 
   // Choose random user
   createRule() {
-    let randomUser: string = this.userList[Math.floor(Math.random() * this.userList.length)];
+    // If all users create rule, start again list
+    if (this.userWithoutRule.length === 0) {
+      this.userWithoutRule = this.userList
+    }
+    let randomUser: string = this.userWithoutRule[Math.floor(Math.random() * this.userWithoutRule.length)];
     this.userRules = randomUser;
+    // Remove user from list
+    let newUserWithoutRule: string[] = this.userWithoutRule;
+    for (let index = 0; index < newUserWithoutRule.length; index++) {
+      if (randomUser === newUserWithoutRule[index]) {
+        delete newUserWithoutRule[index]
+        break
+      }
+    }
+    // Remove undefined items
+    const newUserWithoutRuleClean = []
+    for (let index = 0; index < newUserWithoutRule.length; index++) {
+      if (newUserWithoutRule[index] !== undefined) {
+        newUserWithoutRuleClean.push(newUserWithoutRule[index])
+      }
+    }
+    this.userWithoutRule = newUserWithoutRuleClean
+    // Open Modal
     this.modalRules = true;
   }
 
