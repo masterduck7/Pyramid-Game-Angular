@@ -38,10 +38,15 @@ export class GameComponent implements OnInit {
   modalCard: boolean = false;
   cardPlayed: string = '';
   userPlayed: string = '';
+  userPlayedRepeated: string = '';
   action: string = '';
+  actionRepeated: string = '';
   actualRow: string = '';
   shots: string = '';
+  shotsRepeated: string = 'shots';
   modalWords: object;
+  repeated: boolean = false;
+  notRepeatedOnly: boolean = false;
 
   constructor(private route: Router, public translate: TranslateService) {
     translate.addLangs(['en', 'es']);
@@ -297,6 +302,8 @@ export class GameComponent implements OnInit {
   }
 
   play(item) {
+    this.notRepeatedOnly = true
+    this.repeated = false
     this.cardInGame = (Number(this.cardInGame) + 1).toString()
     this.cardPlayed = "../../../assets/Cards/" + item.card + ".png";
     if (item.card === '0') {
@@ -306,17 +313,32 @@ export class GameComponent implements OnInit {
         this.addDrinks(user['name'], item.row + 1)
       });
     } else {
-      let users: string[] = this.getUsersWithCard(item['card']);
+      let usersWithCard = this.getUsersWithCard(item['card']);
+      let users: string[] = usersWithCard[0]
+      let usersRepeated: string[] = usersWithCard[1]
+      if (usersRepeated.length > 0) {
+        this.repeated = true;
+      }
+      if (users.length === 0) {
+        this.notRepeatedOnly = false
+      }
       if (item.type) {
         users.forEach(user => {
           this.addDrinks(user, item.row + 1)
+        });
+        usersRepeated.forEach(user => {
+          this.addDrinks(user, 2 * (item.row + 1))
         });
       } else {
         users.forEach(user => {
           this.addGifts(user, item.row + 1)
         })
+        usersRepeated.forEach(user => {
+          this.addGifts(user, 2 * (item.row + 1))
+        })
       }
       this.userPlayed = users.join(', ');
+      this.userPlayedRepeated = usersRepeated.join(', ');
       if (users.length > 1) {
         if (item.type) {
           this.action = this.returnTranslation('drinks');
@@ -330,6 +352,19 @@ export class GameComponent implements OnInit {
           this.action = this.returnTranslation('give');
         }
       }
+      if (usersRepeated.length > 1) {
+        if (item.type) {
+          this.actionRepeated = this.returnTranslation('drinks');
+        } else {
+          this.actionRepeated = this.returnTranslation('gives');
+        }
+      } else {
+        if (item.type) {
+          this.actionRepeated = this.returnTranslation('drink');
+        } else {
+          this.actionRepeated = this.returnTranslation('give');
+        }
+      }
     }
     this.actualRow = item.row + 1;
     if (item.row === 0) {
@@ -341,12 +376,21 @@ export class GameComponent implements OnInit {
 
   getUsersWithCard(card: string) {
     let users: string[] = [];
+    let usersRepeated: string[] = [];
     this.userDrinks.forEach(user => {
-      if (user['cards'].includes(card)) {
+      var cont: number = 0
+      user['cards'].forEach(card_user => {
+        if (card_user === card) {
+          cont += 1
+        }
+      });
+      if (cont === 2) {
+        usersRepeated.push(user['name'])
+      } else if (cont === 1) {
         users.push(user['name'])
       }
     });
-    return users;
+    return [users, usersRepeated];
   }
 
   addDrinks(user: string, numberDrinks: number) {

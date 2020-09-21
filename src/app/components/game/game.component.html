@@ -76,7 +76,8 @@
 
 <clr-modal [(clrModalOpen)]="modalCard" [clrModalClosable]="false" [clrModalSize]="'sm'">
     <div class="modal-body body-modal">
-        <p>{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
+        <p *ngIf="notRepeatedOnly">{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
+        <p *ngIf="repeated">{{userPlayedRepeated}} {{actionRepeated}} {{2*actualRow}} {{shotsRepeated}}</p>
         <br>
         <img src={{cardPlayed}} alt="Card" class="card-played" />
     </div>
