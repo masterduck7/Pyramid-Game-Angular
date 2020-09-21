@@ -396,14 +396,14 @@ export class GameComponent implements OnInit {
     let beforeDrinks: string = localStorage.getItem('pyramid_user_' + user)
     let newDrinks: number = Number(beforeDrinks) + numberDrinks
     localStorage.setItem('pyramid_user_' + user, newDrinks.toString())
-    this.updateUserDrinks();
+    this.updateUserDrinksAndGifts();
   }
 
   addGifts(user: string, numberGifts: number) {
     let beforeGifts: string = localStorage.getItem('pyramid_user_gifts_' + user)
     let newGifts: number = Number(beforeGifts) + numberGifts
     localStorage.setItem('pyramid_user_gifts_' + user, newGifts.toString())
-    this.updateUserDrinks();
+    this.updateUserDrinksAndGifts();
   }
 
   setUserDrinks(userData: object[]) {
@@ -415,7 +415,7 @@ export class GameComponent implements OnInit {
     this.userDrinks = userDrinks;
   }
 
-  updateUserDrinks() {
+  updateUserDrinksAndGifts() {
     let userDrinks: object[] = []
     this.userDrinks.forEach(user => {
       let userData: object = { name: user['name'], cards: user['cards'], drinks: localStorage.getItem('pyramid_user_' + user['name']), gifts: localStorage.getItem('pyramid_user_gifts_' + user['name']) }
