@@ -110,7 +110,6 @@ export class FormComponent implements OnInit {
         }
         // stop here if form is invalid
         if (this.dynamicForm.invalid) {
-            console.log(this.dynamicForm.controls.height.status)
             if (this.dynamicForm.controls.height.status === "VALID" && this.dynamicForm.controls.mode.status === "VALID" && this.dynamicForm.controls.numberPlayers.status === "VALID" && this.dynamicForm.controls.players.status === "VALID" && this.dynamicForm.controls.rule.status === "VALID" && this.f.mode.value !== "Birthday" && this.f.birthday.value === null) {
 
             } else {

@@ -23,13 +23,10 @@
                         <select formControlName="mode" class="form-control select-form"
                             [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
                             <option value=""></option>
-                            <option i18n value="Hard">{{'Hard' | translate}}</option>
                             <option i18n value="Normal">{{'Normal' | translate}}</option>
                             <option i18n value="Nuclear">{{'Nuclear' | translate}}</option>
                             <option i18n value="Birthday">{{'Birthday' | translate}}</option>
                         </select><br>
-                        <small *ngIf="f.mode.value === 'Hard'" i18n
-                            class="help-text">{{'Hard mode' | translate}}</small>
                         <small *ngIf="f.mode.value === 'Normal'" i18n
                             class="help-text">{{'Normal mode' | translate}}</small>
                         <small *ngIf="f.mode.value === 'Nuclear'" i18n

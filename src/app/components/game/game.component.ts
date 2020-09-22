@@ -77,34 +77,30 @@ export class GameComponent implements OnInit {
 
   setGame(mode: string) {
     this.setUserVars(this.players);
-    if (mode === 'Hard') {
+    if (mode === 'Normal') {
       this.setNumberCardsInGame();
-      this.setUserCards('Hard');
+      this.setUserCards();
       if (this.numberCardsInGame > this.userCardsInGame.length) {
         let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
         this.fillBoard(diff);
       }
-      this.setStructure('Hard');
-    } else if (mode === 'Normal') {
-      this.setNumberCardsInGame();
-      this.setUserCards('Normal');
-      this.setStructure('Normal');
+      this.setStructure();
     } else if (mode === 'Birthday') {
       this.setNumberCardsInGame();
-      this.setUserCards('Hard');
+      this.setUserCards();
       if (this.numberCardsInGame > this.userCardsInGame.length) {
         let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
         this.fillBoard(diff);
       }
-      this.setStructure('Hard');
+      this.setStructure();
     } else if (mode === 'Nuclear') {
       this.setNumberCardsInGame();
-      this.setUserCards('Hard');
+      this.setUserCards();
       if (this.numberCardsInGame > this.userCardsInGame.length) {
         let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
         this.fillBoard(diff);
       }
-      this.setStructure('Hard');
+      this.setStructure();
     }
 
     this.setRuleTime();
@@ -118,39 +114,25 @@ export class GameComponent implements OnInit {
     this.numberCardsInGame = number_cards;
   }
 
-  setUserCards(mode: string) {
+  setUserCards() {
     let userData: object[] = [];
-    if (mode === 'Hard') {
-      this.players.forEach(user => {
-        let card1: string = this.setCards('user', mode, false);
-        let card2: string = this.setCards('user', mode, false);
-        userData.push({ 'name': user['name'], 'cards': [card1, card2] })
-        if (!this.userCardsInGame.includes(card1)) {
-          this.userCardsInGame.push(card1);
-          this.userCardsInGame.push(card1);
-          this.userCardsInGame.push(card1);
-          this.userCardsInGame.push(card1);
-        }
-        if (!this.userCardsInGame.includes(card2)) {
-          this.userCardsInGame.push(card2);
-          this.userCardsInGame.push(card2);
-          this.userCardsInGame.push(card2);
-          this.userCardsInGame.push(card2);
-        }
-      });
-    } else if (mode === 'Normal') {
-      this.players.forEach(user => {
-        let card1: string = this.setCards('user', mode, false);
-        let card2: string = this.setCards('user', mode, false);
-        userData.push({ 'name': user['name'], 'cards': [card1, card2] })
-        if (!this.userCardsInGame.includes(card1)) {
-          this.userCardsInGame.push(card1);
-        }
-        if (!this.userCardsInGame.includes(card2)) {
-          this.userCardsInGame.push(card2);
-        }
-      });
-    }
+    this.players.forEach(user => {
+      let card1: string = this.setCards('user', false);
+      let card2: string = this.setCards('user', false);
+      userData.push({ 'name': user['name'], 'cards': [card1, card2] })
+      if (!this.userCardsInGame.includes(card1)) {
+        this.userCardsInGame.push(card1);
+        this.userCardsInGame.push(card1);
+        this.userCardsInGame.push(card1);
+        this.userCardsInGame.push(card1);
+      }
+      if (!this.userCardsInGame.includes(card2)) {
+        this.userCardsInGame.push(card2);
+        this.userCardsInGame.push(card2);
+        this.userCardsInGame.push(card2);
+        this.userCardsInGame.push(card2);
+      }
+    });
     this.setUserDrinks(userData);
   }
 
@@ -184,7 +166,7 @@ export class GameComponent implements OnInit {
 
   // Set structure by mode
   // If normal and card without user fill with 'all drinks' card
-  setStructure(mode: string) {
+  setStructure() {
     let set_structure: object[][] = [];
     let cont: number = this.numberCardsInGame;
     let rowNumber: number = Number(this.height) - 1;
@@ -193,10 +175,10 @@ export class GameComponent implements OnInit {
       let row: object[] = [];
       for (let data = 0; data < index; data++) {
         if (index === 1) {
-          row.push({ card: this.setCards('board', mode, true), number: cont - 1, row: rowNumber, type: type })
+          row.push({ card: this.setCards('board', true), number: cont - 1, row: rowNumber, type: type })
           cont = cont - 1;
         } else {
-          row.push({ card: this.setCards('board', mode, false), number: cont - 1, row: rowNumber, type: type })
+          row.push({ card: this.setCards('board', false), number: cont - 1, row: rowNumber, type: type })
           cont = cont - 1;
         }
       }
@@ -210,71 +192,36 @@ export class GameComponent implements OnInit {
 
   // Set cards, first card never is 'all drinks'
   // 5 tries to get another card. If not found put all drinks card
-  setCards(type: string, mode: string, first: boolean) {
+  setCards(type: string, first: boolean) {
     if (type === 'board') {
-      if (mode === 'Hard') {
-        let randomCard: string = this.userCardsInGame[Math.floor(Math.random() * this.userCardsInGame.length)];
-        if (first) {
-          let cont: number = 0;
-          while (cont < 5) {
-            let card: string = this.userCardsInGame[Math.floor(Math.random() * this.userCardsInGame.length)];
-            if (card !== '0') {
-              randomCard = card;
-              cont = 5;
-            }
+      let randomCard: string = this.userCardsInGame[Math.floor(Math.random() * this.userCardsInGame.length)];
+      if (first) {
+        let cont: number = 0;
+        while (cont < 5) {
+          let card: string = this.userCardsInGame[Math.floor(Math.random() * this.userCardsInGame.length)];
+          if (card !== '0') {
+            randomCard = card;
+            cont = 5;
           }
-        }
-        // Remove cards from list
-        let new_card_list: string[] = this.userCardsInGame;
-        for (let index = 0; index < new_card_list.length; index++) {
-          if (randomCard === new_card_list[index]) {
-            delete new_card_list[index]
-            break
-          }
-        }
-        // Remove undefined items
-        const new_card_list_clean = []
-        for (let index = 0; index < new_card_list.length; index++) {
-          if (new_card_list[index] !== undefined) {
-            new_card_list_clean.push(new_card_list[index])
-          }
-        }
-        this.userCardsInGame = new_card_list_clean
-        return randomCard;
-      } else if (mode === 'Normal') {
-        let randomCard: string = this.boardCardList[Math.floor(Math.random() * this.boardCardList.length)];
-        if (first) {
-          let cont: number = 0;
-          while (cont < 5) {
-            let card: string = this.boardCardList[Math.floor(Math.random() * this.boardCardList.length)];
-            if (this.userCardsInGame.includes(card)) {
-              randomCard = card;
-              cont = 5;
-            }
-          }
-        }
-        // Remove cards from list
-        let new_card_list: string[] = this.boardCardList;
-        for (let index = 0; index < new_card_list.length; index++) {
-          if (randomCard === new_card_list[index]) {
-            delete new_card_list[index]
-            break
-          }
-        }
-        // Remove undefined items
-        const new_card_list_clean = []
-        for (let index = 0; index < new_card_list.length; index++) {
-          if (new_card_list[index] !== undefined) {
-            new_card_list_clean.push(new_card_list[index])
-          }
-        }
-        this.boardCardList = new_card_list_clean
-        if (!this.userCardsInGame.includes(randomCard)) {
-          return '0'
-        } else {
-          return randomCard;
         }
       }
+      // Remove cards from list
+      let new_card_list: string[] = this.userCardsInGame;
+      for (let index = 0; index < new_card_list.length; index++) {
+        if (randomCard === new_card_list[index]) {
+          delete new_card_list[index]
+          break
+        }
+      }
+      // Remove undefined items
+      const new_card_list_clean = []
+      for (let index = 0; index < new_card_list.length; index++) {
+        if (new_card_list[index] !== undefined) {
+          new_card_list_clean.push(new_card_list[index])
+        }
+      }
+      this.userCardsInGame = new_card_list_clean
+      return randomCard;
 
     } else if (type === 'user') {
       let randomCard: string = this.userCardList[Math.floor(Math.random() * this.userCardList.length)];
