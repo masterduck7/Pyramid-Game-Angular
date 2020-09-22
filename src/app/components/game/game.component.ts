@@ -29,6 +29,7 @@ export class GameComponent implements OnInit {
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   userCardsInGame: string[] = [];
+  ruleType: string[] = [];
   setRule: number;
   modalRules: boolean = false;
   userRules: string = '';
@@ -72,7 +73,7 @@ export class GameComponent implements OnInit {
     this.height = localStorage.getItem('pyramid_height')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
     this.birthdayBoy = localStorage.getItem('pyramid_birthday')
-    this.rule = localStorage.getItem('pyramid_rule') || 'Yes'
+    this.rule = localStorage.getItem('pyramid_rule') || ''
     this.setGame();
     this.setWords();
   }
@@ -88,7 +89,16 @@ export class GameComponent implements OnInit {
     }
     this.setStructure();
     if (this.rule === 'Yes') {
-      this.setRuleTime();
+      this.ruleType.push('Normal')
+      this.setRuleTime('Normal');
+    }
+    if (this.mode === 'Birthday') {
+      this.ruleType.push('Birthday')
+      this.setRuleTime('Birthday');
+    }
+    if (this.mode === 'Nuclear') {
+      this.ruleType.push('Nuclear')
+      this.setRuleTime('Nuclear');
     }
   }
 
@@ -242,7 +252,7 @@ export class GameComponent implements OnInit {
   // Play Cards
   playCard(item) {
     if (this.ruleTime()) {
-      this.createRule();
+      this.createRule(this.ruleType);
       this.play(item);
     } else {
       this.play(item);
@@ -424,8 +434,44 @@ export class GameComponent implements OnInit {
 
   /// Rules ///
 
-  // Choose random user
-  createRule() {
+  // Set Rule time
+  // Normal rule: If pyramid height > 4 rules every 10 cards, else rule every 5 cards
+  setRuleTime(type: string) {
+    if (type === "Normal") {
+      if (Number(this.height) > 4) {
+        this.setRule = 10
+      } else {
+        this.setRule = 5
+      }
+    } else if (type === "Birthday") {
+
+    } else if (type === "Nuclear") {
+
+    }
+  }
+
+  // Check if time to rule
+  // Normal rule: Rule created after 10 cards. If last card, not show rule
+  ruleTime() {
+    if (this.rule === 'Yes') {
+      if ((Number(this.cardInGame) + 1) === this.lastCard) {
+        return false;
+      }
+      if (Number.isInteger((Number(this.cardInGame) + 1) / this.setRule)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  // Create Rule
+  // Normal rule: Choose random user to create one
+  // Birthday rule: Birthday boy drinks double
+  // Nuclear rule: Missiles fall every x time
+  createRule(ruleType: string[]) {
     // If all users create rule, start again list
     if (this.userWithoutRule.length === 0) {
       this.userWithoutRule = this.userList
@@ -452,32 +498,6 @@ export class GameComponent implements OnInit {
     this.modalRules = true;
   }
 
-  // Rule created after 10 cards
-  // If last card not show rule
-  ruleTime() {
-    if (this.rule === 'Yes') {
-      if ((Number(this.cardInGame) + 1) === this.lastCard) {
-        return false;
-      }
-      if (Number.isInteger((Number(this.cardInGame) + 1) / this.setRule)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
-  // If pyramid height > 4 rules every 10 cards
-  // else rule every 5 cards
-  setRuleTime() {
-    if (Number(this.height) > 4) {
-      this.setRule = 10
-    } else {
-      this.setRule = 5
-    }
-  }
 
   /// Utils ///
 
