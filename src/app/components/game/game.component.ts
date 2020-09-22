@@ -97,7 +97,16 @@ export class GameComponent implements OnInit {
         this.fillBoard(diff);
       }
       this.setStructure('Hard');
+    } else if (mode === 'Nuclear') {
+      this.setNumberCardsInGame();
+      this.setUserCards('Hard');
+      if (this.numberCardsInGame > this.userCardsInGame.length) {
+        let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
+        this.fillBoard(diff);
+      }
+      this.setStructure('Hard');
     }
+
     this.setRuleTime();
   }
 
@@ -464,6 +473,9 @@ export class GameComponent implements OnInit {
       localStorage.removeItem('pyramid_user_' + user)
       localStorage.removeItem('pyramid_user_gifts_' + user)
     });
+    if (this.mode === "Birthday") {
+      localStorage.removeItem('pyramid_birthday')
+    }
   }
 
   closeModalWinners() {

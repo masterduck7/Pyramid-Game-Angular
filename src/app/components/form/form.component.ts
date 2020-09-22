@@ -37,6 +37,7 @@ export class FormComponent implements OnInit {
         this.dynamicForm = this.formBuilder.group({
             rule: [null, Validators.required],
             mode: [null, Validators.required],
+            birthday: [null, Validators.required],
             height: [null, Validators.required],
             numberPlayers: ['', Validators.required],
             players: new FormArray([])
@@ -49,6 +50,7 @@ export class FormComponent implements OnInit {
     get h() { return this.f.height; }
     get m() { return this.f.mode; }
     get r() { return this.f.rule; }
+    get b() { return this.f.birthday; }
 
     onChangeTickets(e) {
         const numberPlayers = e.target.value || 0;
@@ -108,11 +110,19 @@ export class FormComponent implements OnInit {
         }
         // stop here if form is invalid
         if (this.dynamicForm.invalid) {
-            return;
+            console.log(this.dynamicForm.controls.height.status)
+            if (this.dynamicForm.controls.height.status === "VALID" && this.dynamicForm.controls.mode.status === "VALID" && this.dynamicForm.controls.numberPlayers.status === "VALID" && this.dynamicForm.controls.players.status === "VALID" && this.dynamicForm.controls.rule.status === "VALID" && this.f.mode.value !== "Birthday" && this.f.birthday.value === null) {
+
+            } else {
+                return;
+            }
         }
         // Save Game data in Local Storage
         localStorage.setItem('pyramid_height', this.f.height.value)
         localStorage.setItem('pyramid_mode', this.f.mode.value)
+        if (this.f.mode.value === "Birthday") {
+            localStorage.setItem('pyramid_birthday', this.f.birthday.value)
+        }
         localStorage.setItem('pyramid_rule', this.f.rule.value)
         localStorage.setItem('pyramid_users', JSON.stringify(this.f.players.value))
         this.checkNumberCards()
@@ -123,6 +133,7 @@ export class FormComponent implements OnInit {
         this.submitted = false;
         this.dynamicForm.reset();
         this.t.clear();
+        this.b.reset();
     }
 
     onClear() {
@@ -132,6 +143,7 @@ export class FormComponent implements OnInit {
         this.h.reset();
         this.m.reset();
         this.r.reset();
+        this.b.reset();
     }
 
     closeModalError() {

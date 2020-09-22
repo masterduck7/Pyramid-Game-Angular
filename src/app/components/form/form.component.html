@@ -25,9 +25,17 @@
                             <option value=""></option>
                             <option i18n value="Hard">{{'Hard' | translate}}</option>
                             <option i18n value="Normal">{{'Normal' | translate}}</option>
+                            <option i18n value="Nuclear">{{'Nuclear' | translate}}</option>
+                            <option i18n value="Birthday">{{'Birthday' | translate}}</option>
                         </select><br>
-                        <small i18n class="help-text">{{'Hard mode' | translate}}</small><br>
-                        <small i18n class="help-text">{{'Normal mode' | translate}}</small><br>
+                        <small *ngIf="f.mode.value === 'Hard'" i18n
+                            class="help-text">{{'Hard mode' | translate}}</small>
+                        <small *ngIf="f.mode.value === 'Normal'" i18n
+                            class="help-text">{{'Normal mode' | translate}}</small>
+                        <small *ngIf="f.mode.value === 'Nuclear'" i18n
+                            class="help-text">{{'Nuclear mode' | translate}}</small>
+                        <small *ngIf="f.mode.value === 'Birthday'" i18n
+                            class="help-text">{{'Birthday mode' | translate}}</small>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
                             <div i18n *ngIf="f.height.errors.required" class="error">
                                 {{'Height is required' | translate}}</div>
@@ -90,6 +98,14 @@
                         </div>
                     </div>
                     <br>
+                    <div *ngIf="f.mode.value === 'Birthday' && f.players.value.length > 0">
+                        <label i18n>{{'Birthday Boy' | translate}}</label>
+                        <select formControlName="birthday" class="form-control select-form">
+                            <option value=""></option>
+                            <option value="{{player.name}}" *ngFor="let player of f.players.value">{{player.name}}
+                            </option>
+                        </select>
+                    </div>
                     <div class="card-footer text-center">
                         <button i18n class="btn btn-primary mr-1">{{'Play' | translate}}</button><br><br>
                         <button i18n class="btn btn-secondary mr-1" type="reset"
