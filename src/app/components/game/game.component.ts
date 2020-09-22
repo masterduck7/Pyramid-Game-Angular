@@ -48,6 +48,7 @@ export class GameComponent implements OnInit {
   modalWords: object;
   repeated: boolean = false;
   notRepeatedOnly: boolean = false;
+  birthdayBoy: string;
 
   constructor(private route: Router, public translate: TranslateService) {
     translate.addLangs(['en', 'es']);
@@ -70,42 +71,40 @@ export class GameComponent implements OnInit {
     this.mode = localStorage.getItem('pyramid_mode')
     this.height = localStorage.getItem('pyramid_height')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
+    this.birthdayBoy = localStorage.getItem('pyramid_birthday')
     this.rule = localStorage.getItem('pyramid_rule') || 'Yes'
-    this.setGame(this.mode);
+    this.setGame();
     this.setWords();
   }
 
-  setGame(mode: string) {
+  /// Set Game ///
+  setGame() {
     this.setUserVars(this.players);
-    if (mode === 'Normal') {
-      this.setNumberCardsInGame();
-      this.setUserCards();
-      if (this.numberCardsInGame > this.userCardsInGame.length) {
-        let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
-        this.fillBoard(diff);
-      }
-      this.setStructure();
-    } else if (mode === 'Birthday') {
-      this.setNumberCardsInGame();
-      this.setUserCards();
-      if (this.numberCardsInGame > this.userCardsInGame.length) {
-        let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
-        this.fillBoard(diff);
-      }
-      this.setStructure();
-    } else if (mode === 'Nuclear') {
-      this.setNumberCardsInGame();
-      this.setUserCards();
-      if (this.numberCardsInGame > this.userCardsInGame.length) {
-        let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
-        this.fillBoard(diff);
-      }
-      this.setStructure();
+    this.setNumberCardsInGame();
+    this.setUserCards();
+    if (this.numberCardsInGame > this.userCardsInGame.length) {
+      let diff: number = this.numberCardsInGame - this.userCardsInGame.length;
+      this.fillBoard(diff);
     }
-
-    this.setRuleTime();
+    this.setStructure();
+    if (this.rule === 'Yes') {
+      this.setRuleTime();
+    }
   }
 
+  // Step 1: Set user vars. drinks and gifts from localstorage
+  setUserVars(users) {
+    let userList: string[] = []
+    users.forEach(user => {
+      userList.push(user.name)
+      localStorage.setItem('pyramid_user_' + user.name, '0')
+      localStorage.setItem('pyramid_user_gifts_' + user.name, '0')
+    });
+    this.userList = userList;
+    this.userWithoutRule = userList;
+  }
+
+  // Step 2: Get number of cards in game. Neccesary for other logics
   setNumberCardsInGame() {
     let number_cards: number = 0;
     for (let i = 1; i < Number(this.height) + 1; i++) {
@@ -114,6 +113,7 @@ export class GameComponent implements OnInit {
     this.numberCardsInGame = number_cards;
   }
 
+  // Step 3: Set user cards and deck to build the board with only cards in hand
   setUserCards() {
     let userData: object[] = [];
     this.players.forEach(user => {
@@ -136,7 +136,8 @@ export class GameComponent implements OnInit {
     this.setUserDrinks(userData);
   }
 
-  // Fill Board
+  // Step 4: Fill Board
+  // Here we use number of cards in game
   // If diff cards > 7 , fill with 'all drinks' and 7 repeated cards from users
   fillBoard(diff: number) {
     let originalCards: string[] = this.userCardsInGame;
@@ -153,18 +154,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  setUserVars(users) {
-    let userList: string[] = []
-    users.forEach(user => {
-      userList.push(user.name)
-      localStorage.setItem('pyramid_user_' + user.name, '0')
-      localStorage.setItem('pyramid_user_gifts_' + user.name, '0')
-    });
-    this.userList = userList;
-    this.userWithoutRule = userList;
-  }
-
-  // Set structure by mode
+  // Step 5.1: Set structure
   // If normal and card without user fill with 'all drinks' card
   setStructure() {
     let set_structure: object[][] = [];
@@ -190,7 +180,7 @@ export class GameComponent implements OnInit {
     this.structure = set_structure
   }
 
-  // Set cards, first card never is 'all drinks'
+  // Step 5.2: Set cards, first card never is 'all drinks'
   // 5 tries to get another card. If not found put all drinks card
   setCards(type: string, first: boolean) {
     if (type === 'board') {
@@ -247,14 +237,9 @@ export class GameComponent implements OnInit {
     }
   }
 
-  checkCard(id) {
-    if (this.cardInGame != id) {
-      return true
-    } else {
-      return false
-    }
-  }
+  /// Game ///
 
+  // Play Cards
   playCard(item) {
     if (this.ruleTime()) {
       this.createRule();
@@ -339,6 +324,14 @@ export class GameComponent implements OnInit {
     }
   }
 
+  checkCard(id) {
+    if (this.cardInGame != id) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   getUsersWithCard(card: string) {
     let users: string[] = [];
     let usersRepeated: string[] = [];
@@ -358,6 +351,7 @@ export class GameComponent implements OnInit {
     return [users, usersRepeated];
   }
 
+  // Update drinks
   addDrinks(user: string, numberDrinks: number) {
     let beforeDrinks: string = localStorage.getItem('pyramid_user_' + user)
     let newDrinks: number = Number(beforeDrinks) + numberDrinks
@@ -393,25 +387,9 @@ export class GameComponent implements OnInit {
     this.userDrinks = userDrinks;
   }
 
-  userMoreDrinks() {
-    let maxDrinks: number = -1
-    let maxDrinksUser: string = ''
-    this.userList.forEach(user => {
-      let drinks: number = Number(localStorage.getItem('pyramid_user_' + user))
-      if (drinks > maxDrinks) {
-        maxDrinks = drinks
-        maxDrinksUser = user
-      } else if (drinks === maxDrinks) {
-        maxDrinksUser = maxDrinksUser + ',' + user
-      }
-    });
-    this.winnerNames = maxDrinksUser;
-    this.winnerDrinks = maxDrinks.toString();
-    this.modalWinners = true;
-  }
-
+  // Finish game
+  // Clean vars
   finish() {
-    this.userMoreDrinks()
     localStorage.removeItem('pyramid_height')
     localStorage.removeItem('pyramid_mode')
     localStorage.removeItem('pyramid_rule')
@@ -424,6 +402,8 @@ export class GameComponent implements OnInit {
       localStorage.removeItem('pyramid_birthday')
     }
   }
+
+  /// Modals ///
 
   closeModalWinners() {
     this.modalWinners = false;
@@ -441,6 +421,8 @@ export class GameComponent implements OnInit {
     this.modalRules = false;
     this.modalCard = true;
   }
+
+  /// Rules ///
 
   // Choose random user
   createRule() {
@@ -497,6 +479,9 @@ export class GameComponent implements OnInit {
     }
   }
 
+  /// Utils ///
+
+  // Translations
   setWords() {
     this.modalWords = {
       'drink': ['drink', 'bebe'],
