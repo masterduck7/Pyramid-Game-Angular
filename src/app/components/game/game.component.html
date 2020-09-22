@@ -50,7 +50,7 @@
 </clr-main-container>
 
 <clr-modal [(clrModalOpen)]="modalWinners" [clrModalClosable]="false">
-    <h3 i18n class="modal-title">{{'Winners' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">{{'Winners' | translate}}</h3>
     <div class="modal-body">
         <table class="table table-users">
             <thead>
@@ -78,6 +78,8 @@
     <div class="modal-body body-modal">
         <p *ngIf="notRepeatedOnly">{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
         <p *ngIf="repeated">{{userPlayedRepeated}} {{actionRepeated}} {{2*actualRow}} {{shotsRepeated}}</p>
+        <p *ngIf="birthdayBoyDrinks">{{'Birthday Boy' | translate}} : {{action}} {{actualRow + 1}} shots
+        </p>
         <br>
         <img src={{cardPlayed}} alt="Card" class="card-played" />
     </div>
@@ -87,11 +89,28 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalRules" [clrModalClosable]="false">
-    <h3 i18n class="modal-title">{{'Set a rule' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">{{'Set a rule' | translate}}</h3>
     <div class="modal-body">
         <p i18n>{{userRules}} {{'choose your rule' | translate}}</p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary" (click)="closeModalRules()">{{'Close' | translate}}</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalMissile" [clrModalClosable]="false">
+    <h3 *ngIf="missileType === 'Birthday'" i18n class="modal-title center-content">{{'Missile Birthday' | translate}}
+    </h3>
+    <h3 *ngIf="missileType === 'Nuclear'" i18n class="modal-title center-content">{{'Missile Nuclear' | translate}}</h3>
+    <h3 *ngIf="missileType === 'Armageddon'" i18n class="modal-title center-content">
+        {{'Missile Armageddon' | translate}}</h3>
+    <div class="modal-body">
+        <p *ngIf="missileType === 'Birthday'" innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
+        <p *ngIf="missileType === 'Nuclear'" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
+        <p *ngIf="missileType === 'Armageddon'" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
+    </div>
+    <div class="modal-footer">
+        <button i18n type="button" class="btn btn-primary"
+            (click)="closeModalMissile()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>

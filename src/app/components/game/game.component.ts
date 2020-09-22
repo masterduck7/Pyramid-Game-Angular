@@ -9,17 +9,17 @@ import { Router } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
+  // Localstorage vars
   language: string = localStorage.getItem('pyramid_lang');
   height: string;
   mode: string;
   normalRule: string;
+  birthdayBoy: string;
   players: string[];
+
+  // Game vars created for structure
   userList: string[];
   userDrinks: object[] = [];
-  structure: object[][] = [];
-  cardInGame: string = '0';
-  lastCard: number;
-  numberCardsInGame: number;
   userCardList: string[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
@@ -29,15 +29,32 @@ export class GameComponent implements OnInit {
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   userCardsInGame: string[] = [];
+  structure: object[][] = [];
+
+  // Vars for conditions
+  cardInGame: string = '0';
+  lastCard: number;
+  numberCardsInGame: number;
+
+  // Rule vars
   ruleType: string[] = [];
-  setRule: number;
+  activeRules: string[] = [];
+  normalRuleTime: number;
+  birthdayRuleTime: number;
+  nuclearRuleTime: number;
+  armageddonRuleTime: number;
+
+  // Modals
   modalRules: boolean = false;
-  userRules: string = '';
-  userWithoutRule: string[];
   modalWinners: boolean = false;
-  winnerNames: string = '';
-  winnerDrinks: string = '';
   modalCard: boolean = false;
+  modalMissile: boolean = false;
+  modalWords: object;
+  repeated: boolean = false;
+  notRepeatedOnly: boolean = false;
+  birthdayBoyDrinks: boolean = false;
+
+  // Modal fill
   cardPlayed: string = '';
   userPlayed: string = '';
   userPlayedRepeated: string = '';
@@ -46,10 +63,12 @@ export class GameComponent implements OnInit {
   actualRow: string = '';
   shots: string = '';
   shotsRepeated: string = 'shots';
-  modalWords: object;
-  repeated: boolean = false;
-  notRepeatedOnly: boolean = false;
-  birthdayBoy: string;
+
+  // Rules
+  userRules: string = '';
+  userWithoutRule: string[];
+  missileType: string = '';
+
 
   constructor(private route: Router, public translate: TranslateService) {
     translate.addLangs(['en', 'es']);
@@ -96,6 +115,9 @@ export class GameComponent implements OnInit {
     }
     if (this.mode === 'Nuclear') {
       this.ruleType.push('Nuclear')
+    }
+    if (this.mode === 'Armageddon') {
+      this.ruleType.push('Armageddon')
     }
     this.setRuleTime();
   }
@@ -249,8 +271,9 @@ export class GameComponent implements OnInit {
 
   // Play Cards
   playCard(item) {
-    if (this.ruleTime()) {
-      this.createRule(this.ruleType);
+    let rules: string[] = this.ruleTime()
+    if (rules.length > 0) {
+      this.createRule(rules);
       this.play(item);
     } else {
       this.play(item);
@@ -260,6 +283,7 @@ export class GameComponent implements OnInit {
   }
 
   play(item) {
+    this.birthdayBoyDrinks = false
     this.notRepeatedOnly = true
     this.repeated = false
     this.cardInGame = (Number(this.cardInGame) + 1).toString()
@@ -274,6 +298,8 @@ export class GameComponent implements OnInit {
       let usersWithCard = this.getUsersWithCard(item['card']);
       let users: string[] = usersWithCard[0]
       let usersRepeated: string[] = usersWithCard[1]
+      let birthdayBoy: string[] = usersWithCard[2]
+      let birthdayBoyRepeated: string[] = usersWithCard[3]
       if (usersRepeated.length > 0) {
         this.repeated = true;
       }
@@ -281,19 +307,39 @@ export class GameComponent implements OnInit {
         this.notRepeatedOnly = false
       }
       if (item.type) {
+        if (birthdayBoyRepeated.length > 0 || birthdayBoy.length > 0) {
+          this.birthdayBoyDrinks = true;
+        }
         users.forEach(user => {
           this.addDrinks(user, item.row + 1)
         });
         usersRepeated.forEach(user => {
           this.addDrinks(user, 2 * (item.row + 1))
         });
+        // Birthday boy drinks double
+        birthdayBoy.forEach(user => {
+          this.addDrinks(user, 2 * (item.row + 1))
+        });
+        birthdayBoyRepeated.forEach(user => {
+          this.addDrinks(user, 4 * (item.row + 1))
+        });
       } else {
+        if (birthdayBoyRepeated.length > 0 || birthdayBoy.length > 0) {
+          this.birthdayBoyDrinks = true;
+        }
         users.forEach(user => {
           this.addGifts(user, item.row + 1)
         })
         usersRepeated.forEach(user => {
           this.addGifts(user, 2 * (item.row + 1))
         })
+        // Birthday boy gifts + 1
+        birthdayBoy.forEach(user => {
+          this.addGifts(user, (item.row + 2))
+        });
+        birthdayBoyRepeated.forEach(user => {
+          this.addGifts(user, ((2 * (item.row + 1)) + 1))
+        });
       }
       this.userPlayed = users.join(', ');
       this.userPlayedRepeated = usersRepeated.join(', ');
@@ -332,31 +378,39 @@ export class GameComponent implements OnInit {
     }
   }
 
-  checkCard(id) {
-    if (this.cardInGame != id) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   getUsersWithCard(card: string) {
     let users: string[] = [];
     let usersRepeated: string[] = [];
+    let birthdayBoy: string[] = [];
+    let birthdayBoyRepeated: string[] = [];
     this.userDrinks.forEach(user => {
-      var cont: number = 0
-      user['cards'].forEach(card_user => {
-        if (card_user === card) {
-          cont += 1
+      if (user['name'] === this.birthdayBoy) {
+        var cont: number = 0
+        user['cards'].forEach(card_user => {
+          if (card_user === card) {
+            cont += 1
+          }
+        });
+        if (cont === 2) {
+          birthdayBoyRepeated.push(user['name'])
+        } else if (cont === 1) {
+          birthdayBoy.push(user['name'])
         }
-      });
-      if (cont === 2) {
-        usersRepeated.push(user['name'])
-      } else if (cont === 1) {
-        users.push(user['name'])
+      } else {
+        var cont: number = 0
+        user['cards'].forEach(card_user => {
+          if (card_user === card) {
+            cont += 1
+          }
+        });
+        if (cont === 2) {
+          usersRepeated.push(user['name'])
+        } else if (cont === 1) {
+          users.push(user['name'])
+        }
       }
     });
-    return [users, usersRepeated];
+    return [users, usersRepeated, birthdayBoy, birthdayBoyRepeated];
   }
 
   // Update drinks
@@ -418,63 +472,110 @@ export class GameComponent implements OnInit {
   setRuleTime() {
     if (this.normalRule === 'Yes') {
       if (Number(this.height) > 4) {
-        this.setRule = 10
+        this.normalRuleTime = 10
       } else {
-        this.setRule = 5
+        this.normalRuleTime = 5
       }
+    }
+    if (this.mode === 'Birthday') {
+      this.birthdayRuleTime = 5
+    }
+    if (this.mode === 'Nuclear') {
+      this.birthdayRuleTime = 5
+    }
+    if (this.mode === 'Armageddon') {
+      this.birthdayRuleTime = 3
     }
   }
 
   // Check if time to rule
   // Normal rule: Rule created after 10 cards. If last card, not show rule
   ruleTime() {
+    var activeRules: string[] = []
     if (this.normalRule === 'Yes') {
-      if ((Number(this.cardInGame) + 1) === this.lastCard) {
-        return false;
+      if (Number.isInteger((Number(this.cardInGame) + 1) / this.normalRuleTime)) {
+        activeRules.push('Normal')
       }
-      if (Number.isInteger((Number(this.cardInGame) + 1) / this.setRule)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
     }
+    if (this.mode === 'Birthday') {
+      if (Number.isInteger((Number(this.cardInGame) + 1) / this.birthdayRuleTime)) {
+        activeRules.push('Birthday')
+      }
+    }
+    if (this.mode === 'Nuclear') {
+      if (Number.isInteger((Number(this.cardInGame) + 1) / this.nuclearRuleTime)) {
+        activeRules.push('Nuclear')
+      }
+    }
+    if (this.mode === 'Armageddon') {
+      if (Number.isInteger((Number(this.cardInGame) + 1) / this.armageddonRuleTime)) {
+        activeRules.push('Armageddon')
+      }
+    }
+    this.activeRules = activeRules;
+    return activeRules;
   }
 
   // Create Rule
-  // Normal rule: Choose random user to create one
-  // Birthday rule: Birthday boy drinks double
-  // Nuclear rule: Missiles fall every x time
+  // Normal rule: Choose random user to create one. User can't repeat except if no more users to create a rule
   createRule(ruleType: string[]) {
-    // If all users create rule, start again list
-    if (this.userWithoutRule.length === 0) {
-      this.userWithoutRule = this.userList
-    }
-    let randomUser: string = this.userWithoutRule[Math.floor(Math.random() * this.userWithoutRule.length)];
-    this.userRules = randomUser;
-    // Remove user from list
-    let newUserWithoutRule: string[] = this.userWithoutRule;
-    for (let index = 0; index < newUserWithoutRule.length; index++) {
-      if (randomUser === newUserWithoutRule[index]) {
-        delete newUserWithoutRule[index]
-        break
+    if (ruleType.includes('Normal')) {
+      // If all users create rule, start again list
+      if (this.userWithoutRule.length === 0) {
+        this.userWithoutRule = this.userList
       }
-    }
-    // Remove undefined items
-    const newUserWithoutRuleClean = []
-    for (let index = 0; index < newUserWithoutRule.length; index++) {
-      if (newUserWithoutRule[index] !== undefined) {
-        newUserWithoutRuleClean.push(newUserWithoutRule[index])
+      let randomUser: string = this.userWithoutRule[Math.floor(Math.random() * this.userWithoutRule.length)];
+      this.userRules = randomUser;
+      // Remove user from list
+      let newUserWithoutRule: string[] = this.userWithoutRule;
+      for (let index = 0; index < newUserWithoutRule.length; index++) {
+        if (randomUser === newUserWithoutRule[index]) {
+          delete newUserWithoutRule[index]
+          break
+        }
       }
+      // Remove undefined items
+      const newUserWithoutRuleClean = []
+      for (let index = 0; index < newUserWithoutRule.length; index++) {
+        if (newUserWithoutRule[index] !== undefined) {
+          newUserWithoutRuleClean.push(newUserWithoutRule[index])
+        }
+      }
+      this.userWithoutRule = newUserWithoutRuleClean
+      // Open Modal
+      this.modalRules = true;
+    } else {
+      this.modalCard = true;
     }
-    this.userWithoutRule = newUserWithoutRuleClean
-    // Open Modal
-    this.modalRules = true;
+  }
+
+  // If no normal rule open missile modal to other modes
+  // Birthday rule: Birthday boy drinks double. Every 5 cards get 2 drinks as a gift
+  // Nuclear rule: Missiles fall every x time
+  // Armageddon rule: Missiles fall every x time harder
+  checkModeRules() {
+    var activeRules: string[] = this.activeRules
+    if (activeRules.includes('Birthday')) {
+      this.missileType = 'Birthday';
+    } else if (activeRules.includes('Nuclear')) {
+      this.missileType = 'Nuclear';
+    } else if (activeRules.includes('Armageddon')) {
+      this.missileType = 'Armageddon';
+    }
+    this.modalMissile = true;
   }
 
 
   /// Utils ///
+
+  // Check if card was played
+  checkCard(id) {
+    if (this.cardInGame != id) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   // Translations
   setWords() {
@@ -509,10 +610,18 @@ export class GameComponent implements OnInit {
     if (Number(this.cardInGame) === this.lastCard) {
       this.finish()
     }
+    console.log(this.activeRules)
+    if (this.activeRules.includes('Birthday') || this.activeRules.includes('Nuclear') || this.activeRules.includes('Armageddon')) {
+      this.checkModeRules()
+    }
   }
 
   closeModalRules() {
     this.modalRules = false;
     this.modalCard = true;
+  }
+
+  closeModalMissile() {
+    this.modalMissile = false;
   }
 }
