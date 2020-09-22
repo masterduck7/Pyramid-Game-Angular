@@ -12,7 +12,7 @@ export class GameComponent implements OnInit {
   language: string = localStorage.getItem('pyramid_lang');
   height: string;
   mode: string;
-  rule: string;
+  normalRule: string;
   players: string[];
   userList: string[];
   userDrinks: object[] = [];
@@ -73,7 +73,7 @@ export class GameComponent implements OnInit {
     this.height = localStorage.getItem('pyramid_height')
     this.players = JSON.parse(localStorage.getItem('pyramid_users')) || []
     this.birthdayBoy = localStorage.getItem('pyramid_birthday')
-    this.rule = localStorage.getItem('pyramid_rule') || ''
+    this.normalRule = localStorage.getItem('pyramid_rule') || ''
     this.setGame();
     this.setWords();
   }
@@ -88,18 +88,16 @@ export class GameComponent implements OnInit {
       this.fillBoard(diff);
     }
     this.setStructure();
-    if (this.rule === 'Yes') {
+    if (this.normalRule === 'Yes') {
       this.ruleType.push('Normal')
-      this.setRuleTime('Normal');
     }
     if (this.mode === 'Birthday') {
       this.ruleType.push('Birthday')
-      this.setRuleTime('Birthday');
     }
     if (this.mode === 'Nuclear') {
       this.ruleType.push('Nuclear')
-      this.setRuleTime('Nuclear');
     }
+    this.setRuleTime();
   }
 
   // Step 1: Set user vars. drinks and gifts from localstorage
@@ -413,47 +411,24 @@ export class GameComponent implements OnInit {
     }
   }
 
-  /// Modals ///
-
-  closeModalWinners() {
-    this.modalWinners = false;
-    this.route.navigate(['/']);
-  }
-
-  closeModalCard() {
-    this.modalCard = false;
-    if (Number(this.cardInGame) === this.lastCard) {
-      this.finish()
-    }
-  }
-
-  closeModalRules() {
-    this.modalRules = false;
-    this.modalCard = true;
-  }
-
   /// Rules ///
 
   // Set Rule time
   // Normal rule: If pyramid height > 4 rules every 10 cards, else rule every 5 cards
-  setRuleTime(type: string) {
-    if (type === "Normal") {
+  setRuleTime() {
+    if (this.normalRule === 'Yes') {
       if (Number(this.height) > 4) {
         this.setRule = 10
       } else {
         this.setRule = 5
       }
-    } else if (type === "Birthday") {
-
-    } else if (type === "Nuclear") {
-
     }
   }
 
   // Check if time to rule
   // Normal rule: Rule created after 10 cards. If last card, not show rule
   ruleTime() {
-    if (this.rule === 'Yes') {
+    if (this.normalRule === 'Yes') {
       if ((Number(this.cardInGame) + 1) === this.lastCard) {
         return false;
       }
@@ -520,5 +495,24 @@ export class GameComponent implements OnInit {
     } else {
       return this.modalWords[word][1]
     }
+  }
+
+  /// Modals ///
+
+  closeModalWinners() {
+    this.modalWinners = false;
+    this.route.navigate(['/']);
+  }
+
+  closeModalCard() {
+    this.modalCard = false;
+    if (Number(this.cardInGame) === this.lastCard) {
+      this.finish()
+    }
+  }
+
+  closeModalRules() {
+    this.modalRules = false;
+    this.modalCard = true;
   }
 }
