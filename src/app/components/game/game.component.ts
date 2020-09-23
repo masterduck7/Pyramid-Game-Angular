@@ -66,9 +66,10 @@ export class GameComponent implements OnInit {
   // Missile set
   nuclearDrink: number = 30;
   nuclearGift: number = 70;
-  nuclearMax: number = 100;
-  ArmageddonDrink: number = 0.9;
-  ArmageddonGift: number = 0.5;
+  nuclearAttacks: number = 2;
+  armageddonDrink: number = 0.9;
+  armageddonGift: number = 0.5;
+  armageddonAttacks: number = 3;
 
   // Rule set
   ruleType: string[] = [];
@@ -575,27 +576,43 @@ export class GameComponent implements OnInit {
   }
 
   createNuclearRule() {
-    var options = Array(this.nuclearMax / 10);
-    options.fill('G', 0, this.nuclearGift / 10)
-    options.fill('D', this.nuclearDrink / 10, (this.nuclearMax / 10) + 1)
+    var options = Array((this.nuclearGift + this.nuclearDrink) * 10);
+    options.fill('G', 0, (this.nuclearGift * 10))
+    options.fill('D', this.nuclearGift * 10, ((this.nuclearGift + this.nuclearDrink) * 10) + 1)
     var ruleWinnner: string = options[Math.floor(Math.random() * options.length)]
     if (ruleWinnner === "G") {
       console.log("G")
+      const n: number = this.nuclearAttacks;
+      const attacks = this.userList
+        .map(x => ({ x, r: Math.random() }))
+        .sort((a, b) => a.r - b.r)
+        .map(a => a.x)
+        .slice(0, n);
+      console.log(attacks)
     } else {
       console.log("D")
     }
+    this.modalNuclearMissile = true;
   }
 
   createArmageddonRule() {
-    var options = Array((this.ArmageddonGift + this.ArmageddonDrink) * 10);
-    options.fill('G', 0, (this.ArmageddonGift * 10))
-    options.fill('D', this.ArmageddonGift * 10, ((this.ArmageddonGift + this.ArmageddonDrink) * 10) + 1)
+    var options = Array((this.armageddonGift + this.armageddonDrink) * 10);
+    options.fill('G', 0, (this.armageddonGift * 10))
+    options.fill('D', this.armageddonGift * 10, ((this.armageddonGift + this.armageddonDrink) * 10) + 1)
     var ruleWinnner: string = options[Math.floor(Math.random() * options.length)]
     if (ruleWinnner === "G") {
       console.log("G")
+      const n: number = this.armageddonAttacks;
+      const attacks = this.userList
+        .map(x => ({ x, r: Math.random() }))
+        .sort((a, b) => a.r - b.r)
+        .map(a => a.x)
+        .slice(0, n);
+      console.log(attacks)
     } else {
       console.log("D")
     }
+    this.modalArmageddonMissile = true;
   }
 
 
