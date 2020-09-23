@@ -99,10 +99,10 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalBirthdayMissile" [clrModalClosable]="false">
-    <h3 *ngIf="missileType === 'Birthday'" i18n class="modal-title center-content">{{'Missile Birthday' | translate}}
+    <h3 i18n class="modal-title center-content">{{'Birthday Missile' | translate}}
     </h3>
     <div class="modal-body">
-        <p *ngIf="missileType === 'Birthday'" innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
+        <p innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"
@@ -111,9 +111,10 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalNuclearMissile" [clrModalClosable]="false">
-    <h3 *ngIf="missileType === 'Nuclear'" i18n class="modal-title center-content">{{'Missile Nuclear' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">{{'Nuclear Missile' | translate}}</h3>
     <div class="modal-body">
-        <p *ngIf="missileType === 'Nuclear'" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
+        <p innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
+        <p>{{nuclearUsers}} {{nuclearAction}} {{nuclearNumber}} {{nuclearShots}}</p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"
@@ -122,10 +123,11 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
-    <h3 *ngIf="missileType === 'Armageddon'" i18n class="modal-title center-content">
-        {{'Missile Armageddon' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">
+        {{'Armageddon Missile' | translate}}</h3>
     <div class="modal-body">
-        <p *ngIf="missileType === 'Armageddon'" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
+        <p innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
+        <p>{{armageddonUsers}} {{armageddonAction}} {{armageddonNumber}} {{armageddonShots}}</p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"

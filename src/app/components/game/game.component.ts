@@ -57,16 +57,28 @@ export class GameComponent implements OnInit {
   actualRow: string = '';
   shots: string = '';
   shotsRepeated: string = 'shots';
+  armageddonUsers: string = '';
+  armageddonAction: string = '';
+  armageddonNumber: string = '';
+  armageddonShots: string = '';
+  nuclearUsers: string = '';
+  nuclearAction: string = '';
+  nuclearNumber: string = '';
+  nuclearShots: string = '';
 
   // Rules
   userRules: string = '';
   userWithoutRule: string[];
-  missileType: string = '';
 
   // Missile set
+  nuclearNumberDrinks: number = 1;
+  nuclearNumberGifts: number = 2;
   nuclearDrink: number = 30;
   nuclearGift: number = 70;
   nuclearAttacks: number = 2;
+
+  armageddonNumberDrinks: number = 2;
+  armageddonNumberGifts: number = 3;
   armageddonDrink: number = 0.9;
   armageddonGift: number = 0.5;
   armageddonAttacks: number = 3;
@@ -562,14 +574,11 @@ export class GameComponent implements OnInit {
   checkModeRules() {
     var activeRules: string[] = this.activeRules
     if (activeRules.includes('Birthday')) {
-      this.missileType = 'Birthday';
       this.modalBirthdayMissile = true;
     } else if (activeRules.includes('Nuclear')) {
-      this.missileType = 'Nuclear';
       this.createNuclearRule();
       this.modalNuclearMissile = true;
     } else if (activeRules.includes('Armageddon')) {
-      this.missileType = 'Armageddon';
       this.createArmageddonRule();
       this.modalArmageddonMissile = true;
     }
@@ -581,16 +590,43 @@ export class GameComponent implements OnInit {
     options.fill('D', this.nuclearGift * 10, ((this.nuclearGift + this.nuclearDrink) * 10) + 1)
     var ruleWinnner: string = options[Math.floor(Math.random() * options.length)]
     if (ruleWinnner === "G") {
-      console.log("G")
       const n: number = this.nuclearAttacks;
       const attacks = this.userList
         .map(x => ({ x, r: Math.random() }))
         .sort((a, b) => a.r - b.r)
         .map(a => a.x)
         .slice(0, n);
-      console.log(attacks)
+      this.nuclearUsers = attacks.join(', ')
+      this.nuclearNumber = this.nuclearNumberGifts.toString()
+      if (attacks.length > 1) {
+        this.nuclearAction = this.returnTranslation('gives');
+      } else {
+        this.nuclearAction = this.returnTranslation('give');
+      }
+      if (this.nuclearNumberGifts > 1) {
+        this.armageddonShots = this.returnTranslation('shots');
+      } else {
+        this.armageddonShots = this.returnTranslation('shot');
+      }
     } else {
-      console.log("D")
+      const n: number = this.nuclearAttacks;
+      const attacks = this.userList
+        .map(x => ({ x, r: Math.random() }))
+        .sort((a, b) => a.r - b.r)
+        .map(a => a.x)
+        .slice(0, n);
+      this.nuclearUsers = attacks.join(', ')
+      this.nuclearNumber = this.nuclearNumberDrinks.toString()
+      if (attacks.length > 1) {
+        this.nuclearAction = this.returnTranslation('drinks');
+      } else {
+        this.nuclearAction = this.returnTranslation('drink');
+      }
+      if (this.nuclearNumberDrinks > 1) {
+        this.armageddonShots = this.returnTranslation('shots');
+      } else {
+        this.armageddonShots = this.returnTranslation('shot');
+      }
     }
     this.modalNuclearMissile = true;
   }
@@ -601,16 +637,43 @@ export class GameComponent implements OnInit {
     options.fill('D', this.armageddonGift * 10, ((this.armageddonGift + this.armageddonDrink) * 10) + 1)
     var ruleWinnner: string = options[Math.floor(Math.random() * options.length)]
     if (ruleWinnner === "G") {
-      console.log("G")
+      const n: number = this.armageddonAttacks;
+      const attacks: string[] = this.userList
+        .map(x => ({ x, r: Math.random() }))
+        .sort((a, b) => a.r - b.r)
+        .map(a => a.x)
+        .slice(0, n);
+      this.armageddonUsers = attacks.join(', ')
+      this.armageddonNumber = this.armageddonNumberGifts.toString()
+      if (attacks.length > 1) {
+        this.armageddonAction = this.returnTranslation('gives');
+      } else {
+        this.armageddonAction = this.returnTranslation('give');
+      }
+      if (this.armageddonNumberGifts > 1) {
+        this.armageddonShots = this.returnTranslation('shots');
+      } else {
+        this.armageddonShots = this.returnTranslation('shot');
+      }
+    } else {
       const n: number = this.armageddonAttacks;
       const attacks = this.userList
         .map(x => ({ x, r: Math.random() }))
         .sort((a, b) => a.r - b.r)
         .map(a => a.x)
         .slice(0, n);
-      console.log(attacks)
-    } else {
-      console.log("D")
+      this.armageddonUsers = attacks.join(', ')
+      this.armageddonNumber = this.armageddonNumberDrinks.toString()
+      if (attacks.length > 1) {
+        this.armageddonAction = this.returnTranslation('drinks');
+      } else {
+        this.armageddonAction = this.returnTranslation('drink');
+      }
+      if (this.armageddonNumberDrinks > 1) {
+        this.armageddonShots = this.returnTranslation('shots');
+      } else {
+        this.armageddonShots = this.returnTranslation('shot');
+      }
     }
     this.modalArmageddonMissile = true;
   }
