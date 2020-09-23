@@ -98,19 +98,37 @@
     </div>
 </clr-modal>
 
-<clr-modal [(clrModalOpen)]="modalMissile" [clrModalClosable]="false">
+<clr-modal [(clrModalOpen)]="modalBirthdayMissile" [clrModalClosable]="false">
     <h3 *ngIf="missileType === 'Birthday'" i18n class="modal-title center-content">{{'Missile Birthday' | translate}}
     </h3>
+    <div class="modal-body">
+        <p *ngIf="missileType === 'Birthday'" innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
+    </div>
+    <div class="modal-footer">
+        <button i18n type="button" class="btn btn-primary"
+            (click)="closeModalBirthdayMissile()">{{'Close' | translate}}</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalNuclearMissile" [clrModalClosable]="false">
     <h3 *ngIf="missileType === 'Nuclear'" i18n class="modal-title center-content">{{'Missile Nuclear' | translate}}</h3>
+    <div class="modal-body">
+        <p *ngIf="missileType === 'Nuclear'" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
+    </div>
+    <div class="modal-footer">
+        <button i18n type="button" class="btn btn-primary"
+            (click)="closeModalNuclearMissile()">{{'Close' | translate}}</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
     <h3 *ngIf="missileType === 'Armageddon'" i18n class="modal-title center-content">
         {{'Missile Armageddon' | translate}}</h3>
     <div class="modal-body">
-        <p *ngIf="missileType === 'Birthday'" innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
-        <p *ngIf="missileType === 'Nuclear'" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
         <p *ngIf="missileType === 'Armageddon'" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"
-            (click)="closeModalMissile()">{{'Close' | translate}}</button>
+            (click)="closeModalArmageddonMissile()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>

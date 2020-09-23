@@ -36,19 +36,13 @@ export class GameComponent implements OnInit {
   lastCard: number;
   numberCardsInGame: number;
 
-  // Rule vars
-  ruleType: string[] = [];
-  activeRules: string[] = [];
-  normalRuleTime: number;
-  birthdayRuleTime: number;
-  nuclearRuleTime: number;
-  armageddonRuleTime: number;
-
   // Modals
   modalRules: boolean = false;
   modalWinners: boolean = false;
   modalCard: boolean = false;
-  modalMissile: boolean = false;
+  modalBirthdayMissile: boolean = false;
+  modalNuclearMissile: boolean = false;
+  modalArmageddonMissile: boolean = false;
   modalWords: object;
   repeated: boolean = false;
   notRepeatedOnly: boolean = false;
@@ -68,6 +62,21 @@ export class GameComponent implements OnInit {
   userRules: string = '';
   userWithoutRule: string[];
   missileType: string = '';
+
+  // Missile set
+  nuclearDrink: number = 30;
+  nuclearGift: number = 70;
+  nuclearMax: number = 100;
+  ArmageddonDrink: number = 0.9;
+  ArmageddonGift: number = 0.5;
+
+  // Rule set
+  ruleType: string[] = [];
+  activeRules: string[] = [];
+  normalRuleTime: number;
+  birthdayRuleTime: number = 5;
+  nuclearRuleTime: number = 5;
+  armageddonRuleTime: number = 3;
 
 
   constructor(private route: Router, public translate: TranslateService) {
@@ -452,6 +461,7 @@ export class GameComponent implements OnInit {
   // Finish game
   // Clean vars
   finish() {
+    this.modalWinners = true;
     localStorage.removeItem('pyramid_height')
     localStorage.removeItem('pyramid_mode')
     localStorage.removeItem('pyramid_rule')
@@ -477,21 +487,16 @@ export class GameComponent implements OnInit {
         this.normalRuleTime = 5
       }
     }
-    if (this.mode === 'Birthday') {
-      this.birthdayRuleTime = 5
-    }
-    if (this.mode === 'Nuclear') {
-      this.birthdayRuleTime = 5
-    }
-    if (this.mode === 'Armageddon') {
-      this.birthdayRuleTime = 3
-    }
   }
 
   // Check if time to rule
-  // Normal rule: Rule created after 10 cards. If last card, not show rule
+  // Normal rule: Rule created after 10 cards.
+  // If last card, not show rule
   ruleTime() {
     var activeRules: string[] = []
+    if ((Number(this.cardInGame) + 1) === Number(this.numberCardsInGame)) {
+      return activeRules;
+    }
     if (this.normalRule === 'Yes') {
       if (Number.isInteger((Number(this.cardInGame) + 1) / this.normalRuleTime)) {
         activeRules.push('Normal')
@@ -557,12 +562,40 @@ export class GameComponent implements OnInit {
     var activeRules: string[] = this.activeRules
     if (activeRules.includes('Birthday')) {
       this.missileType = 'Birthday';
+      this.modalBirthdayMissile = true;
     } else if (activeRules.includes('Nuclear')) {
       this.missileType = 'Nuclear';
+      this.createNuclearRule();
+      this.modalNuclearMissile = true;
     } else if (activeRules.includes('Armageddon')) {
       this.missileType = 'Armageddon';
+      this.createArmageddonRule();
+      this.modalArmageddonMissile = true;
     }
-    this.modalMissile = true;
+  }
+
+  createNuclearRule() {
+    var options = Array(this.nuclearMax / 10);
+    options.fill('G', 0, this.nuclearGift / 10)
+    options.fill('D', this.nuclearDrink / 10, (this.nuclearMax / 10) + 1)
+    var ruleWinnner: string = options[Math.floor(Math.random() * options.length)]
+    if (ruleWinnner === "G") {
+      console.log("G")
+    } else {
+      console.log("D")
+    }
+  }
+
+  createArmageddonRule() {
+    var options = Array((this.ArmageddonGift + this.ArmageddonDrink) * 10);
+    options.fill('G', 0, (this.ArmageddonGift * 10))
+    options.fill('D', this.ArmageddonGift * 10, ((this.ArmageddonGift + this.ArmageddonDrink) * 10) + 1)
+    var ruleWinnner: string = options[Math.floor(Math.random() * options.length)]
+    if (ruleWinnner === "G") {
+      console.log("G")
+    } else {
+      console.log("D")
+    }
   }
 
 
@@ -610,7 +643,6 @@ export class GameComponent implements OnInit {
     if (Number(this.cardInGame) === this.lastCard) {
       this.finish()
     }
-    console.log(this.activeRules)
     if (this.activeRules.includes('Birthday') || this.activeRules.includes('Nuclear') || this.activeRules.includes('Armageddon')) {
       this.checkModeRules()
     }
@@ -621,7 +653,15 @@ export class GameComponent implements OnInit {
     this.modalCard = true;
   }
 
-  closeModalMissile() {
-    this.modalMissile = false;
+  closeModalBirthdayMissile() {
+    this.modalBirthdayMissile = false;
+  }
+
+  closeModalNuclearMissile() {
+    this.modalNuclearMissile = false;
+  }
+
+  closeModalArmageddonMissile() {
+    this.modalArmageddonMissile = false;
   }
 }
