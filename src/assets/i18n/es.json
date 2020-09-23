@@ -55,8 +55,9 @@
     "choose your rule": "elija su regla",
     "Birthday Missile": "Regalo de cumpleaños",
     "Nuclear Missile": "Misil nuclear",
-    "Armageddon Missile": "Misil final",
-    "Missile Birthday Description": "Ha llegado un regalo para el cumpleañero ! <br><br> Regala 2 tragos",
+    "Armageddon Missile": "Ataque aéreo",
+    "Missile Birthday Description": "Ha llegado un regalo para el cumpleañero !",
+    "Missile Birthday Description Gifts": "Regala 2 tragos",
     "Missile Nuclear Description": "Missile Nuclear Description",
     "Missile Armageddon Description": "Missile Armageddon Description"
 }

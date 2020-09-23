@@ -3,7 +3,7 @@
         <div class="header-nav" [clr-nav-level]="1">
             <div class="branding">
                 <a href="https://lpsoftware.space" class="nav-link">
-                    <clr-icon shape="happy-face"></clr-icon>
+                    <mdb-icon fas icon="glass-cheers" size="lg"></mdb-icon>
                 </a>
                 <span i18n class="title">{{'Pyramid Game' | translate}}</span>
             </div>
@@ -102,7 +102,13 @@
     <h3 i18n class="modal-title center-content">{{'Birthday Missile' | translate}}
     </h3>
     <div class="modal-body">
-        <p innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
+        <div class="center-content">
+            <i class="fas fa-gift fa-2x birthday-present pr-3" aria-hidden="true"></i>
+            <i class="fas fa-gift fa-2x birthday-present pr-3" aria-hidden="true"></i>
+        </div>
+        <p class="center-content" innerHtml="{{'Missile Birthday Description' | translate}}" i18n></p>
+        <p class="center-content textEmphasis" innerHtml="{{'Missile Birthday Description Gifts' | translate}}" i18n>
+        </p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"
@@ -113,8 +119,13 @@
 <clr-modal [(clrModalOpen)]="modalNuclearMissile" [clrModalClosable]="false">
     <h3 i18n class="modal-title center-content">{{'Nuclear Missile' | translate}}</h3>
     <div class="modal-body">
-        <p innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
-        <p>{{nuclearUsers}} {{nuclearAction}} {{nuclearNumber}} {{nuclearShots}}</p>
+        <div class="center-content">
+            <i class="fas fa-bomb fa-2x bomb pr-3" aria-hidden="true"></i>
+            <i class="fas fa-bomb fa-2x bomb pr-3" aria-hidden="true"></i>
+            <i class="fas fa-bomb fa-2x bomb pr-3" aria-hidden="true"></i>
+        </div>
+        <p class="center-content" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
+        <p class="center-content textEmphasis">{{nuclearUsers}} {{nuclearAction}} {{nuclearNumber}} {{nuclearShots}}</p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"
@@ -123,11 +134,16 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
-    <h3 i18n class="modal-title center-content">
-        {{'Armageddon Missile' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">{{'Armageddon Missile' | translate}}</h3>
     <div class="modal-body">
-        <p innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
-        <p>{{armageddonUsers}} {{armageddonAction}} {{armageddonNumber}} {{armageddonShots}}</p>
+        <div class="center-content">
+            <i class="fas fa-fighter-jet fa-2x bomb pr-3" aria-hidden="true"></i>
+            <i class="fas fa-fighter-jet fa-2x bomb pr-3" aria-hidden="true"></i>
+            <i class="fas fa-fighter-jet fa-2x bomb pr-3" aria-hidden="true"></i>
+        </div>
+        <p class="center-content" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
+        <p class="center-content textEmphasis">{{armageddonUsers}} {{armageddonAction}} {{armageddonNumber}}
+            {{armageddonShots}}</p>
     </div>
     <div class="modal-footer">
         <button i18n type="button" class="btn btn-primary"

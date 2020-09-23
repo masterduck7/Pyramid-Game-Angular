@@ -48,3 +48,16 @@
     width: 70%;
     height: auto;
 }
+.birthday-present {
+    color: red;
+    margin-left: 5%;
+    align-content: center;
+}
+.bomb {
+    color: black;
+    margin-left: 5%;
+    align-content: center;
+}
+.textEmphasis {
+    font-weight: bold;
+}

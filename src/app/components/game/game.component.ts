@@ -80,7 +80,7 @@ export class GameComponent implements OnInit {
   armageddonNumberDrinks: number = 2;
   armageddonNumberGifts: number = 3;
   armageddonDrink: number = 0.9;
-  armageddonGift: number = 0.5;
+  armageddonGift: number = 0.4;
   armageddonAttacks: number = 3;
 
   // Rule set
@@ -88,8 +88,8 @@ export class GameComponent implements OnInit {
   activeRules: string[] = [];
   normalRuleTime: number;
   birthdayRuleTime: number = 5;
-  nuclearRuleTime: number = 5;
-  armageddonRuleTime: number = 3;
+  nuclearRuleTime: number = 6;
+  armageddonRuleTime: number = 4;
 
 
   constructor(private route: Router, public translate: TranslateService) {
@@ -575,6 +575,7 @@ export class GameComponent implements OnInit {
     var activeRules: string[] = this.activeRules
     if (activeRules.includes('Birthday')) {
       this.modalBirthdayMissile = true;
+      this.addGifts(this.birthdayBoy, 2);
     } else if (activeRules.includes('Nuclear')) {
       this.createNuclearRule();
       this.modalNuclearMissile = true;
@@ -608,6 +609,10 @@ export class GameComponent implements OnInit {
       } else {
         this.armageddonShots = this.returnTranslation('shot');
       }
+      // Add gifts
+      attacks.forEach(user => {
+        this.addGifts(user, this.nuclearNumberGifts);
+      });
     } else {
       const n: number = this.nuclearAttacks;
       const attacks = this.userList
@@ -627,6 +632,10 @@ export class GameComponent implements OnInit {
       } else {
         this.armageddonShots = this.returnTranslation('shot');
       }
+      // Add drinks
+      attacks.forEach(user => {
+        this.addDrinks(user, this.nuclearNumberDrinks);
+      });
     }
     this.modalNuclearMissile = true;
   }
@@ -655,6 +664,10 @@ export class GameComponent implements OnInit {
       } else {
         this.armageddonShots = this.returnTranslation('shot');
       }
+      // Add gifts
+      attacks.forEach(user => {
+        this.addGifts(user, this.armageddonNumberGifts);
+      });
     } else {
       const n: number = this.armageddonAttacks;
       const attacks = this.userList
@@ -674,6 +687,10 @@ export class GameComponent implements OnInit {
       } else {
         this.armageddonShots = this.returnTranslation('shot');
       }
+      // Add gifts
+      attacks.forEach(user => {
+        this.addDrinks(user, this.armageddonNumberDrinks);
+      });
     }
     this.modalArmageddonMissile = true;
   }
