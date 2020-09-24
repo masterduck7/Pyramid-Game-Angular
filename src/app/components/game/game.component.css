@@ -59,10 +59,33 @@
     align-content: center;
 }
 .jet {
-    color: green;
+    color: black;
     margin-left: 5%;
     align-content: center;
 }
 .textEmphasis {
     font-weight: bold;
+}
+::ng-deep .overflow-modal .modal-content {
+    background-image: url('../../../assets/Modes/Armageddon.png');
+    background-position: center;
+    background-size: cover;
+}
+
+::ng-deep .overflow-modal-body .modal-body {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.modal-title-style {
+    font-weight: bolder;
+    color: black;
+    font-size: xx-large;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(3px);
+}
+.modal-body-style {
+    font-weight: bold;
+    color: black;
+    font-size: medium;
 }

@@ -89,7 +89,7 @@ export class GameComponent implements OnInit {
   normalRuleTime: number;
   birthdayRuleTime: number = 5;
   nuclearRuleTime: number = 6;
-  armageddonRuleTime: number = 4;
+  armageddonRuleTime: number = 1;
 
 
   constructor(private route: Router, public translate: TranslateService) {

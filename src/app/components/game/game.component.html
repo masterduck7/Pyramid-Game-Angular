@@ -132,21 +132,26 @@
             (click)="closeModalNuclearMissile()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>
-
-<clr-modal [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
-    <h3 i18n class="modal-title center-content">{{'Armageddon Missile' | translate}}</h3>
-    <div class="modal-body">
-        <div class="center-content">
-            <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
-            <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
-            <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
+<clr-main-container class="overflow-modal">
+    <clr-modal class="overflow-modal-body" [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
+        <h3 i18n class="modal-title-style modal-title center-content">
+            {{'Armageddon Missile' | translate}}</h3>
+        <div class="modal-body">
+            <div class="center-content">
+                <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
+                <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
+                <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
+            </div>
+            <p class="modal-body-style center-content" innerHtml="{{'Missile Armageddon Description' | translate}}"
+                i18n>
+            </p>
+            <p class="modal-body-style center-content textEmphasis">{{armageddonUsers}} {{armageddonAction}}
+                {{armageddonNumber}}
+                {{armageddonShots}}</p>
         </div>
-        <p class="center-content" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n></p>
-        <p class="center-content textEmphasis">{{armageddonUsers}} {{armageddonAction}} {{armageddonNumber}}
-            {{armageddonShots}}</p>
-    </div>
-    <div class="modal-footer">
-        <button i18n type="button" class="btn btn-primary"
-            (click)="closeModalArmageddonMissile()">{{'Close' | translate}}</button>
-    </div>
-</clr-modal>
+        <div class="modal-footer">
+            <button i18n type="button" class="btn btn-primary"
+                (click)="closeModalArmageddonMissile()">{{'Close' | translate}}</button>
+        </div>
+    </clr-modal>
+</clr-main-container>
