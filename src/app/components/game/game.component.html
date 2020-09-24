@@ -117,41 +117,38 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalNuclearMissile" [clrModalClosable]="false">
-    <h3 i18n class="modal-title center-content">{{'Nuclear Missile' | translate}}</h3>
+    <h3 i18n class="modal-title-style modal-title center-content">{{'Nuclear Missile' | translate}}</h3>
     <div class="modal-body">
-        <div class="center-content">
-            <i class="fas fa-bomb fa-2x bomb pr-3" aria-hidden="true"></i>
-            <i class="fas fa-bomb fa-2x bomb pr-3" aria-hidden="true"></i>
-            <i class="fas fa-bomb fa-2x bomb pr-3" aria-hidden="true"></i>
-        </div>
-        <p class="center-content" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
-        <p class="center-content textEmphasis">{{nuclearUsers}} {{nuclearAction}} {{nuclearNumber}} {{nuclearShots}}</p>
+        <p class="modal-body-style center-content" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n></p>
+        <p class="modal-body-style center-content textEmphasis">{{nuclearUsers}} {{nuclearAction}} {{nuclearNumber}}
+            {{nuclearShots}}</p>
+        <br>
     </div>
-    <div class="modal-footer">
+    <div class="modal-body center-content">
+        <img src="../../../assets/Modes/Nuclear.jpg" class="image">
+    </div>
+    <div class="modal-footer center-content">
         <button i18n type="button" class="btn btn-primary"
             (click)="closeModalNuclearMissile()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>
-<clr-main-container class="overflow-modal">
-    <clr-modal class="overflow-modal-body" [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
-        <h3 i18n class="modal-title-style modal-title center-content">
-            {{'Armageddon Missile' | translate}}</h3>
-        <div class="modal-body">
-            <div class="center-content">
-                <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
-                <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
-                <i class="fas fa-fighter-jet fa-2x jet pr-3" aria-hidden="true"></i>
-            </div>
-            <p class="modal-body-style center-content" innerHtml="{{'Missile Armageddon Description' | translate}}"
-                i18n>
-            </p>
-            <p class="modal-body-style center-content textEmphasis">{{armageddonUsers}} {{armageddonAction}}
-                {{armageddonNumber}}
-                {{armageddonShots}}</p>
-        </div>
-        <div class="modal-footer">
-            <button i18n type="button" class="btn btn-primary"
-                (click)="closeModalArmageddonMissile()">{{'Close' | translate}}</button>
-        </div>
-    </clr-modal>
-</clr-main-container>
+
+<clr-modal [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
+    <h3 i18n class="modal-title-style modal-title center-content">
+        {{'Armageddon Missile' | translate}}</h3>
+    <div class="modal-body">
+        <p class="modal-body-style center-content" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n>
+        </p>
+        <p class="modal-body-style center-content textEmphasis">{{armageddonUsers}} {{armageddonAction}}
+            {{armageddonNumber}}
+            {{armageddonShots}}</p>
+        <br>
+    </div>
+    <div class="modal-body center-content">
+        <img src="../../../assets/Modes/Armageddon.png" class="image">
+    </div>
+    <div class="modal-footer center-content">
+        <button i18n type="button" class="btn btn-primary"
+            (click)="closeModalArmageddonMissile()">{{'Close' | translate}}</button>
+    </div>
+</clr-modal>
