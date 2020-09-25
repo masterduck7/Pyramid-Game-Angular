@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { GameComponent } from './components/game/game.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MDBBootstrapModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

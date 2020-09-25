@@ -37,6 +37,18 @@
     width: 50%;
     height: inherit;
 }
+.textEmphasis {
+    font-weight: bold;
+}
+
+.game-board {
+    /* Change board background */
+}
+.sidenav-board {
+    /* Change sidenav background */
+}
+
+/* Modals  */
 .footer-modal {
     justify-content: center;
 }
@@ -48,3 +60,31 @@
     width: 70%;
     height: auto;
 }
+::ng-deep .overflow-modal-armageddon .modal-content {
+    background-image: url('../../../assets/Modes/Armageddon.png');
+    background-position: top center;
+    background-size: cover;
+}
+
+::ng-deep .overflow-modal-nuclear .modal-content {
+    background-image: url('../../../assets/Modes/Nuclear.png');
+    background-position: top center;
+    background-size: cover;
+}
+
+::ng-deep .overflow-modal-birthday .modal-content {
+    background-image: url('../../../assets/Modes/Birthday.png');
+    background-position: top center;
+    background-size: cover;
+}
+.modal-title-style {
+    font-weight: bold;
+    color: black;
+    font-size: xx-large;
+    text-align: center;
+}
+.modal-body-style {
+    color: black;
+    font-size: medium;
+    text-align: center;
+} 

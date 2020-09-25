@@ -3,7 +3,7 @@
         <div class="header-nav" [clr-nav-level]="1">
             <div class="branding">
                 <a href="https://lpsoftware.space" class="nav-link">
-                    <clr-icon shape="happy-face"></clr-icon>
+                    <mdb-icon fas icon="glass-cheers" size="lg"></mdb-icon>
                 </a>
                 <span i18n class="title">{{'Pyramid Game' | translate}}</span>
             </div>
@@ -20,56 +20,98 @@
                     <br>
                     <div>
                         <label i18n>{{'Mode' | translate}}</label>
-                        <select formControlName="mode" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
+                        <select formControlName="mode" class="form-control select-form"
+                            [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
                             <option value=""></option>
-                            <option i18n value="Hard">{{'Hard' | translate}}</option>
                             <option i18n value="Normal">{{'Normal' | translate}}</option>
+                            <option i18n value="Nuclear">{{'Nuclear' | translate}}</option>
+                            <option i18n value="Birthday">{{'Birthday' | translate}}</option>
+                            <option i18n value="Armageddon">{{'Armageddon' | translate}}</option>
                         </select><br>
-                        <small i18n class="help-text">{{'Hard mode' | translate}}</small><br>
-                        <small i18n class="help-text">{{'Normal mode' | translate}}</small><br>
+                        <small *ngIf="f.mode.value === 'Normal'" i18n
+                            class="help-text">{{'Normal mode' | translate}}</small>
+                        <small *ngIf="f.mode.value === 'Nuclear'" i18n
+                            class="help-text">{{'Nuclear mode' | translate}}</small>
+                        <small *ngIf="f.mode.value === 'Birthday'" i18n
+                            class="help-text">{{'Birthday mode' | translate}}</small>
+                        <small *ngIf="f.mode.value === 'Armageddon'" i18n
+                            class="help-text">{{'Armageddon mode' | translate}}</small>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                            <div i18n *ngIf="f.height.errors.required" class="error">{{'Height is required' | translate}}</div>
+                            <div i18n *ngIf="f.height.errors.required" class="error">
+                                {{'Height is required' | translate}}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <label i18n>{{'Rule' | translate}}</label>
+                        <select formControlName="rule" class="form-control select-form"
+                            [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
+                            <option value=""></option>
+                            <option i18n value="Yes">{{'Yes' | translate}}</option>
+                            <option i18n value="No">{{'No' | translate}}</option>
+                        </select><br>
+                        <div *ngIf="submitted && f.rule.errors" class="invalid-feedback">
+                            <div i18n *ngIf="f.rule.errors.required" class="error">{{'Rule is required' | translate}}
+                            </div>
                         </div>
                     </div>
                     <br>
                     <div>
                         <label i18n>{{'Height' | translate}}</label>
-                        <select formControlName="height" class="form-control select-form" [ngClass]="{ 'is-invalid': submitted && f.height.errors }">
+                        <select formControlName="height" class="form-control select-form"
+                            [ngClass]="{ 'is-invalid': submitted && f.height.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
                         </select>
                         <div *ngIf="submitted && f.height.errors" class="invalid-feedback">
-                            <div i18n *ngIf="f.height.errors.required" class="error">{{'Height is required' | translate}}</div>
+                            <div i18n *ngIf="f.height.errors.required" class="error">
+                                {{'Height is required' | translate}}</div>
                         </div>
                     </div>
                     <br>
                     <div>
                         <label i18n>{{'Number of players' | translate}}</label>
-                        <select formControlName="numberPlayers" class="form-control select-form" (change)="onChangeTickets($event)" [ngClass]="{ 'is-invalid': submitted && f.numberPlayers.errors }">
+                        <select formControlName="numberPlayers" class="form-control select-form"
+                            (change)="onChangeTickets($event)"
+                            [ngClass]="{ 'is-invalid': submitted && f.numberPlayers.errors }">
                             <option value=""></option>
                             <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">{{i}}</option>
                         </select>
                         <div *ngIf="submitted && f.numberPlayers.errors" class="invalid-feedback">
-                            <div i18n *ngIf="f.numberPlayers.errors.required" class="error">{{'Number of players is required' | translate}}</div>
+                            <div i18n *ngIf="f.numberPlayers.errors.required" class="error">
+                                {{'Number of players is required' | translate}}</div>
                         </div>
                     </div>
                     <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
                         <div class="list-group-item">
                             <div [formGroup]="ticket" class="input-form card">
                                 <div class="form-group col-6">
-                                    <input type="text" formControlName="name" placeholder="Player {{i + 1}}" class="form-control input-form-text" [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
+                                    <input type="text" formControlName="name" placeholder="Player {{i + 1}}"
+                                        class="form-control input-form-text"
+                                        [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
                                     <div *ngIf="submitted && ticket.controls.name.errors" class="invalid-feedback">
-                                        <div i18n *ngIf="ticket.controls.name.errors.required" class="error">{{'Name is required' | translate}}</div>
+                                        <div i18n *ngIf="ticket.controls.name.errors.required" class="error">
+                                            {{'Name is required' | translate}}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <br>
+                    <div *ngIf="f.mode.value === 'Birthday' && f.players.value.length > 0">
+                        <label i18n>{{'Birthday Boy' | translate}}</label>
+                        <select formControlName="birthday" class="form-control select-form">
+                            <option value=""></option>
+                            <option value="{{player.name}}" *ngFor="let player of f.players.value">{{player.name}}
+                            </option>
+                        </select>
+                    </div>
                     <div class="card-footer text-center">
                         <button i18n class="btn btn-primary mr-1">{{'Play' | translate}}</button><br><br>
-                        <button i18n class="btn btn-secondary mr-1" type="reset" (click)="onReset()">{{'Reset' | translate}}</button>
-                        <button i18n class="btn btn-secondary" type="button" (click)="onClear()">{{'Clear' | translate}}</button>
+                        <button i18n class="btn btn-secondary mr-1" type="reset"
+                            (click)="onReset()">{{'Reset' | translate}}</button>
+                        <button i18n class="btn btn-secondary" type="button"
+                            (click)="onClear()">{{'Clear' | translate}}</button>
                     </div>
                 </div>
             </form>
@@ -93,6 +135,7 @@
         <p i18n>{{'number cards error' | translate}}</p>
     </div>
     <div class="modal-footer">
-        <button i18n type="button" class="btn btn-primary" (click)="closeModalNumberCards()">{{'Close' | translate}}</button>
+        <button i18n type="button" class="btn btn-primary"
+            (click)="closeModalNumberCards()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>

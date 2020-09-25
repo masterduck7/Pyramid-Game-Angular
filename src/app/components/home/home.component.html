@@ -3,7 +3,7 @@
         <div class="header-nav" [clr-nav-level]="1">
             <div class="branding">
                 <a href="https://lpsoftware.space" class="nav-link">
-                    <clr-icon shape="happy-face"></clr-icon>
+                    <mdb-icon fas icon="glass-cheers" size="lg"></mdb-icon>
                 </a>
                 <span i18n class="title">{{'Pyramid Game' | translate}}</span>
             </div>
@@ -44,19 +44,21 @@
                 <li class="clr-timeline-step">
                     <clr-icon shape="dot-circle" aria-current="true" aria-label="Current"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">{{'2 cards are assigned per player' | translate}}</span>
+                        <span i18n
+                            class="clr-timeline-step-title">{{'2 cards are assigned per player' | translate}}</span>
                     </div>
                 </li>
                 <li class="clr-timeline-step">
                     <clr-icon shape="dot-circle" aria-current="true" aria-label="Current"></clr-icon>
                     <div class="clr-timeline-step-body">
-                        <span i18n class="clr-timeline-step-title">{{'The difficulty depends on the height of the pyramid' | translate}}</span>
+                        <span i18n
+                            class="clr-timeline-step-title">{{'The difficulty depends on the height of the pyramid' | translate}}</span>
                     </div>
                 </li>
             </ul>
         </main>
         <nav class="sidenav body-container nav" [clr-nav-level]="2">
-            <img src="../../../assets/Example.png" alt="Example" class="image"/>
+            <img src="../../../assets/Example.png" alt="Example" class="image" />
             <h6 i18n class="lpsoftware">{{'By LPSoftware' | translate}}</h6>
         </nav>
     </div>

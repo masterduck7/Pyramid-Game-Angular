@@ -3,7 +3,7 @@
         <div class="header-nav" [clr-nav-level]="1">
             <div class="branding">
                 <a href="https://lpsoftware.space" class="nav-link">
-                    <clr-icon shape="happy-face"></clr-icon>
+                    <mdb-icon fas icon="glass-cheers" size="lg"></mdb-icon>
                 </a>
                 <span i18n class="title">{{'Pyramid Game' | translate}}</span>
             </div>
@@ -11,7 +11,7 @@
         </div>
     </clr-header>
     <div class="content-container">
-        <main class="content-area center-content">
+        <main class="content-area center-content game-board">
             <table>
                 <tbody>
                     <tr class="row" *ngFor="let row of structure">
@@ -25,7 +25,7 @@
                 </tbody>
             </table>
         </main>
-        <nav class="sidenav nav" [clr-nav-level]="2">
+        <nav class="sidenav nav sidenav-board" [clr-nav-level]="2">
             <h2 i18n style="text-align: center;">{{'Drinks' | translate}}</h2>
             <table class="table table-users">
                 <thead>
@@ -50,7 +50,7 @@
 </clr-main-container>
 
 <clr-modal [(clrModalOpen)]="modalWinners" [clrModalClosable]="false">
-    <h3 i18n class="modal-title">{{'Winners' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">{{'Winners' | translate}}</h3>
     <div class="modal-body">
         <table class="table table-users">
             <thead>
@@ -78,6 +78,8 @@
     <div class="modal-body body-modal">
         <p *ngIf="notRepeatedOnly">{{userPlayed}} {{action}} {{actualRow}} {{shots}}</p>
         <p *ngIf="repeated">{{userPlayedRepeated}} {{actionRepeated}} {{2*actualRow}} {{shotsRepeated}}</p>
+        <p *ngIf="birthdayBoyDrinks">{{'Birthday Boy' | translate}} : {{action}} {{actualRow + 1}} shots
+        </p>
         <br>
         <img src={{cardPlayed}} alt="Card" class="card-played" />
     </div>
@@ -87,7 +89,7 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="modalRules" [clrModalClosable]="false">
-    <h3 i18n class="modal-title">{{'Set a rule' | translate}}</h3>
+    <h3 i18n class="modal-title center-content">{{'Set a rule' | translate}}</h3>
     <div class="modal-body">
         <p i18n>{{userRules}} {{'choose your rule' | translate}}</p>
     </div>
@@ -95,3 +97,105 @@
         <button i18n type="button" class="btn btn-primary" (click)="closeModalRules()">{{'Close' | translate}}</button>
     </div>
 </clr-modal>
+
+<clr-main-container class="overflow-modal-birthday">
+    <clr-modal [(clrModalOpen)]="modalBirthdayMissile" [clrModalClosable]="false">
+        <div class="modal-title">
+            <div class="clr-row">
+                <div class="clr-col">
+                </div>
+                <div class="clr-col">
+                    <p i18n class="modal-title-style">
+                        {{'Birthday Missile' | translate}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="clr-row">
+                <div class="clr-col">
+                </div>
+                <div class="clr-col">
+                    <p class="modal-body-style" innerHtml="{{'Missile Birthday Description' | translate}}" i18n>
+                    </p>
+                    <div class="clr-break-row"></div>
+                    <p class="modal-body-style textEmphasis"
+                        innerHtml="{{'Missile Birthday Description Gifts' | translate}}" i18n>
+                    </p>
+                    <br><br><br><br>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button i18n type="button" class="btn btn-primary"
+                (click)="closeModalBirthdayMissile()">{{'Close' | translate}}</button>
+        </div>
+    </clr-modal>
+</clr-main-container>
+
+<clr-main-container class="overflow-modal-nuclear">
+    <clr-modal [(clrModalOpen)]="modalNuclearMissile" [clrModalClosable]="false">
+        <div class="modal-title">
+            <div class="clr-row">
+                <div class="clr-col">
+                </div>
+                <div class="clr-col">
+                    <p i18n class="modal-title-style">
+                        {{'Nuclear Missile' | translate}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="clr-row">
+                <div class="clr-col">
+                </div>
+                <div class="clr-col">
+                    <p class="modal-body-style" innerHtml="{{'Missile Nuclear Description' | translate}}" i18n>
+                    </p>
+                    <div class="clr-break-row"></div>
+                    <p class="modal-body-style textEmphasis">{{nuclearUsers}} {{nuclearAction}}
+                        {{nuclearNumber}}
+                        {{nuclearShots}}</p>
+                    <br><br><br><br>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button i18n type="button" class="btn btn-primary"
+                (click)="closeModalNuclearMissile()">{{'Close' | translate}}</button>
+        </div>
+    </clr-modal>
+</clr-main-container>
+
+<clr-main-container class="overflow-modal-armageddon">
+    <clr-modal [(clrModalOpen)]="modalArmageddonMissile" [clrModalClosable]="false">
+        <div class="modal-title">
+            <div class="clr-row">
+                <div class="clr-col">
+                </div>
+                <div class="clr-col">
+                    <p i18n class="modal-title-style">
+                        {{'Armageddon Missile' | translate}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="clr-row">
+                <div class="clr-col">
+                </div>
+                <div class="clr-col">
+                    <p class="modal-body-style" innerHtml="{{'Missile Armageddon Description' | translate}}" i18n>
+                    </p>
+                    <div class="clr-break-row"></div>
+                    <p class="modal-body-style textEmphasis">{{armageddonUsers}} {{armageddonAction}}
+                        {{armageddonNumber}}
+                        {{armageddonShots}}</p>
+                    <br><br><br><br>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button i18n type="button" class="btn btn-primary"
+                (click)="closeModalArmageddonMissile()">{{'Close' | translate}}</button>
+        </div>
+    </clr-modal>
+</clr-main-container>
