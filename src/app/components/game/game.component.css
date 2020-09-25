@@ -37,6 +37,18 @@
     width: 50%;
     height: inherit;
 }
+.textEmphasis {
+    font-weight: bold;
+}
+
+.game-board {
+    /* Change board background */
+}
+.sidenav-board {
+    /* Change sidenav background */
+}
+
+/* Modals  */
 .footer-modal {
     justify-content: center;
 }
@@ -47,24 +59,6 @@
 .card-played {
     width: 70%;
     height: auto;
-}
-.birthday-present {
-    color: red;
-    margin-left: 5%;
-    align-content: center;
-}
-.bomb {
-    color: black;
-    margin-left: 5%;
-    align-content: center;
-}
-.jet {
-    color: black;
-    margin-left: 5%;
-    align-content: center;
-}
-.textEmphasis {
-    font-weight: bold;
 }
 ::ng-deep .overflow-modal-armageddon .modal-content {
     background-image: url('../../../assets/Modes/Armageddon.png');
@@ -83,8 +77,6 @@
     background-position: top center;
     background-size: cover;
 }
-
-
 .modal-title-style {
     font-weight: bold;
     color: black;

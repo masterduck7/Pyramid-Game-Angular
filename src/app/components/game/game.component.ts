@@ -87,7 +87,7 @@ export class GameComponent implements OnInit {
   ruleType: string[] = [];
   activeRules: string[] = [];
   normalRuleTime: number;
-  birthdayRuleTime: number = 1;
+  birthdayRuleTime: number = 5;
   nuclearRuleTime: number = 6;
   armageddonRuleTime: number = 4;
 

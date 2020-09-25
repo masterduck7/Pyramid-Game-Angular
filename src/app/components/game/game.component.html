@@ -11,7 +11,7 @@
         </div>
     </clr-header>
     <div class="content-container">
-        <main class="content-area center-content">
+        <main class="content-area center-content game-board">
             <table>
                 <tbody>
                     <tr class="row" *ngFor="let row of structure">
@@ -25,7 +25,7 @@
                 </tbody>
             </table>
         </main>
-        <nav class="sidenav nav" [clr-nav-level]="2">
+        <nav class="sidenav nav sidenav-board" [clr-nav-level]="2">
             <h2 i18n style="text-align: center;">{{'Drinks' | translate}}</h2>
             <table class="table table-users">
                 <thead>
