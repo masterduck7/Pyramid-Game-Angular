@@ -24,8 +24,8 @@
                             [ngClass]="{ 'is-invalid': submitted && f.mode.errors }">
                             <option value=""></option>
                             <option i18n value="Normal">{{'Normal' | translate}}</option>
-                            <option i18n value="Nuclear">{{'Nuclear' | translate}}</option>
                             <option i18n value="Birthday">{{'Birthday' | translate}}</option>
+                            <option i18n value="Nuclear">{{'Nuclear' | translate}}</option>
                             <option i18n value="Armageddon">{{'Armageddon' | translate}}</option>
                         </select><br>
                         <small *ngIf="f.mode.value === 'Normal'" i18n
