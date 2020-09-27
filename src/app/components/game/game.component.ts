@@ -88,7 +88,7 @@ export class GameComponent implements OnInit {
   activeRules: string[] = [];
   normalRuleTime: number;
   birthdayRuleTime: number = 5;
-  nuclearRuleTime: number = 6;
+  nuclearRuleTime: number = 1;
   armageddonRuleTime: number = 4;
 
 
@@ -600,14 +600,14 @@ export class GameComponent implements OnInit {
       this.nuclearUsers = attacks.join(', ')
       this.nuclearNumber = this.nuclearNumberGifts.toString()
       if (attacks.length > 1) {
-        this.nuclearAction = this.returnTranslation('gives');
+        this.nuclearAction = this.returnTranslation('missileGifts');
       } else {
-        this.nuclearAction = this.returnTranslation('give');
+        this.nuclearAction = this.returnTranslation('missileGift');
       }
       if (this.nuclearNumberGifts > 1) {
-        this.armageddonShots = this.returnTranslation('shots');
+        this.nuclearShots = this.returnTranslation('missiles');
       } else {
-        this.armageddonShots = this.returnTranslation('shot');
+        this.nuclearShots = this.returnTranslation('missile');
       }
       // Add gifts
       attacks.forEach(user => {
@@ -623,14 +623,14 @@ export class GameComponent implements OnInit {
       this.nuclearUsers = attacks.join(', ')
       this.nuclearNumber = this.nuclearNumberDrinks.toString()
       if (attacks.length > 1) {
-        this.nuclearAction = this.returnTranslation('drinks');
+        this.nuclearAction = this.returnTranslation('missileDrinks');
       } else {
-        this.nuclearAction = this.returnTranslation('drink');
+        this.nuclearAction = this.returnTranslation('missileDrink');
       }
       if (this.nuclearNumberDrinks > 1) {
-        this.armageddonShots = this.returnTranslation('shots');
+        this.nuclearShots = this.returnTranslation('missiles');
       } else {
-        this.armageddonShots = this.returnTranslation('shot');
+        this.nuclearShots = this.returnTranslation('missile');
       }
       // Add drinks
       attacks.forEach(user => {
@@ -655,14 +655,14 @@ export class GameComponent implements OnInit {
       this.armageddonUsers = attacks.join(', ')
       this.armageddonNumber = this.armageddonNumberGifts.toString()
       if (attacks.length > 1) {
-        this.armageddonAction = this.returnTranslation('gives');
+        this.armageddonAction = this.returnTranslation('missileGifts');
       } else {
-        this.armageddonAction = this.returnTranslation('give');
+        this.armageddonAction = this.returnTranslation('missileGift');
       }
       if (this.armageddonNumberGifts > 1) {
-        this.armageddonShots = this.returnTranslation('shots');
+        this.armageddonShots = this.returnTranslation('missiles');
       } else {
-        this.armageddonShots = this.returnTranslation('shot');
+        this.armageddonShots = this.returnTranslation('missile');
       }
       // Add gifts
       attacks.forEach(user => {
@@ -678,14 +678,14 @@ export class GameComponent implements OnInit {
       this.armageddonUsers = attacks.join(', ')
       this.armageddonNumber = this.armageddonNumberDrinks.toString()
       if (attacks.length > 1) {
-        this.armageddonAction = this.returnTranslation('drinks');
+        this.armageddonAction = this.returnTranslation('missileDrinks');
       } else {
-        this.armageddonAction = this.returnTranslation('drink');
+        this.armageddonAction = this.returnTranslation('missileDrink');
       }
       if (this.armageddonNumberDrinks > 1) {
-        this.armageddonShots = this.returnTranslation('shots');
+        this.armageddonShots = this.returnTranslation('missiles');
       } else {
-        this.armageddonShots = this.returnTranslation('shot');
+        this.armageddonShots = this.returnTranslation('missile');
       }
       // Add gifts
       attacks.forEach(user => {
@@ -716,7 +716,12 @@ export class GameComponent implements OnInit {
       'gives': ['gives', 'regalan'],
       'shot': ['shot', 'trago'],
       'shots': ['shots', 'tragos'],
-      'All': ['All', 'Todos'],
+      'missile': ['missile', 'misil'],
+      'missiles': ['missiles', 'misiles'],
+      'missileDrink': ['receive', 'ha sido atacado por'],
+      'missileDrinks': ['receive', 'han sido atacados por'],
+      'missileGift': ['send', 'envia'],
+      'missileGifts': ['send', 'envian']
     };
   }
 
